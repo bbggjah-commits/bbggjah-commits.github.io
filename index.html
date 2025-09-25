@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Krnl Executor Download</title>
+    <title>Cosmic Experience | تجربة كونية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,222 +14,362 @@
         }
 
         :root {
-            --primary-color: #000000;
-            --secondary-color: #ffffff;
-            --accent-color: #333333;
-            --text-color: #ffffff;
-            --hover-color: #555555;
+            --cosmic-purple: #8a2be2;
+            --neon-blue: #00f5ff;
+            --galaxy-black: #0a0a1a;
+            --starlight: #fffacd;
+            --nebula-pink: #ff1493;
+            --quantum-green: #7fff00;
         }
 
         body {
-            background-color: var(--primary-color);
-            color: var(--text-color);
+            background: var(--galaxy-black);
+            color: white;
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* الكون المتلألئ */
+        #universe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .comet {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(45deg, transparent, var(--neon-blue), transparent);
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: cometFly linear infinite;
+        }
+
+        @keyframes cometFly {
+            0% { transform: translateX(-100px) translateY(-100px); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(100vw) translateY(100vh); opacity: 0; }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Header Styles */
+        /* Header كوني */
         header {
-            background-color: rgba(0, 0, 0, 0.9);
-            padding: 20px 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+            padding: 30px 0;
+            background: rgba(10, 10, 26, 0.7);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+            position: relative;
         }
 
-        /* تنسيقات الـ Logo */
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            display: inline-flex; 
+        .cosmic-nav {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
         }
-        
-        .logo-img {
-            height: 30px; /* حجم الشعار في الـ Header */
-            width: auto;
-            object-fit: contain;
-        }
-        /* نهاية تنسيقات الـ Logo */
 
-        /* Hero Section */
-        .hero {
-            padding: 180px 0 100px;
-            text-align: center;
-            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), 
-                        radial-gradient(circle at center, #333 0%, #000 100%);
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--cosmic-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px var(--cosmic-purple);
         }
 
-        /* تنسيقات صورة الشعار في الـ Hero */
-        .hero-logo {
-            margin-bottom: 30px;
+        .nav-links {
+            display: flex;
+            gap: 30px;
         }
 
-        .hero-logo img {
-            max-width: 300px; /* حجم أكبر للشعار في قسم الـ Hero */
-            height: auto;
-            object-fit: contain;
-        }
-        /* نهاية تنسيقات صورة الشعار في الـ Hero */
-        
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .hero p {
-            font-size: 20px;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            line-height: 1.6;
-            color: #cccccc;
-        }
-
-        /* Download Section */
-        .download-section {
-            padding: 80px 0;
-            background-color: var(--accent-color);
-        }
-
-        .download-card {
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            padding: 40px;
-            max-width: 600px;
-            margin: 0 auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid #444;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .download-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
-        }
-
-        .download-title {
-            font-size: 32px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .download-description {
-            font-size: 18px;
-            margin-bottom: 30px;
-            text-align: center;
-            color: #cccccc;
-            line-height: 1.6;
-        }
-
-        .download-btn {
-            display: block;
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(45deg, #222, #444);
-            color: white;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
+        .nav-link {
+            color: var(--starlight);
             text-decoration: none;
-            letter-spacing: 1px;
-            border: 2px solid #555;
-        }
-
-        .download-btn:hover {
-            background: linear-gradient(45deg, #333, #555);
-            transform: scale(1.03);
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
-        }
-
-        /* Features Section */
-        .features {
-            padding: 100px 0;
-            background-color: var(--primary-color);
-        }
-
-        .section-title {
-            font-size: 36px;
-            text-align: center;
-            margin-bottom: 60px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-link:hover {
+            color: var(--neon-blue);
+            text-shadow: 0 0 15px var(--neon-blue);
+            transform: translateY(-2px);
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
+        }
+
+        /* Hero Section كوني */
+        .cosmic-hero {
+            padding: 150px 0 100px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, var(--nebula-pink), var(--neon-blue), var(--quantum-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 50px rgba(255, 20, 147, 0.5);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 50px rgba(255, 20, 147, 0.5); }
+            100% { text-shadow: 0 0 70px rgba(0, 245, 255, 0.7); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--starlight);
+            margin-bottom: 40px;
+            line-height: 1.6;
+            text-shadow: 0 0 20px rgba(255, 250, 205, 0.5);
+        }
+
+        /* الأزرار الكونية */
+        .cosmic-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+
+        .cosmic-btn {
+            padding: 18px 35px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cosmic-purple), var(--nebula-pink));
+            color: white;
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
+        }
+
+        .cosmic-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .cosmic-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(138, 43, 226, 0.6);
+        }
+
+        .cosmic-btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 245, 255, 0.1);
+            box-shadow: 0 0 50px rgba(0, 245, 255, 0.5);
+        }
+
+        /* الأيقونات الكونية */
+        .icon-wrapper {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cosmic-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 0 10px currentColor);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary .cosmic-icon {
+            color: var(--starlight);
+        }
+
+        .btn-secondary .cosmic-icon {
+            color: var(--neon-blue);
+        }
+
+        .cosmic-btn:hover .cosmic-icon {
+            transform: scale(1.2) rotate(15deg);
+            filter: drop-shadow(0 0 20px currentColor);
+        }
+
+        /* الميزات الكونية */
+        .cosmic-features {
+            padding: 100px 0;
+            position: relative;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
         }
 
         .feature-card {
-            background-color: rgba(30, 30, 30, 0.8);
-            padding: 30px;
-            border-radius: 8px;
+            background: rgba(20, 20, 40, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
             text-align: center;
-            transition: transform 0.3s;
-            border: 1px solid #444;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.1), transparent);
+            transition: left 0.6s;
         }
 
         .feature-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--neon-blue);
+            box-shadow: 0 20px 50px rgba(0, 245, 255, 0.2);
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
         }
 
         .feature-icon {
-            font-size: 40px;
-            margin-bottom: 20px;
-            color: #fff;
+            font-size: 4rem;
+            margin-bottom: 25px;
+            background: linear-gradient(45deg, var(--cosmic-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px var(--cosmic-purple));
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2) rotate(10deg);
+            filter: drop-shadow(0 0 30px var(--neon-blue));
         }
 
         .feature-title {
-            font-size: 24px;
+            font-size: 1.8rem;
             margin-bottom: 15px;
-            font-weight: 600;
+            color: var(--starlight);
+            font-weight: 700;
         }
 
         .feature-description {
             color: #cccccc;
             line-height: 1.6;
+            font-size: 1.1rem;
         }
 
-        /* Footer */
-        footer {
-            background-color: #111;
-            padding: 40px 0;
+        /* الفوتر الكوني */
+        .cosmic-footer {
+            background: rgba(5, 5, 15, 0.9);
+            padding: 50px 0 30px;
+            border-top: 1px solid rgba(138, 43, 226, 0.3);
+            position: relative;
+        }
+
+        .footer-content {
             text-align: center;
-            border-top: 1px solid #333;
         }
 
-        .footer-text {
-            color: #999;
-            font-size: 16px;
+        .copyright {
+            font-size: 1.1rem;
+            color: var(--starlight);
+            margin-top: 20px;
+            text-shadow: 0 0 10px rgba(255, 250, 205, 0.5);
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .copyright span {
+            color: var(--neon-blue);
+            font-weight: 700;
         }
 
-        .fade-in {
-            animation: fadeIn 1s ease-out;
+        /* التأثيرات الخاصة */
+        .pulse {
+            animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
@@ -238,128 +378,245 @@
             100% { transform: scale(1); }
         }
 
-        .pulse {
-            animation: pulse 2s infinite;
+        .float {
+            animation: float 6s ease-in-out infinite;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-            
-            .hero p {
-                font-size: 18px;
-            }
-            
-            .download-title {
-                font-size: 28px;
-            }
-            
-            .section-title {
-                font-size: 30px;
-            }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
 
-            .hero-logo img {
-                max-width: 200px;
+        /* الاستجابة */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .cosmic-nav {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .cosmic-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cosmic-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .feature-card {
+                padding: 30px 20px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- الكون المتلألئ -->
+    <div id="universe"></div>
+
+    <!-- Header -->
     <header>
         <div class="container">
-            <div class="logo">
-                <img src="/images/1000020689.png" alt="Krnl Executor Logo" class="logo-img">
-            </div>
+            <nav class="cosmic-nav">
+                <div class="logo">COSMIC</div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link">الرئيسية</a>
+                    <a href="#" class="nav-link">الميزات</a>
+                    <a href="#" class="nav-link">التحميل</a>
+                    <a href="#" class="nav-link">الدعم</a>
+                </div>
+            </nav>
         </div>
     </header>
 
-    <section class="hero fade-in">
+    <!-- Hero Section -->
+    <section class="cosmic-hero">
         <div class="container">
-            <div class="hero-logo">
-                <img src="/images/1000020689.png" alt="Krnl Executor Logo">
+            <div class="hero-content">
+                <h1 class="hero-title float">تجربة كونية</h1>
+                <p class="hero-subtitle">
+                    اكتشف عالمًا من الإمكانيات اللامحدودة مع تصميم كوني خارق للجمال. 
+                    حيث تلتقي التكنولوجيا بالفن في رحلة عبر النجوم والمجرات.
+                </p>
+                
+                <div class="cosmic-buttons">
+                    <a href="#" class="cosmic-btn btn-primary pulse">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-rocket cosmic-icon"></i>
+                        </div>
+                        ابدأ الرحلة الكونية
+                    </a>
+                    
+                    <a href="#" class="cosmic-btn btn-secondary">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-globe cosmic-icon"></i>
+                        </div>
+                        استكشف المجرات
+                    </a>
+                </div>
             </div>
-            
-            <h1>Krnl Executor</h1>
-            <p>A powerful multi-platform scripting engine, complete with a text editor and built-in script database. Experience the ultimate performance with our latest update.</p>
         </div>
     </section>
 
-    <section class="download-section">
+    <!-- Features Section -->
+    <section class="cosmic-features">
         <div class="container">
-            <div class="download-card fade-in">
-                <h2 class="download-title">Download Krnl Executor</h2>
-                <p class="download-description">Get the latest version of Krnl Executor with enhanced features, improved stability, and better performance. Click the button below to download.</p>
-                <a href="https://www.mediafire.com/file/a7bz4fu84hqas80/krnl.executor.1_ing1.apk/file" class="download-btn pulse" target="_blank">Download Now</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="features">
-        <div class="container">
-            <h2 class="section-title">Key Features</h2>
             <div class="features-grid">
-                <div class="feature-card fade-in">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3 class="feature-title">High Performance</h3>
-                    <p class="feature-description">Experience blazing fast execution speeds with our optimized scripting engine.</p>
+                <div class="feature-card">
+                    <i class="fas fa-star feature-icon"></i>
+                    <h3 class="feature-title">نجوم متلألئة</h3>
+                    <p class="feature-description">
+                        تجربة بصرية فريدة مع نجوم تتلألأ وتتحرك في خلفية كونية ساحرة.
+                    </p>
                 </div>
                 
-                <div class="feature-card fade-in">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="feature-title">Secure & Safe</h3>
-                    <p class="feature-description">Our executor is regularly updated to ensure maximum security and protection.</p>
+                <div class="feature-card">
+                    <i class="fas fa-bolt feature-icon"></i>
+                    <h3 class="feature-title">أيقونات خارقة</h3>
+                    <p class="feature-description">
+                        تصميم أيقونات فريد لا مثيل له مع تأثيرات ضوئية وحركات سلسة.
+                    </p>
                 </div>
                 
-                <div class="feature-card fade-in">
-                    <div class="feature-icon">
-                        <i class="fas fa-sync-alt"></i>
-                    </div>
-                    <h3 class="feature-title">Regular Updates</h3>
-                    <p class="feature-description">Receive frequent updates with new features, bug fixes, and performance improvements.</p>
+                <div class="feature-card">
+                    <i class="fas fa-infinity feature-icon"></i>
+                    <h3 class="feature-title">لانهائي الإبداع</h3>
+                    <p class="feature-description">
+                        تصميم يتطور باستمرار مع أحدث تقنيات الويب وتأثيرات CSS المتطورة.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer>
+    <!-- Footer -->
+    <footer class="cosmic-footer">
         <div class="container">
-            <p class="footer-text">Krnl Executor &copy; 2023. All rights reserved.</p>
+            <div class="footer-content">
+                <div class="cosmic-buttons">
+                    <a href="#" class="cosmic-btn btn-secondary">
+                        <i class="fab fa-github cosmic-icon"></i>
+                        GitHub
+                    </a>
+                    <a href="#" class="cosmic-btn btn-secondary">
+                        <i class="fab fa-discord cosmic-icon"></i>
+                        Discord
+                    </a>
+                    <a href="#" class="cosmic-btn btn-secondary">
+                        <i class="fab fa-twitter cosmic-icon"></i>
+                        Twitter
+                    </a>
+                </div>
+                
+                <p class="copyright">
+                    جميع الحقوق محفوظة <span>© 2025 COSMIC EXPERIENCE</span>
+                </p>
+            </div>
         </div>
     </footer>
 
     <script>
-        // Add scroll animations
+        // إنشاء الكون المتلألئ
+        function createUniverse() {
+            const universe = document.getElementById('universe');
+            const starCount = 200;
+            const cometCount = 5;
+
+            // إنشاء النجوم
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                const size = Math.random() * 3 + 1;
+                const duration = Math.random() * 5 + 3;
+                
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                star.style.setProperty('--duration', `${duration}s`);
+                
+                // جعل بعض النجوم ملونة
+                if (Math.random() > 0.7) {
+                    const colors = ['#00f5ff', '#ff1493', '#7fff00', '#fffacd'];
+                    star.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    star.style.boxShadow = `0 0 ${size * 2}px currentColor`;
+                }
+                
+                universe.appendChild(star);
+            }
+
+            // إنشاء المذنبات
+            for (let i = 0; i < cometCount; i++) {
+                const comet = document.createElement('div');
+                comet.className = 'comet';
+                
+                comet.style.left = `${Math.random() * 50}%`;
+                comet.style.top = `${Math.random() * 50}%`;
+                comet.style.animationDuration = `${Math.random() * 10 + 5}s`;
+                comet.style.animationDelay = `${Math.random() * 10}s`;
+                
+                universe.appendChild(comet);
+            }
+        }
+
+        // تأثيرات Scroll
         document.addEventListener('DOMContentLoaded', function() {
-            const fadeElements = document.querySelectorAll('.fade-in');
+            createUniverse();
             
-            const fadeInOnScroll = function() {
-                fadeElements.forEach(element => {
-                    const elementTop = element.getBoundingClientRect().top;
-                    const elementVisible = 150;
-                    
-                    if (elementTop < window.innerHeight - elementVisible) {
-                        element.style.opacity = 1;
-                        element.style.transform = 'translateY(0)';
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
                     }
                 });
-            };
-            
-            // Set initial state
-            fadeElements.forEach(element => {
-                element.style.opacity = 0;
-                element.style.transform = 'translateY(20px)';
-                element.style.transition = 'opacity 0.6s, transform 0.6s';
+            }, observerOptions);
+
+            // تطبيق تأثيرات على العناصر
+            document.querySelectorAll('.feature-card').forEach((card, index) => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = `all 0.6s ease ${index * 0.2}s`;
+                observer.observe(card);
+            });
+        });
+
+        // تأثيرات إضافية للأزرار
+        document.querySelectorAll('.cosmic-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.05)';
             });
             
-            // Check on scroll
-            window.addEventListener('scroll', fadeInOnScroll);
-            fadeInOnScroll(); // Check on load
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
         });
     </script>
 </body>
