@@ -122,7 +122,27 @@
             text-align: center;
             z-index: 1;
             padding: 2rem;
-            max-width: 800px;
+            max-width: 900px;
+        }
+
+        .logo-container {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .krnl-logo {
+            width: 200px;
+            height: 200px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .krnl-logo:hover {
+            transform: scale(1.05);
         }
 
         h1 {
@@ -132,6 +152,12 @@
             background: linear-gradient(to right, #fff, #aaa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #ccc;
         }
 
         p {
@@ -191,6 +217,26 @@
             font-size: 1.8rem;
         }
 
+        .platforms {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .platform {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+        }
+
+        .platform i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
         .features {
             display: flex;
             justify-content: center;
@@ -242,6 +288,20 @@
                 font-size: 2.5rem;
             }
             
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .krnl-logo {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .platforms {
+                flex-direction: column;
+                align-items: center;
+            }
+            
             .features {
                 flex-direction: column;
                 align-items: center;
@@ -272,10 +332,27 @@
     </div>
 
     <div class="content">
+        <div class="logo-container">
+            <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/0c0d6d6a-9c8a-4c8a-8c8a-9c8a9c8a9c8a/df1x1x1-9c8a9c8a-9c8a-4c8a-8c8a-9c8a9c8a9c8a.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzBjMGQ2ZDZhLTljOGEtNGM4YS04YzhhLTljOGE5YzhhOWM4YVwvZGYxeDF4MS05YzhhOWM4YS05YzhhLTRjOGEtOGM4YS05YzhhOWM4YTljOGEucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.9c8a9c8a9c8a9c8a9c8a9c8a9c8a9c8a9c8a9c8a9c8a9c8a9c8a9c8a9c8a9c8a" 
+                 alt="Krnl Executor" class="krnl-logo" onerror="this.src='https://via.placeholder.com/200x200/000000/FFFFFF?text=Krnl+Executor'">
+        </div>
+        
         <h1>Krnl Executor</h1>
+        <div class="subtitle">Roblox Android & iOS</div>
         <p>Experience the power of the universe with Krnl - the most advanced executor for Roblox. Download now and unlock endless possibilities!</p>
         
-        <a href="https://download2431.mediafire.com/qotirqf0w9mgP0u77z_OS79Cyro1FkxWpgrEPZetmCrnNhB7ijf-3UiJ8YzBnN76Oh4jcPeFW0uwjLdtyGFR0nz47e0S3Yvou2-jEY2-QWiwyNmqxsbJN9qszfQrdjiv-WBNMPM5i204XiPH0uo3UGNGno7EBGSwHTicAW08Cfdg/a7bz4fu84hqas80/krnl.executor.1_ing1.apk" class="download-btn" target="_blank">
+        <div class="platforms">
+            <div class="platform">
+                <i class="fab fa-android"></i>
+                <span>Android</span>
+            </div>
+            <div class="platform">
+                <i class="fab fa-apple"></i>
+                <span>iOS</span>
+            </div>
+        </div>
+        
+        <a href="https://download2430.mediafire.com/u2jhmrgnq0fg2Q-w0SOu7p36NricZ0hRFmwEI9I2N_DccI6Uf7qfo38Js83gdY98O_Ss8KDc4F2gkNdA85DjsWRM3D8RApa3jwyEMOV7smX4TAdVbWoGoUYQkv-2zKfs_toA1BQcHJy3j1ZZjMzNmkaSQJeUoMDNgh2Znp7RrSzS/txw7kcgvtha757h/krnl+Executor+%281ing_1%29.apk" class="download-btn" target="_blank">
             <span class="icon"><i class="fas fa-download"></i></span> Download Krnl
         </a>
         
