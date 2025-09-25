@@ -1,623 +1,221 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosmic Experience | تجربة كونية</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Stellar Interface - Download Krnl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        /*
+        ========================================
+        CSS Styling: Black, White, and Cosmic Aesthetics
+        ========================================
+        */
 
         :root {
-            --cosmic-purple: #8a2be2;
-            --neon-blue: #00f5ff;
-            --galaxy-black: #0a0a1a;
-            --starlight: #fffacd;
-            --nebula-pink: #ff1493;
-            --quantum-green: #7fff00;
+            --bg-color: #0a0a0a; /* Deep Space Black */
+            --text-color: #ffffff; /* Cosmic White */
+            --accent-color: #333333; /* Dark Grey for subtle elements */
+            --button-color: #1a1a1a;
+            --button-hover: #000000;
+            --star-color: #ffffff;
         }
 
         body {
-            background: var(--galaxy-black);
-            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             min-height: 100vh;
-            overflow-x: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow: hidden; /* Hide scrollbars caused by moving elements */
             position: relative;
         }
 
-        /* الكون المتلألئ */
-        #universe {
-            position: fixed;
+        /*
+        ========================================
+        Cosmic Background (Stars, Dust, and Black Hole)
+        ========================================
+        */
+
+        /* Stars/Dust Container */
+        .cosmic-background {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            pointer-events: none;
+            z-index: 1;
+            /* Black Hole Effect (subtle radial gradient) */
+            background: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 50%, var(--bg-color) 100%);
         }
 
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle var(--duration) infinite ease-in-out;
-        }
-
+        /* Keyframes for Star Twinkle (Tala'lu') */
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            0%, 100% { opacity: 0.8; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.2); }
         }
 
-        .comet {
+        /* Keyframes for Star Movement (Haraka) */
+        @keyframes move-stars {
+            from { transform: translateY(0); }
+            to { transform: translateY(-2000px); }
+        }
+
+        /* Creating Multiple Layers of Stars/Dust */
+        .stars-layer {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: linear-gradient(45deg, transparent, var(--neon-blue), transparent);
-            border-radius: 50%;
-            filter: blur(1px);
-            animation: cometFly linear infinite;
+            width: 3000px;
+            height: 3000px;
+            background: transparent;
+            box-shadow: 
+                0 0 1px var(--star-color), 100px 100px 2px var(--star-color),
+                -50px 200px 1px rgba(255, 255, 255, 0.7), 250px 300px 1.5px var(--star-color),
+                -300px 400px 1px rgba(255, 255, 255, 0.5), 150px 600px 0.8px var(--star-color),
+                -200px 750px 1.2px rgba(255, 255, 255, 0.9), 300px 850px 1px var(--star-color),
+                -450px 1000px 0.7px rgba(255, 255, 255, 0.6), 500px 1150px 1.1px var(--star-color),
+                /* Add more stars for density */
+                700px 1300px 1.3px var(--star-color), -600px 1450px 0.9px rgba(255, 255, 255, 0.7),
+                850px 1600px 1.0px var(--star-color), -750px 1750px 1.4px rgba(255, 255, 255, 0.9),
+                1000px 1900px 1.2px var(--star-color), -900px 2050px 0.6px rgba(255, 255, 255, 0.5),
+                1150px 2200px 1.5px var(--star-color), -1050px 2350px 1.0px rgba(255, 255, 255, 0.8),
+                1300px 2500px 0.8px var(--star-color), -1200px 2650px 1.1px rgba(255, 255, 255, 0.7),
+                1450px 2800px 1.3px var(--star-color), -1350px 2950px 0.9px rgba(255, 255, 255, 0.6);
+            
+            animation: move-stars 150s linear infinite, twinkle 3s ease-in-out infinite alternate;
+            transform-origin: 0 0;
         }
 
-        @keyframes cometFly {
-            0% { transform: translateX(-100px) translateY(-100px); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateX(100vw) translateY(100vh); opacity: 0; }
+        .stars-layer:nth-child(2) {
+            width: 2000px;
+            height: 2000px;
+            animation: move-stars 100s linear infinite, twinkle 4s ease-in-out infinite alternate;
+            opacity: 0.6;
+            transform: scale(0.5); /* Closer to the Black Hole, smaller */
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .stars-layer:nth-child(3) {
+            width: 4000px;
+            height: 4000px;
+            animation: move-stars 200s linear infinite, twinkle 5s ease-in-out infinite alternate;
+            opacity: 0.4;
+        }
+
+        /*
+        ========================================
+        Main Content (Button and Icons)
+        ========================================
+        */
+
+        .main-container {
             position: relative;
-            z-index: 1;
-        }
-
-        /* Header كوني */
-        header {
-            padding: 30px 0;
-            background: rgba(10, 10, 26, 0.7);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
-            position: relative;
-        }
-
-        .cosmic-nav {
+            z-index: 10; /* Above the cosmic background */
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.3); /* Slight overlay for readability */
+            border-radius: 10px;
         }
 
-        .logo {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, var(--cosmic-purple), var(--neon-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px var(--cosmic-purple);
+        h1 {
+            font-size: 3em;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
-        .nav-links {
+        /* Download Button (The Jewel) */
+        .download-btn {
+            background-color: var(--button-color);
+            color: var(--text-color);
+            border: 2px solid var(--text-color);
+            padding: 15px 40px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-decoration: none; /* In case we use an <a> tag */
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .download-btn:hover {
+            background-color: var(--button-hover);
+            color: #00ffcc; /* A slight, cold light on hover */
+            border-color: #00ffcc;
+            box-shadow: 0 0 20px #00ffcc, 0 0 10px var(--text-color);
+            transform: translateY(-2px);
+        }
+        
+        /* Icons Section (The Unmatched Icons) - Now using Font Awesome */
+        .icon-bar {
+            margin-top: 40px;
             display: flex;
             gap: 30px;
         }
 
-        .nav-link {
-            color: var(--starlight);
+        .icon-bar a {
+            color: var(--text-color);
+            font-size: 2.5em; /* Adjust size as needed */
             text-decoration: none;
-            font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            transition: transform 0.3s ease, color 0.3s ease;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
         }
 
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .nav-link:hover {
-            color: var(--neon-blue);
-            text-shadow: 0 0 15px var(--neon-blue);
-            transform: translateY(-2px);
-        }
-
-        .nav-link:hover::before {
-            left: 100%;
-        }
-
-        /* Hero Section كوني */
-        .cosmic-hero {
-            padding: 150px 0 100px;
-            text-align: center;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero-title {
-            font-size: 5rem;
-            font-weight: 900;
-            margin-bottom: 30px;
-            background: linear-gradient(45deg, var(--nebula-pink), var(--neon-blue), var(--quantum-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 50px rgba(255, 20, 147, 0.5);
-            animation: titleGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes titleGlow {
-            0% { text-shadow: 0 0 50px rgba(255, 20, 147, 0.5); }
-            100% { text-shadow: 0 0 70px rgba(0, 245, 255, 0.7); }
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--starlight);
-            margin-bottom: 40px;
-            line-height: 1.6;
-            text-shadow: 0 0 20px rgba(255, 250, 205, 0.5);
-        }
-
-        /* الأزرار الكونية */
-        .cosmic-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 50px;
-        }
-
-        .cosmic-btn {
-            padding: 18px 35px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--cosmic-purple), var(--nebula-pink));
-            color: white;
-            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--neon-blue);
-            border: 2px solid var(--neon-blue);
-            box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
-        }
-
-        .cosmic-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s;
-        }
-
-        .cosmic-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(138, 43, 226, 0.6);
-        }
-
-        .cosmic-btn:hover::before {
-            left: 100%;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(0, 245, 255, 0.1);
-            box-shadow: 0 0 50px rgba(0, 245, 255, 0.5);
-        }
-
-        /* الأيقونات الكونية */
-        .icon-wrapper {
-            position: relative;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .cosmic-icon {
-            font-size: 2rem;
-            filter: drop-shadow(0 0 10px currentColor);
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary .cosmic-icon {
-            color: var(--starlight);
-        }
-
-        .btn-secondary .cosmic-icon {
-            color: var(--neon-blue);
-        }
-
-        .cosmic-btn:hover .cosmic-icon {
-            transform: scale(1.2) rotate(15deg);
-            filter: drop-shadow(0 0 20px currentColor);
-        }
-
-        /* الميزات الكونية */
-        .cosmic-features {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .feature-card {
-            background: rgba(20, 20, 40, 0.6);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px 30px;
-            text-align: center;
-            border: 1px solid rgba(138, 43, 226, 0.3);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.1), transparent);
-            transition: left 0.6s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: var(--neon-blue);
-            box-shadow: 0 20px 50px rgba(0, 245, 255, 0.2);
-        }
-
-        .feature-card:hover::before {
-            left: 100%;
-        }
-
-        .feature-icon {
-            font-size: 4rem;
-            margin-bottom: 25px;
-            background: linear-gradient(45deg, var(--cosmic-purple), var(--neon-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 0 20px var(--cosmic-purple));
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover .feature-icon {
-            transform: scale(1.2) rotate(10deg);
-            filter: drop-shadow(0 0 30px var(--neon-blue));
-        }
-
-        .feature-title {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--starlight);
-            font-weight: 700;
-        }
-
-        .feature-description {
+        .icon-bar a:hover {
             color: #cccccc;
-            line-height: 1.6;
-            font-size: 1.1rem;
+            transform: scale(1.1) rotate(5deg);
         }
 
-        /* الفوتر الكوني */
-        .cosmic-footer {
-            background: rgba(5, 5, 15, 0.9);
-            padding: 50px 0 30px;
-            border-top: 1px solid rgba(138, 43, 226, 0.3);
-            position: relative;
-        }
-
-        .footer-content {
+        /* Footer for Copyright */
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
             text-align: center;
+            z-index: 10;
+            font-size: 0.8em;
+            opacity: 0.7;
         }
 
-        .copyright {
-            font-size: 1.1rem;
-            color: var(--starlight);
-            margin-top: 20px;
-            text-shadow: 0 0 10px rgba(255, 250, 205, 0.5);
-        }
-
-        .copyright span {
-            color: var(--neon-blue);
-            font-weight: 700;
-        }
-
-        /* التأثيرات الخاصة */
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .float {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        /* الاستجابة */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 3.5rem;
-            }
-            
-            .cosmic-nav {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .cosmic-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .cosmic-btn {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2.8rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .feature-card {
-                padding: 30px 20px;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- الكون المتلألئ -->
-    <div id="universe"></div>
 
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav class="cosmic-nav">
-                <div class="logo">COSMIC</div>
-                <div class="nav-links">
-                    <a href="#" class="nav-link">الرئيسية</a>
-                    <a href="#" class="nav-link">الميزات</a>
-                    <a href="#" class="nav-link">التحميل</a>
-                    <a href="#" class="nav-link">الدعم</a>
-                </div>
-            </nav>
+    <div class="cosmic-background">
+        <div class="stars-layer"></div>
+        <div class="stars-layer"></div>
+        <div class="stars-layer"></div>
+    </div>
+
+    <div class="main-container">
+        <h1>🌌 KRNL Stellar Release 🚀</h1>
+        
+        <a href="https://www.mediafire.com/file/a7bz4fu84hqas80/krnl.executor.1_ing1.apk/file" target="_blank" class="download-btn">
+            Download Krnl
+        </a>
+
+        <div class="icon-bar">
+            <a href="#" title="Settings"><i class="fas fa-cog"></i></a>
+            <a href="#" title="Information"><i class="fas fa-info-circle"></i></a>
+            <a href="#" title="Support"><i class="fas fa-headset"></i></a>
+            <a href="#" title="Updates"><i class="fas fa-sync-alt"></i></a>
         </div>
-    </header>
+    </div>
 
-    <!-- Hero Section -->
-    <section class="cosmic-hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title float">تجربة كونية</h1>
-                <p class="hero-subtitle">
-                    اكتشف عالمًا من الإمكانيات اللامحدودة مع تصميم كوني خارق للجمال. 
-                    حيث تلتقي التكنولوجيا بالفن في رحلة عبر النجوم والمجرات.
-                </p>
-                
-                <div class="cosmic-buttons">
-                    <a href="#" class="cosmic-btn btn-primary pulse">
-                        <div class="icon-wrapper">
-                            <i class="fas fa-rocket cosmic-icon"></i>
-                        </div>
-                        ابدأ الرحلة الكونية
-                    </a>
-                    
-                    <a href="#" class="cosmic-btn btn-secondary">
-                        <div class="icon-wrapper">
-                            <i class="fas fa-globe cosmic-icon"></i>
-                        </div>
-                        استكشف المجرات
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="footer">
+        <p>Copyright 2025© | Stellar Interface Design</p>
+    </div>
 
-    <!-- Features Section -->
-    <section class="cosmic-features">
-        <div class="container">
-            <div class="features-grid">
-                <div class="feature-card">
-                    <i class="fas fa-star feature-icon"></i>
-                    <h3 class="feature-title">نجوم متلألئة</h3>
-                    <p class="feature-description">
-                        تجربة بصرية فريدة مع نجوم تتلألأ وتتحرك في خلفية كونية ساحرة.
-                    </p>
-                </div>
-                
-                <div class="feature-card">
-                    <i class="fas fa-bolt feature-icon"></i>
-                    <h3 class="feature-title">أيقونات خارقة</h3>
-                    <p class="feature-description">
-                        تصميم أيقونات فريد لا مثيل له مع تأثيرات ضوئية وحركات سلسة.
-                    </p>
-                </div>
-                
-                <div class="feature-card">
-                    <i class="fas fa-infinity feature-icon"></i>
-                    <h3 class="feature-title">لانهائي الإبداع</h3>
-                    <p class="feature-description">
-                        تصميم يتطور باستمرار مع أحدث تقنيات الويب وتأثيرات CSS المتطورة.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="cosmic-footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="cosmic-buttons">
-                    <a href="#" class="cosmic-btn btn-secondary">
-                        <i class="fab fa-github cosmic-icon"></i>
-                        GitHub
-                    </a>
-                    <a href="#" class="cosmic-btn btn-secondary">
-                        <i class="fab fa-discord cosmic-icon"></i>
-                        Discord
-                    </a>
-                    <a href="#" class="cosmic-btn btn-secondary">
-                        <i class="fab fa-twitter cosmic-icon"></i>
-                        Twitter
-                    </a>
-                </div>
-                
-                <p class="copyright">
-                    جميع الحقوق محفوظة <span>© 2025 COSMIC EXPERIENCE</span>
-                </p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // إنشاء الكون المتلألئ
-        function createUniverse() {
-            const universe = document.getElementById('universe');
-            const starCount = 200;
-            const cometCount = 5;
-
-            // إنشاء النجوم
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                
-                const size = Math.random() * 3 + 1;
-                const duration = Math.random() * 5 + 3;
-                
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.animationDelay = `${Math.random() * 5}s`;
-                star.style.setProperty('--duration', `${duration}s`);
-                
-                // جعل بعض النجوم ملونة
-                if (Math.random() > 0.7) {
-                    const colors = ['#00f5ff', '#ff1493', '#7fff00', '#fffacd'];
-                    star.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    star.style.boxShadow = `0 0 ${size * 2}px currentColor`;
-                }
-                
-                universe.appendChild(star);
-            }
-
-            // إنشاء المذنبات
-            for (let i = 0; i < cometCount; i++) {
-                const comet = document.createElement('div');
-                comet.className = 'comet';
-                
-                comet.style.left = `${Math.random() * 50}%`;
-                comet.style.top = `${Math.random() * 50}%`;
-                comet.style.animationDuration = `${Math.random() * 10 + 5}s`;
-                comet.style.animationDelay = `${Math.random() * 10}s`;
-                
-                universe.appendChild(comet);
-            }
-        }
-
-        // تأثيرات Scroll
-        document.addEventListener('DOMContentLoaded', function() {
-            createUniverse();
-            
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = 1;
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-
-            // تطبيق تأثيرات على العناصر
-            document.querySelectorAll('.feature-card').forEach((card, index) => {
-                card.style.opacity = 0;
-                card.style.transform = 'translateY(30px)';
-                card.style.transition = `all 0.6s ease ${index * 0.2}s`;
-                observer.observe(card);
-            });
-        });
-
-        // تأثيرات إضافية للأزرار
-        document.querySelectorAll('.cosmic-btn').forEach(btn => {
-            btn.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px) scale(1.05)';
-            });
-            
-            btn.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-    </script>
 </body>
 </html>
