@@ -1,36 +1,42 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosmic Krnl Download</title>
+    <title>مركز تنزيل التطبيقات - الكوني</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #ffffff;
+            --secondary-color: #000000;
+            --accent-color: #00a8ff;
+            --text-color: #f0f0f0;
+            --card-bg: rgba(30, 30, 30, 0.7);
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #000;
-            color: #fff;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
             overflow-x: hidden;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
+        /* الخلفية الكونية */
         .cosmic-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: -2;
             background: radial-gradient(ellipse at center, #0a0e2a 0%, #000000 70%);
         }
 
@@ -56,45 +62,13 @@
 
         .black-hole {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
+            top: 20%;
+            right: 10%;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
             background: radial-gradient(circle at center, #1a1a1a 0%, #000000 70%);
             box-shadow: 0 0 100px rgba(255, 255, 255, 0.1);
-        }
-
-        .black-hole::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 320px;
-            height: 320px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            animation: rotate 20s linear infinite;
-        }
-
-        .black-hole::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 340px;
-            height: 340px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            animation: rotate 30s linear infinite reverse;
-        }
-
-        @keyframes rotate {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
         .cosmic-dust {
@@ -118,297 +92,321 @@
             100% { background-position: 1000px 1000px; }
         }
 
-        .mustafa-name {
-            font-size: 4.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            text-align: center;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
-            background: linear-gradient(to right, #ffffff, #cccccc, #ffffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: glow 2s ease-in-out infinite alternate;
-            position: relative;
-            z-index: 2;
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073; }
-            to { text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6; }
-        }
-
-        .content {
-            text-align: center;
-            z-index: 1;
-            padding: 2rem;
-            max-width: 900px;
-        }
-
-        .logo-container {
-            margin-bottom: 2rem;
+        /* الشريط العلوي */
+        header {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .krnl-logo {
-            width: 280px;
-            height: 280px;
-            border-radius: 20px;
-            object-fit: contain;
-            border: 3px solid #fff;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-            transition: transform 0.3s ease;
-            background-color: rgba(255, 255, 255, 0.05);
-            padding: 10px;
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
         }
 
-        .krnl-logo:hover {
-            transform: scale(1.05);
+        .logo i {
+            margin-left: 10px;
+            color: var(--accent-color);
         }
 
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        /* قائمة الأنظمة */
+        .platform-menu {
+            position: relative;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .platform-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 10px;
+            padding: 0.5rem;
+            min-width: 150px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            z-index: 101;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .platform-options.active {
+            display: flex;
+        }
+
+        .platform-option {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .platform-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .platform-option i {
+            margin-left: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* المحتوى الرئيسي */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
             background: linear-gradient(to right, #fff, #aaa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
-        .subtitle {
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .app-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .app-image {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .app-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .app-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-title {
             font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: #ccc;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
         }
 
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
+        .app-description {
             color: #ccc;
-            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            flex-grow: 1;
         }
 
         .download-btn {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(45deg, #000, #333);
             color: white;
-            font-size: 1.5rem;
             font-weight: bold;
-            padding: 1rem 2rem;
-            border: 2px solid #fff;
-            border-radius: 50px;
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             text-decoration: none;
-            margin: 1rem 0;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
+            margin-top: auto;
         }
 
         .download-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
             background: linear-gradient(45deg, #333, #555);
+            border-color: rgba(255, 255, 255, 0.5);
         }
 
-        .download-btn:active {
-            transform: translateY(0);
+        .download-btn i {
+            margin-left: 8px;
         }
 
-        .download-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .download-btn:hover::before {
-            left: 100%;
-        }
-
-        .icon {
-            margin-right: 10px;
-            font-size: 1.8rem;
-        }
-
-        .platforms {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .platform {
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-        }
-
-        .platform i {
-            margin-right: 10px;
-            font-size: 1.5rem;
-        }
-
-        .features {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .feature {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 1.5rem;
-            width: 200px;
-            transition: transform 0.3s ease;
-        }
-
-        .feature:hover {
-            transform: translateY(-10px);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #fff;
-        }
-
-        .feature h3 {
-            margin-bottom: 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        .feature p {
-            font-size: 0.9rem;
-            margin: 0;
-        }
-
+        /* التذييل */
         footer {
-            margin-top: 3rem;
-            padding: 1rem;
             text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: #888;
             font-size: 0.9rem;
         }
 
-        /* Responsive design */
+        /* التجاوب مع الشاشات المختلفة */
         @media (max-width: 768px) {
-            .mustafa-name {
-                font-size: 3rem;
+            header {
+                padding: 1rem;
             }
-            
-            h1 {
-                font-size: 2.5rem;
+
+            .logo {
+                font-size: 1.5rem;
             }
-            
-            .subtitle {
-                font-size: 1.2rem;
+
+            .container {
+                padding: 1rem;
             }
-            
-            .krnl-logo {
-                width: 200px;
-                height: 200px;
+
+            .page-title {
+                font-size: 2rem;
             }
-            
-            .platforms {
-                flex-direction: column;
-                align-items: center;
+
+            .apps-grid {
+                grid-template-columns: 1fr;
             }
-            
-            .features {
-                flex-direction: column;
-                align-items: center;
-            }
-            
+
             .black-hole {
-                width: 200px;
-                height: 200px;
-            }
-            
-            .black-hole::before {
-                width: 220px;
-                height: 220px;
-            }
-            
-            .black-hole::after {
-                width: 240px;
-                height: 240px;
+                width: 150px;
+                height: 150px;
+                top: 15%;
+                right: 5%;
             }
         }
     </style>
 </head>
 <body>
+    <!-- الخلفية الكونية -->
     <div class="cosmic-background">
         <div class="stars" id="stars-container"></div>
         <div class="black-hole"></div>
         <div class="cosmic-dust"></div>
     </div>
 
-    <div class="content">
-        <div class="mustafa-name">MUSTAFA</div>
-        
-        <div class="logo-container">
-            <img src="https://krnlexecutorios.com/wp-content/uploads/2025/09/Krnl-Executor-Site-Logo.webp" 
-                 alt="Krnl Executor" class="krnl-logo" 
-                 onerror="this.src='https://via.placeholder.com/280x280/000000/FFFFFF?text=Krnl+Executor'">
+    <!-- الشريط العلوي -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-rocket"></i>
+            <span>مركز التحميل الكوني</span>
         </div>
         
-        <h1>Krnl Executor</h1>
-        <div class="subtitle">Roblox Android & iOS</div>
-        <p>Experience the power of the universe with Krnl - the most advanced executor for Roblox. Download now and unlock endless possibilities!</p>
-        
-        <div class="platforms">
-            <div class="platform">
-                <i class="fab fa-android"></i>
-                <span>Android</span>
-            </div>
-            <div class="platform">
-                <i class="fab fa-apple"></i>
-                <span>iOS</span>
+        <div class="platform-menu">
+            <button class="menu-toggle">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <div class="platform-options">
+                <a href="#" class="platform-option">
+                    <i class="fab fa-android"></i>
+                    <span>Android</span>
+                </a>
+                <a href="#" class="platform-option">
+                    <i class="fab fa-apple"></i>
+                    <span>iOS</span>
+                </a>
+                <a href="#" class="platform-option">
+                    <i class="fab fa-windows"></i>
+                    <span>Windows</span>
+                </a>
             </div>
         </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <h1 class="page-title">تنزيل التطبيقات المميزة</h1>
         
-        <a href="https://download2430.mediafire.com/u2jhmrgnq0fg2Q-w0SOu7p36NricZ0hRFmwEI9I2N_DccI6Uf7qfo38Js83gdY98O_Ss8KDc4F2gkNdA85DjsWRM3D8RApa3jwyEMOV7smX4TAdVbWoGoUYQkv-2zKfs_toA1BQcHJy3j1ZZjMzNmkaSQJeUoMDNgh2Znp7RrSzS/txw7kcgvtha757h/krnl+Executor+%281ing_1%29.apk" class="download-btn" target="_blank">
-            <span class="icon"><i class="fas fa-download"></i></span> Download Krnl
-        </a>
-        
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon"><i class="fas fa-rocket"></i></div>
-                <h3>Fast Execution</h3>
-                <p>Lightning-fast script execution for optimal performance</p>
+        <div class="apps-grid">
+            <!-- تطبيق DLTA Executor -->
+            <div class="app-card">
+                <div class="app-image">
+                    <img src="https://delta-executor.blog/wp-content/uploads/2025/08/cropped-Delta-Executor.webp" 
+                         alt="DLTA Executor" 
+                         onerror="this.src='https://via.placeholder.com/300x200/000000/FFFFFF?text=DLTA+Executor'">
+                </div>
+                <div class="app-info">
+                    <h2 class="app-title">DLTA Executor</h2>
+                    <p class="app-description">
+                        DLTA Executor هو تطبيق متقدم لتشغيل سكريبتات روبلوكس بسرعة وأمان. يتميز بواجهة سهلة الاستخدام ومميزات متقدمة.
+                    </p>
+                    <a href="#" class="download-btn">
+                        <span>تحميل للتطبيق</span>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
             </div>
-            <div class="feature">
-                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                <h3>Secure</h3>
-                <p>Safe and reliable with regular updates</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon"><i class="fas fa-star"></i></div>
-                <h3>Premium Features</h3>
-                <p>Access to exclusive scripts and tools</p>
+            
+            <!-- تطبيق Krnl Executor -->
+            <div class="app-card">
+                <div class="app-image">
+                    <img src="https://krnlexecutorios.com/wp-content/uploads/2025/09/Krnl-Executor-Site-Logo.webp" 
+                         alt="Krnl Executor" 
+                         onerror="this.src='https://via.placeholder.com/300x200/000000/FFFFFF?text=Krnl+Executor'">
+                </div>
+                <div class="app-info">
+                    <h2 class="app-title">Krnl Executor</h2>
+                    <p class="app-description">
+                        Krnl Executor هو أحد أقوى التطبيقات لتشغيل سكريبتات روبلوكس. يتميز بأداء عالي وتحديثات مستمرة.
+                    </p>
+                    <a href="https://download2430.mediafire.com/u2jhmrgnq0fg2Q-w0SOu7p36NricZ0hRFmwEI9I2N_DccI6Uf7qfo38Js83gdY98O_Ss8KDc4F2gkNdA85DjsWRM3D8RApa3jwyEMOV7smX4TAdVbWoGoUYQkv-2zKfs_toA1BQcHJy3j1ZZjMzNmkaSQJeUoMDNgh2Znp7RrSzS/txw7kcgvtha757h/krnl+Executor+%281ing_1%29.apk" 
+                       class="download-btn" target="_blank">
+                        <span>تحميل للتطبيق</span>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- التذييل -->
     <footer>
-        &copy; 2025 Cosmic Krnl. All rights reserved.
+        <p>© 2025 مركز التحميل الكوني. جميع الحقوق محفوظة.</p>
     </footer>
 
     <script>
-        // Create twinkling stars
+        // إنشاء النجوم المتلألئة
         function createStars() {
             const starsContainer = document.getElementById('stars-container');
             const starCount = 200;
@@ -417,14 +415,14 @@
                 const star = document.createElement('div');
                 star.classList.add('star');
                 
-                // Random position
+                // موقع عشوائي
                 const x = Math.random() * 100;
                 const y = Math.random() * 100;
                 
-                // Random size (1-3px)
+                // حجم عشوائي (1-3px)
                 const size = Math.random() * 2 + 1;
                 
-                // Random animation duration (2-5s)
+                // مدة حركة عشوائية (2-5s)
                 const duration = Math.random() * 3 + 2;
                 
                 star.style.left = `${x}%`;
@@ -433,15 +431,59 @@
                 star.style.height = `${size}px`;
                 star.style.setProperty('--duration', `${duration}s`);
                 
-                // Random delay for animation
+                // تأخير عشوائي للحركة
                 star.style.animationDelay = `${Math.random() * 5}s`;
                 
                 starsContainer.appendChild(star);
             }
         }
         
-        // Initialize when page loads
-        window.addEventListener('load', createStars);
+        // التحكم في القائمة المنسدلة للأنظمة
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            
+            const menuToggle = document.querySelector('.menu-toggle');
+            const platformOptions = document.querySelector('.platform-options');
+            
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                platformOptions.classList.toggle('active');
+            });
+            
+            // إغلاق القائمة عند النقر خارجها
+            document.addEventListener('click', function() {
+                platformOptions.classList.remove('active');
+            });
+            
+            // منع إغلاق القائمة عند النقر داخلها
+            platformOptions.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+            
+            // إضافة تأثيرات للبطاقات عند التمرير
+            const appCards = document.querySelectorAll('.app-card');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            appCards.forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s, transform 0.5s';
+                observer.observe(card);
+            });
+        });
     </script>
 </body>
 </html>
