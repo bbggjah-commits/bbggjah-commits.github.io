@@ -6,6 +6,7 @@
     <title>Krnl Executor Download</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* التنسيقات (CSS) لم تتغير، ولكن تم تضمين التعديلات المتعلقة بالصورة */
         * {
             margin: 0;
             padding: 0;
@@ -36,389 +37,232 @@
 
         /* Header Styles */
         header {
-            background-color: rgba(0, 0, 0, 0.95);
-            padding: 15px 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
         }
 
+        /* تنسيقات الـ Logo */
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-img {
-            height: 35px;
-            width: auto;
-            object-fit: contain;
-            transition: transform 0.3s ease;
-        }
-
-        .logo-img:hover {
-            transform: scale(1.05);
-        }
-
-        .logo-text {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             letter-spacing: 1px;
+            display: inline-flex; 
+            align-items: center;
         }
+        
+        .logo-img {
+            height: 30px; /* حجم الشعار في الـ Header */
+            width: auto;
+            object-fit: contain;
+        }
+        /* نهاية تنسيقات الـ Logo */
 
         /* Hero Section */
         .hero {
-            padding: 160px 0 80px;
+            padding: 180px 0 100px;
             text-align: center;
-            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
-            position: relative;
-            overflow: hidden;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), 
+                        radial-gradient(circle at center, #333 0%, #000 100%);
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
-        }
-
+        /* تنسيقات صورة الشعار في الـ Hero */
         .hero-logo {
             margin-bottom: 30px;
         }
 
         .hero-logo img {
-            max-width: 280px;
+            max-width: 300px; /* حجم أكبر للشعار في قسم الـ Hero */
             height: auto;
             object-fit: contain;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            transition: transform 0.5s ease, box-shadow 0.5s ease;
         }
-
-        .hero-logo img:hover {
-            transform: scale(1.05) rotate(2deg);
-            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1);
-        }
-
+        /* نهاية تنسيقات صورة الشعار في الـ Hero */
+        
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 48px;
             margin-bottom: 20px;
-            font-weight: 800;
-            letter-spacing: 3px;
+            font-weight: 700;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            background: linear-gradient(45deg, #fff, #ccc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 20px;
             max-width: 700px;
             margin: 0 auto 40px;
-            line-height: 1.7;
+            line-height: 1.6;
             color: #cccccc;
-            font-weight: 300;
         }
 
         /* Download Section */
         .download-section {
             padding: 80px 0;
-            background: linear-gradient(45deg, #1a1a1a 0%, #2d2d2d 100%);
-            position: relative;
-        }
-
-        .download-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('1000020689.png') center/cover;
-            opacity: 0.03;
-            pointer-events: none;
+            background-color: var(--accent-color);
         }
 
         .download-card {
-            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);
-            border-radius: 20px;
-            padding: 50px 40px;
-            max-width: 650px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 600px;
             margin: 0 auto;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 1px solid #444;
-            position: relative;
-            z-index: 1;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .download-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9);
-            border-color: #666;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
         }
 
         .download-title {
-            font-size: 2.5rem;
-            margin-bottom: 25px;
+            font-size: 32px;
+            margin-bottom: 20px;
             text-align: center;
-            font-weight: 700;
-            background: linear-gradient(45deg, #fff, #aaa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-weight: 600;
         }
 
         .download-description {
-            font-size: 1.2rem;
-            margin-bottom: 35px;
+            font-size: 18px;
+            margin-bottom: 30px;
             text-align: center;
-            color: #bbbbbb;
-            line-height: 1.7;
-            font-weight: 300;
+            color: #cccccc;
+            line-height: 1.6;
         }
 
         .download-btn {
             display: block;
             width: 100%;
-            padding: 20px;
-            background: linear-gradient(135deg, #333, #555, #333);
-            background-size: 200% 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #222, #444);
             color: white;
             text-align: center;
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 20px;
+            font-weight: 600;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.3s;
             text-decoration: none;
-            letter-spacing: 1.5px;
-            border: 2px solid #666;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .download-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
+            letter-spacing: 1px;
+            border: 2px solid #555;
         }
 
         .download-btn:hover {
-            background-position: 100% 0;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
-            border-color: #888;
-        }
-
-        .download-btn:hover::before {
-            left: 100%;
+            background: linear-gradient(45deg, #333, #555);
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
         }
 
         /* Features Section */
         .features {
             padding: 100px 0;
-            background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
+            background-color: var(--primary-color);
         }
 
         .section-title {
-            font-size: 2.8rem;
+            font-size: 36px;
             text-align: center;
-            margin-bottom: 70px;
-            font-weight: 800;
+            margin-bottom: 60px;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            background: linear-gradient(45deg, #fff, #999);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            letter-spacing: 2px;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 35px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
 
         .feature-card {
-            background: linear-gradient(145deg, #0f0f0f, #1c1c1c);
-            padding: 40px 30px;
-            border-radius: 15px;
+            background-color: rgba(30, 30, 30, 0.8);
+            padding: 30px;
+            border-radius: 8px;
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid #333;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #666, #fff, #666);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
+            transition: transform 0.3s;
+            border: 1px solid #444;
         }
 
         .feature-card:hover {
-            transform: translateY(-12px) scale(1.03);
-            border-color: #555;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-        }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
+            transform: translateY(-10px);
         }
 
         .feature-icon {
-            font-size: 3.5rem;
-            margin-bottom: 25px;
+            font-size: 40px;
+            margin-bottom: 20px;
             color: #fff;
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover .feature-icon {
-            transform: scale(1.2) rotate(5deg);
         }
 
         .feature-title {
-            font-size: 1.6rem;
-            margin-bottom: 20px;
+            font-size: 24px;
+            margin-bottom: 15px;
             font-weight: 600;
-            color: #fff;
         }
 
         .feature-description {
-            color: #bbbbbb;
-            line-height: 1.7;
-            font-size: 1.05rem;
-            font-weight: 300;
+            color: #cccccc;
+            line-height: 1.6;
         }
 
         /* Footer */
         footer {
-            background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
-            padding: 50px 0;
+            background-color: #111;
+            padding: 40px 0;
             text-align: center;
-            border-top: 1px solid #222;
+            border-top: 1px solid #333;
         }
 
         .footer-text {
-            color: #777;
-            font-size: 1rem;
-            font-weight: 300;
+            color: #999;
+            font-size: 16px;
         }
 
         /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .fade-in {
-            animation: fadeInUp 1s ease-out;
+            animation: fadeIn 1s ease-out;
         }
 
-        .float {
-            animation: float 3s ease-in-out infinite;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
-        /* Loading state for images */
-        .logo-img,
-        .hero-logo img {
-            transition: opacity 0.3s ease;
-        }
-
-        .logo-img[src=""],
-        .hero-logo img[src=""] {
-            opacity: 0;
+        .pulse {
+            animation: pulse 2s infinite;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .hero {
-                padding: 140px 0 60px;
-            }
-            
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 36px;
             }
             
             .hero p {
-                font-size: 1.1rem;
+                font-size: 18px;
             }
             
             .download-title {
-                font-size: 2rem;
+                font-size: 28px;
             }
             
             .section-title {
-                font-size: 2.2rem;
+                font-size: 30px;
             }
 
             .hero-logo img {
                 max-width: 200px;
-            }
-
-            .download-card {
-                padding: 30px 20px;
-                margin: 0 15px;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo-text {
-                font-size: 20px;
-            }
-            
-            .hero {
-                padding: 120px 0 40px;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-                letter-spacing: 2px;
-            }
-            
-            .download-btn {
-                padding: 18px;
-                font-size: 1.1rem;
             }
         }
     </style>
@@ -427,19 +271,19 @@
     <header>
         <div class="container">
             <div class="logo">
-                <img src="1000020689.png" alt="Krnl Executor Logo" class="logo-img" onerror="this.style.display='none'">
-                <span class="logo-text">KRNL EXECUTOR</span>
+                <img src="images/1000020689.png" alt="Krnl Executor Logo" class="logo-img">
             </div>
         </div>
     </header>
 
-    <section class="hero">
+    <section class="hero fade-in">
         <div class="container">
-            <div class="hero-logo float">
-                <img src="1000020689.png" alt="Krnl Executor Logo" onerror="this.style.display='none'">
+            <div class="hero-logo">
+                <img src="images/1000020689.png" alt="Krnl Executor Logo">
             </div>
-            <h1 class="fade-in">Krnl Executor</h1>
-            <p class="fade-in">A powerful multi-platform scripting engine, complete with a text editor and built-in script database. Experience the ultimate performance with our latest update.</p>
+            
+            <h1>Krnl Executor</h1>
+            <p>A powerful multi-platform scripting engine, complete with a text editor and built-in script database. Experience the ultimate performance with our latest update.</p>
         </div>
     </section>
 
@@ -455,14 +299,14 @@
 
     <section class="features">
         <div class="container">
-            <h2 class="section-title fade-in">Key Features</h2>
+            <h2 class="section-title">Key Features</h2>
             <div class="features-grid">
                 <div class="feature-card fade-in">
                     <div class="feature-icon">
                         <i class="fas fa-bolt"></i>
                     </div>
                     <h3 class="feature-title">High Performance</h3>
-                    <p class="feature-description">Experience blazing fast execution speeds with our optimized scripting engine that handles complex scripts effortlessly.</p>
+                    <p class="feature-description">Experience blazing fast execution speeds with our optimized scripting engine.</p>
                 </div>
                 
                 <div class="feature-card fade-in">
@@ -470,7 +314,7 @@
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <h3 class="feature-title">Secure & Safe</h3>
-                    <p class="feature-description">Our executor is regularly updated to ensure maximum security and protection against potential threats.</p>
+                    <p class="feature-description">Our executor is regularly updated to ensure maximum security and protection.</p>
                 </div>
                 
                 <div class="feature-card fade-in">
@@ -478,7 +322,7 @@
                         <i class="fas fa-sync-alt"></i>
                     </div>
                     <h3 class="feature-title">Regular Updates</h3>
-                    <p class="feature-description">Receive frequent updates with new features, bug fixes, and performance improvements to enhance your experience.</p>
+                    <p class="feature-description">Receive frequent updates with new features, bug fixes, and performance improvements.</p>
                 </div>
             </div>
         </div>
@@ -491,46 +335,32 @@
     </footer>
 
     <script>
-        // Enhanced scroll animations
+        // Add scroll animations
         document.addEventListener('DOMContentLoaded', function() {
             const fadeElements = document.querySelectorAll('.fade-in');
             
             const fadeInOnScroll = function() {
                 fadeElements.forEach(element => {
                     const elementTop = element.getBoundingClientRect().top;
-                    const elementVisible = 100;
+                    const elementVisible = 150;
                     
                     if (elementTop < window.innerHeight - elementVisible) {
                         element.style.opacity = 1;
                         element.style.transform = 'translateY(0)';
-                        element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
                     }
                 });
             };
             
-            // Set initial state with staggered delay
-            fadeElements.forEach((element, index) => {
+            // Set initial state
+            fadeElements.forEach(element => {
                 element.style.opacity = 0;
-                element.style.transform = 'translateY(30px)';
-                element.style.transition = `opacity 0.8s ease ${index * 0.2}s, transform 0.8s ease ${index * 0.2}s`;
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s, transform 0.6s';
             });
             
             // Check on scroll
             window.addEventListener('scroll', fadeInOnScroll);
             fadeInOnScroll(); // Check on load
-            
-            // Add loading state for images
-            const images = document.querySelectorAll('img');
-            images.forEach(img => {
-                img.addEventListener('load', function() {
-                    this.style.opacity = 1;
-                });
-                
-                img.addEventListener('error', function() {
-                    // If image fails to load, we already have onerror handling
-                    console.log('Image failed to load:', this.src);
-                });
-            });
         });
     </script>
 </body>
