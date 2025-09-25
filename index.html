@@ -125,12 +125,24 @@
         }
 
         h1 {
-            font-size: 3em;
+            font-size: 3em; /* Keep font-size for vertical alignment and consistency */
             letter-spacing: 5px;
             text-transform: uppercase;
             margin-bottom: 30px;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            display: flex; /* Allow logo and text to be on one line if needed */
+            align-items: center; /* Vertically align image and potential text */
+            justify-content: center; /* Horizontally center */
+            gap: 10px; /* Space between logo and any potential text */
         }
+
+        .krnl-logo {
+            height: 60px; /* Adjust height of the logo as needed */
+            width: auto; /* Maintain aspect ratio */
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7)); /* Subtle glow for the logo */
+            margin-bottom: 0px; /* Remove any default margin from the image */
+        }
+
 
         /* Download Button (The Jewel) */
         .download-btn {
@@ -199,7 +211,10 @@
     </div>
 
     <div class="main-container">
-        <h1>🌌 KRNL Stellar Release 🚀</h1>
+        <h1>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAABQCAYAAAAx+g5lAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJpAcs+zwAAACtSURBVHhe7cEBAQAAAIIg/6+mjw8QAAAAAAAAAAAAgI+AYfIAAQAAAABg9wQoAAC7pggAAAAASUVORK5CYII=" alt="Krnl Logo" class="krnl-logo"> 
+            Stellar Release
+        </h1>
         
         <a href="https://www.mediafire.com/file/a7bz4fu84hqas80/krnl.executor.1_ing1.apk/file" target="_blank" class="download-btn">
             Download Krnl
