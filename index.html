@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مركز تنزيل التطبيقات - الكوني</title>
+    <title>Cosmic Download Center</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -29,7 +28,7 @@
             min-height: 100vh;
         }
 
-        /* الخلفية الكونية */
+        /* Cosmic Background */
         .cosmic-background {
             position: fixed;
             top: 0;
@@ -92,7 +91,22 @@
             100% { background-position: 1000px 1000px; }
         }
 
-        /* الشريط العلوي */
+        /* 1ING_1 Text */
+        .ing-text {
+            text-align: center;
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 2rem 0;
+            color: #000;
+            background-color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            display: inline-block;
+            border: 3px solid #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Header */
         header {
             display: flex;
             justify-content: space-between;
@@ -119,7 +133,7 @@
             color: var(--accent-color);
         }
 
-        /* قائمة الأنظمة */
+        /* Platform Menu */
         .platform-menu {
             position: relative;
         }
@@ -177,11 +191,12 @@
             font-size: 1.2rem;
         }
 
-        /* المحتوى الرئيسي */
+        /* Main Content */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
+            text-align: center;
         }
 
         .page-title {
@@ -277,7 +292,20 @@
             margin-left: 8px;
         }
 
-        /* التذييل */
+        /* Windows Page */
+        .windows-page {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .windows-page.active {
+            display: block;
+        }
+
+        /* Footer */
         footer {
             text-align: center;
             padding: 2rem;
@@ -287,7 +315,28 @@
             font-size: 0.9rem;
         }
 
-        /* التجاوب مع الشاشات المختلفة */
+        /* Back Button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn i {
+            margin-right: 5px;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             header {
                 padding: 1rem;
@@ -305,6 +354,11 @@
                 font-size: 2rem;
             }
 
+            .ing-text {
+                font-size: 2.5rem;
+                padding: 0.5rem 1rem;
+            }
+
             .apps-grid {
                 grid-template-columns: 1fr;
             }
@@ -319,18 +373,18 @@
     </style>
 </head>
 <body>
-    <!-- الخلفية الكونية -->
+    <!-- Cosmic Background -->
     <div class="cosmic-background">
         <div class="stars" id="stars-container"></div>
         <div class="black-hole"></div>
         <div class="cosmic-dust"></div>
     </div>
 
-    <!-- الشريط العلوي -->
+    <!-- Header -->
     <header>
         <div class="logo">
             <i class="fas fa-rocket"></i>
-            <span>مركز التحميل الكوني</span>
+            <span>Cosmic Download Center</span>
         </div>
         
         <div class="platform-menu">
@@ -338,15 +392,15 @@
                 <i class="fas fa-ellipsis-v"></i>
             </button>
             <div class="platform-options">
-                <a href="#" class="platform-option">
+                <a href="#" class="platform-option" data-platform="android">
                     <i class="fab fa-android"></i>
                     <span>Android</span>
                 </a>
-                <a href="#" class="platform-option">
+                <a href="#" class="platform-option" data-platform="ios">
                     <i class="fab fa-apple"></i>
                     <span>iOS</span>
                 </a>
-                <a href="#" class="platform-option">
+                <a href="#" class="platform-option" data-platform="windows">
                     <i class="fab fa-windows"></i>
                     <span>Windows</span>
                 </a>
@@ -354,12 +408,13 @@
         </div>
     </header>
 
-    <!-- المحتوى الرئيسي -->
-    <div class="container">
-        <h1 class="page-title">تنزيل التطبيقات المميزة</h1>
+    <!-- Main Android/iOS Page -->
+    <div class="container" id="main-page">
+        <div class="ing-text">1ING_1</div>
+        <h1 class="page-title">Premium Apps Download</h1>
         
         <div class="apps-grid">
-            <!-- تطبيق DLTA Executor -->
+            <!-- DLTA Executor -->
             <div class="app-card">
                 <div class="app-image">
                     <img src="https://delta-executor.blog/wp-content/uploads/2025/08/cropped-Delta-Executor.webp" 
@@ -369,16 +424,16 @@
                 <div class="app-info">
                     <h2 class="app-title">DLTA Executor</h2>
                     <p class="app-description">
-                        DLTA Executor هو تطبيق متقدم لتشغيل سكريبتات روبلوكس بسرعة وأمان. يتميز بواجهة سهلة الاستخدام ومميزات متقدمة.
+                        DLTA Executor is an advanced application for running Roblox scripts quickly and securely. Features an easy-to-use interface and advanced features.
                     </p>
                     <a href="#" class="download-btn">
-                        <span>تحميل للتطبيق</span>
+                        <span>Download App</span>
                         <i class="fas fa-download"></i>
                     </a>
                 </div>
             </div>
             
-            <!-- تطبيق Krnl Executor -->
+            <!-- Krnl Executor -->
             <div class="app-card">
                 <div class="app-image">
                     <img src="https://krnlexecutorios.com/wp-content/uploads/2025/09/Krnl-Executor-Site-Logo.webp" 
@@ -388,11 +443,11 @@
                 <div class="app-info">
                     <h2 class="app-title">Krnl Executor</h2>
                     <p class="app-description">
-                        Krnl Executor هو أحد أقوى التطبيقات لتشغيل سكريبتات روبلوكس. يتميز بأداء عالي وتحديثات مستمرة.
+                        Krnl Executor is one of the most powerful applications for running Roblox scripts. Features high performance and regular updates.
                     </p>
                     <a href="https://download2430.mediafire.com/u2jhmrgnq0fg2Q-w0SOu7p36NricZ0hRFmwEI9I2N_DccI6Uf7qfo38Js83gdY98O_Ss8KDc4F2gkNdA85DjsWRM3D8RApa3jwyEMOV7smX4TAdVbWoGoUYQkv-2zKfs_toA1BQcHJy3j1ZZjMzNmkaSQJeUoMDNgh2Znp7RrSzS/txw7kcgvtha757h/krnl+Executor+%281ing_1%29.apk" 
                        class="download-btn" target="_blank">
-                        <span>تحميل للتطبيق</span>
+                        <span>Download App</span>
                         <i class="fas fa-download"></i>
                     </a>
                 </div>
@@ -400,13 +455,46 @@
         </div>
     </div>
 
-    <!-- التذييل -->
+    <!-- Windows Page -->
+    <div class="windows-page" id="windows-page">
+        <a href="#" class="back-btn" id="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Main
+        </a>
+        
+        <div class="ing-text">1ING_1</div>
+        <h1 class="page-title">Windows Applications</h1>
+        
+        <div class="apps-grid">
+            <!-- Xeno Executor -->
+            <div class="app-card">
+                <div class="app-image">
+                    <img src="https://xeno-now.pages.dev/images/xenos.png" 
+                         alt="Xeno Executor" 
+                         onerror="this.src='https://via.placeholder.com/300x200/000000/FFFFFF?text=Xeno+Executor'">
+                </div>
+                <div class="app-info">
+                    <h2 class="app-title">Xeno Executor</h2>
+                    <p class="app-description">
+                        Xeno Executor is a powerful Windows application for advanced script execution. Perfect for developers and power users with premium features.
+                    </p>
+                    <a href="https://download2340.mediafire.com/n8kb7ohk1vigbaDJWK63_hIF-MN6FpnDesrdbrCwxiI3jmKmJLotYKvydnXjG9rZID0VS71l8s3X9XVU4IJvUQszy22PNg4L6mGUxRyxD063dN0-tpTx0sS8SDH5FIDYP0LL7AEpE10uVKQUDim4ezuuL4g9t2W5hqDty4mn-rtb/jiyom2u60r8sw8p/Xeno-v1.2.65.zip" 
+                       class="download-btn" target="_blank">
+                        <span>Download Executor</span>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
     <footer>
-        <p>© 2025 مركز التحميل الكوني. جميع الحقوق محفوظة.</p>
+        <p>© 2025 Cosmic Download Center. All rights reserved.</p>
     </footer>
 
     <script>
-        // إنشاء النجوم المتلألئة
+        // Create twinkling stars
         function createStars() {
             const starsContainer = document.getElementById('stars-container');
             const starCount = 200;
@@ -415,14 +503,14 @@
                 const star = document.createElement('div');
                 star.classList.add('star');
                 
-                // موقع عشوائي
+                // Random position
                 const x = Math.random() * 100;
                 const y = Math.random() * 100;
                 
-                // حجم عشوائي (1-3px)
+                // Random size (1-3px)
                 const size = Math.random() * 2 + 1;
                 
-                // مدة حركة عشوائية (2-5s)
+                // Random animation duration (2-5s)
                 const duration = Math.random() * 3 + 2;
                 
                 star.style.left = `${x}%`;
@@ -431,36 +519,66 @@
                 star.style.height = `${size}px`;
                 star.style.setProperty('--duration', `${duration}s`);
                 
-                // تأخير عشوائي للحركة
+                // Random delay for animation
                 star.style.animationDelay = `${Math.random() * 5}s`;
                 
                 starsContainer.appendChild(star);
             }
         }
         
-        // التحكم في القائمة المنسدلة للأنظمة
+        // Platform menu functionality
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             
             const menuToggle = document.querySelector('.menu-toggle');
             const platformOptions = document.querySelector('.platform-options');
+            const mainPage = document.getElementById('main-page');
+            const windowsPage = document.getElementById('windows-page');
+            const backBtn = document.getElementById('back-btn');
             
+            // Toggle platform menu
             menuToggle.addEventListener('click', function(e) {
                 e.stopPropagation();
                 platformOptions.classList.toggle('active');
             });
             
-            // إغلاق القائمة عند النقر خارجها
+            // Close menu when clicking outside
             document.addEventListener('click', function() {
                 platformOptions.classList.remove('active');
             });
             
-            // منع إغلاق القائمة عند النقر داخلها
+            // Prevent menu close when clicking inside
             platformOptions.addEventListener('click', function(e) {
                 e.stopPropagation();
             });
             
-            // إضافة تأثيرات للبطاقات عند التمرير
+            // Platform selection
+            document.querySelectorAll('.platform-option').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const platform = this.getAttribute('data-platform');
+                    
+                    if (platform === 'windows') {
+                        mainPage.style.display = 'none';
+                        windowsPage.classList.add('active');
+                    } else {
+                        // For Android and iOS, stay on main page
+                        mainPage.style.display = 'block';
+                        windowsPage.classList.remove('active');
+                    }
+                    
+                    platformOptions.classList.remove('active');
+                });
+            });
+            
+            // Back button functionality
+            backBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                windowsPage.classList.remove('active');
+                mainPage.style.display = 'block';
+            });
+            
+            // Scroll animations for cards
             const appCards = document.querySelectorAll('.app-card');
             
             const observerOptions = {
