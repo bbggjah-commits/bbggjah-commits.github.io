@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delta - Android Executor</title>
+    <title>ING.COM</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- خطوط Google Fonts احترافية -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Exo 2', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         :root {
@@ -91,6 +93,23 @@
             100% { background-position: 1000px 1000px; }
         }
 
+        /* Quickly Download New Updates Text */
+        .updates-text {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 2rem 0;
+            color: #000;
+            background-color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            display: inline-block;
+            border: 3px solid #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
         /* Header */
         header {
             display: flex;
@@ -106,11 +125,13 @@
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
+            font-size: 2rem;
+            font-weight: 700;
             color: var(--primary-color);
             display: flex;
             align-items: center;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
         }
 
         .logo i {
@@ -118,11 +139,100 @@
             color: var(--accent-color);
         }
 
+        /* Platform Menu - Centered */
+        .platform-menu-center {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            display: none;
+        }
+
+        .platform-menu-center.active {
+            display: block;
+        }
+
+        .platform-options-center {
+            background-color: rgba(0, 0, 0, 0.95);
+            border-radius: 15px;
+            padding: 1.5rem;
+            min-width: 250px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .platform-options-center h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+        }
+
+        .platform-option-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.3s;
+            margin: 0.5rem 0;
+            font-weight: 500;
+        }
+
+        .platform-option-center:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .platform-option-center i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .close-menu:hover {
+            color: var(--accent-color);
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
         /* Main Content */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
+            text-align: center;
         }
 
         .page-title {
@@ -132,175 +242,139 @@
             background: linear-gradient(to right, #fff, #aaa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
         }
 
         .subtitle {
             text-align: center;
             margin-bottom: 3rem;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             color: #ccc;
+            font-weight: 300;
+            letter-spacing: 0.5px;
         }
 
-        /* App Sections */
-        .app-section {
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .app-card {
             background: var(--card-bg);
             border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            overflow: hidden;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
         }
 
-        .app-header {
+        .app-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .app-image {
+            height: 200px;
             display: flex;
             align-items: center;
-            margin-bottom: 1.5rem;
+            justify-content: center;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
         }
 
-        .app-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            margin-right: 1rem;
-            object-fit: cover;
+        .app-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .app-card:hover .app-image img {
+            transform: scale(1.05);
+        }
+
+        .app-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .app-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
             color: var(--primary-color);
+            font-weight: 600;
+            font-family: 'Orbitron', sans-serif;
         }
 
         .app-description {
             color: #ccc;
-            line-height: 1.6;
             margin-bottom: 1.5rem;
-        }
-
-        .download-section {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .download-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
+            line-height: 1.5;
+            flex-grow: 1;
+            font-weight: 300;
+            letter-spacing: 0.3px;
         }
 
         .download-btn {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            background: linear-gradient(45deg, #00a8ff, #0097e6);
+            justify-content: center;
+            background: linear-gradient(45deg, #000, #333);
             color: white;
-            font-weight: bold;
-            padding: 0.8rem 1.5rem;
-            border: none;
+            font-weight: 600;
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
-            margin-right: 1rem;
+            margin-top: auto;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
         }
 
         .download-btn:hover {
-            background: linear-gradient(45deg, #0097e6, #0082c4);
+            background: linear-gradient(45deg, #333, #555);
+            border-color: rgba(255, 255, 255, 0.5);
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
         }
 
         .download-btn i {
-            margin-right: 8px;
+            margin-left: 8px;
+            transition: transform 0.3s;
         }
 
-        /* Script Editor Section */
-        .script-editor {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-top: 2rem;
+        .download-btn:hover i {
+            transform: translateY(2px);
         }
 
-        .editor-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
+        /* Windows Page */
+        .windows-page {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
         }
 
-        .editor-tabs {
-            display: flex;
-            gap: 10px;
-        }
-
-        .editor-tab {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            font-size: 0.9rem;
-        }
-
-        .editor-close {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        .code-editor {
-            background: #1e1e1e;
-            border-radius: 5px;
-            padding: 1rem;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            min-height: 150px;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .code-line {
-            margin-bottom: 5px;
-        }
-
-        .code-line:nth-child(1) {
-            color: #569cd6;
-        }
-
-        .code-line:nth-child(2) {
-            color: #dcdcaa;
-        }
-
-        .code-line:nth-child(3) {
-            color: #ce9178;
-        }
-
-        .editor-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .editor-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .editor-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .editor-btn.primary {
-            background: #00a8ff;
-        }
-
-        .editor-btn.primary:hover {
-            background: #0097e6;
+        .windows-page.active {
+            display: block;
         }
 
         /* Footer */
@@ -311,6 +385,35 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: #888;
             font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .back-btn i {
+            margin-right: 5px;
+            transition: transform 0.3s;
+        }
+
+        .back-btn:hover i {
+            transform: translateX(-3px);
         }
 
         /* Responsive Design */
@@ -331,18 +434,17 @@
                 font-size: 2rem;
             }
 
-            .app-header {
-                flex-direction: column;
-                text-align: center;
+            .subtitle {
+                font-size: 1.2rem;
             }
 
-            .app-icon {
-                margin-right: 0;
-                margin-bottom: 1rem;
+            .updates-text {
+                font-size: 2rem;
+                padding: 0.5rem 1rem;
             }
 
-            .editor-buttons {
-                flex-direction: column;
+            .apps-grid {
+                grid-template-columns: 1fr;
             }
 
             .black-hole {
@@ -350,6 +452,11 @@
                 height: 150px;
                 top: 15%;
                 right: 5%;
+            }
+
+            .platform-options-center {
+                min-width: 200px;
+                padding: 1rem;
             }
         }
     </style>
@@ -362,88 +469,131 @@
         <div class="cosmic-dust"></div>
     </div>
 
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Centered Platform Menu -->
+    <div class="platform-menu-center" id="platform-menu-center">
+        <div class="platform-options-center">
+            <button class="close-menu" id="close-menu">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3>Choose Platform</h3>
+            <a href="#" class="platform-option-center" data-platform="android">
+                <i class="fab fa-android"></i>
+                <span>Android</span>
+            </a>
+            <a href="#" class="platform-option-center" data-platform="ios">
+                <i class="fab fa-apple"></i>
+                <span>iOS</span>
+            </a>
+            <a href="#" class="platform-option-center" data-platform="windows">
+                <i class="fab fa-windows"></i>
+                <span>Windows</span>
+            </a>
+        </div>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="logo">
-            <i class="fas fa-bolt"></i>
-            <span>Delta - Android Executor</span>
+            <i class="fas fa-rocket"></i>
+            <span>ING.COM</span>
+        </div>
+        
+        <div class="platform-menu">
+            <button class="menu-toggle" id="menu-toggle-center">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <div class="container">
-        <h1 class="page-title">Delta Executor</h1>
-        <p class="subtitle">deltaexploits.gg/delta-executor-android</p>
-
-        <!-- Data Section -->
-        <div class="app-section">
-            <div class="app-header">
-                <img src="https://delta-executor.blog/wp-content/uploads/2025/08/cropped-Delta-Executor.webp" 
-                     alt="Delta Executor" class="app-icon"
-                     onerror="this.src='https://via.placeholder.com/60x60/000000/FFFFFF?text=Δ'">
-                <h2 class="app-title">Data</h2>
-            </div>
-            
-            <div class="download-section">
-                <h3 class="download-title">Download</h3>
-                <p class="app-description">
-                    Delta is a revolutionary new way to experience the world of scripting with its extensive library of features that will make your life easier.
-                </p>
-                <a href="https://updowncontent.com/file/Delta-2.690.721.apk" class="download-btn" target="_blank">
-                    <i class="fas fa-download"></i>
-                    Download for Android
-                </a>
-            </div>
-        </div>
-
-        <!-- Krnl Executor Section -->
-        <div class="app-section">
-            <div class="app-header">
-                <img src="https://krnlexecutorios.com/wp-content/uploads/2025/09/Krnl-Executor-Site-Logo.webp" 
-                     alt="Krnl Executor" class="app-icon"
-                     onerror="this.src='https://via.placeholder.com/60x60/000000/FFFFFF?text=K'">
-                <h2 class="app-title">Krnl Executor</h2>
-            </div>
-            
-            <div class="download-section">
-                <h3 class="download-title">Download</h3>
-                <p class="app-description">
-                    Krnl Executor offers powerful scripting capabilities with regular updates and extensive feature support for advanced users.
-                </p>
-                <a href="https://krnl.webfiles.pro/file/krnl_release_2.691.868_2025.9.21_50.apk" class="download-btn" target="_blank">
-                    <i class="fas fa-download"></i>
-                    Download for Android
-                </a>
-            </div>
-        </div>
-
-        <!-- Script Editor Section -->
-        <div class="script-editor">
-            <div class="editor-header">
-                <div class="editor-tabs">
-                    <span class="editor-tab">script.lua</span>
-                    <span class="editor-tab">script.lua</span>
+    <!-- Main Android/iOS Page -->
+    <div class="container" id="main-page">
+        <div class="updates-text">Quickly Download New Updates</div>
+        <h1 class="page-title">Premium Apps</h1>
+        <div class="subtitle">Download</div>
+        
+        <div class="apps-grid">
+            <!-- DLTA Executor -->
+            <div class="app-card">
+                <div class="app-image">
+                    <img src="https://delta-executor.blog/wp-content/uploads/2025/08/cropped-Delta-Executor.webp" 
+                         alt="DLTA Executor" 
+                         onerror="this.src='https://via.placeholder.com/300x200/000000/FFFFFF?text=DLTA+Executor'">
                 </div>
-                <button class="editor-close">×</button>
+                <div class="app-info">
+                    <h2 class="app-title">DLTA Executor</h2>
+                    <p class="app-description">
+                        DLTA Executor is a revolutionary new way to experience the world of scripting with its extensive library of features that will make your life easier.
+                    </p>
+                    <a href="https://updowncontent.com/file/Delta-2.690.721.apk" 
+                       class="download-btn" target="_blank">
+                        <span>Download App</span>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
             </div>
             
-            <div class="code-editor">
-                <div class="code-line">loadstring(game:HttpGet("https://raw.githubusercontent.com/brightscripts/..."))()</div>
-                <div class="code-line">-- Your script code here</div>
-                <div class="code-line">-- Execute to run the script</div>
+            <!-- Krnl Executor -->
+            <div class="app-card">
+                <div class="app-image">
+                    <img src="https://krnlexecutorios.com/wp-content/uploads/2025/09/Krnl-Executor-Site-Logo.webp" 
+                         alt="Krnl Executor" 
+                         onerror="this.src='https://via.placeholder.com/300x200/000000/FFFFFF?text=Krnl+Executor'">
+                </div>
+                <div class="app-info">
+                    <h2 class="app-title">Krnl Executor</h2>
+                    <p class="app-description">
+                        Krnl Executor is one of the most powerful applications for running Roblox scripts. Features high performance and regular updates.
+                    </p>
+                    <a href="https://download2430.mediafire.com/u2jhmrgnq0fg2Q-w0SOu7p36NricZ0hRFmwEI9I2N_DccI6Uf7qfo38Js83gdY98O_Ss8KDc4F2gkNdA85DjsWRM3D8RApa3jwyEMOV7smX4TAdVbWoGoUYQkv-2zKfs_toA1BQcHJy3j1ZZjMzNmkaSQJeUoMDNgh2Znp7RrSzS/txw7kcgvtha757h/krnl+Executor+%281ing_1%29.apk" 
+                       class="download-btn" target="_blank">
+                        <span>Download App</span>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
             </div>
-            
-            <div class="editor-buttons">
-                <button class="editor-btn primary">EXECUTE</button>
-                <button class="editor-btn">CLEAR</button>
-                <button class="editor-btn">EXECUTE CLIPBOARD</button>
+        </div>
+    </div>
+
+    <!-- Windows Page -->
+    <div class="windows-page" id="windows-page">
+        <a href="#" class="back-btn" id="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Main
+        </a>
+        
+        <div class="updates-text">Quickly Download New Updates</div>
+        <h1 class="page-title">Windows Applications</h1>
+        <div class="subtitle">Download</div>
+        
+        <div class="apps-grid">
+            <!-- Xeno Executor -->
+            <div class="app-card">
+                <div class="app-image">
+                    <img src="https://xeno-now.pages.dev/images/xenos.png" 
+                         alt="Xeno Executor" 
+                         onerror="this.src='https://via.placeholder.com/300x200/000000/FFFFFF?text=Xeno+Executor'">
+                </div>
+                <div class="app-info">
+                    <h2 class="app-title">Xeno Executor</h2>
+                    <p class="app-description">
+                        Xeno Executor is a powerful Windows application for advanced script execution. Perfect for developers and power users with premium features.
+                    </p>
+                    <a href="https://download2340.mediafire.com/n8kb7ohk1vigbaDJWK63_hIF-MN6FpnDesrdbrCwxiI3jmKmJLotYKvydnXjG9rZID0VS71l8s3X9XVU4IJvUQszy22PNg4L6mGUxRyxD063dN0-tpTx0sS8SDH5FIDYP0LL7AEpE10uVKQUDim4ezuuL4g9t2W5hqDty4mn-rtb/jiyom2u60r8sw8p/Xeno-v1.2.65.zip" 
+                       class="download-btn" target="_blank">
+                        <span>Download Executor</span>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>© 2025 Delta Executor. All rights reserved.</p>
+        <p>© 2025 ING.COM. All rights reserved.</p>
     </footer>
 
     <script>
@@ -479,30 +629,82 @@
             }
         }
         
-        // Script editor functionality
+        // Platform menu functionality
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             
-            const executeBtn = document.querySelector('.editor-btn.primary');
-            const clearBtn = document.querySelectorAll('.editor-btn')[1];
-            const clipboardBtn = document.querySelectorAll('.editor-btn')[2];
-            const closeBtn = document.querySelector('.editor-close');
-            const codeEditor = document.querySelector('.code-editor');
+            const menuToggleCenter = document.getElementById('menu-toggle-center');
+            const platformMenuCenter = document.getElementById('platform-menu-center');
+            const overlay = document.getElementById('overlay');
+            const closeMenu = document.getElementById('close-menu');
+            const mainPage = document.getElementById('main-page');
+            const windowsPage = document.getElementById('windows-page');
+            const backBtn = document.getElementById('back-btn');
             
-            executeBtn.addEventListener('click', function() {
-                alert('Script executed successfully!');
+            // Toggle centered platform menu
+            menuToggleCenter.addEventListener('click', function(e) {
+                e.stopPropagation();
+                platformMenuCenter.classList.add('active');
+                overlay.classList.add('active');
             });
             
-            clearBtn.addEventListener('click', function() {
-                codeEditor.innerHTML = '<div class="code-line">-- Script cleared</div>';
+            // Close menu functions
+            function closePlatformMenu() {
+                platformMenuCenter.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+            
+            closeMenu.addEventListener('click', closePlatformMenu);
+            overlay.addEventListener('click', closePlatformMenu);
+            
+            // Platform selection
+            document.querySelectorAll('.platform-option-center').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const platform = this.getAttribute('data-platform');
+                    
+                    if (platform === 'windows') {
+                        mainPage.style.display = 'none';
+                        windowsPage.classList.add('active');
+                    } else {
+                        // For Android and iOS, stay on main page
+                        mainPage.style.display = 'block';
+                        windowsPage.classList.remove('active');
+                    }
+                    
+                    closePlatformMenu();
+                });
             });
             
-            clipboardBtn.addEventListener('click', function() {
-                alert('Clipboard content executed!');
+            // Back button functionality
+            backBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                windowsPage.classList.remove('active');
+                mainPage.style.display = 'block';
             });
             
-            closeBtn.addEventListener('click', function() {
-                document.querySelector('.script-editor').style.display = 'none';
+            // Scroll animations for cards
+            const appCards = document.querySelectorAll('.app-card');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            appCards.forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s, transform 0.5s';
+                observer.observe(card);
             });
         });
     </script>
