@@ -118,6 +118,25 @@
             100% { background-position: 1000px 1000px; }
         }
 
+        .mustafa-name {
+            font-size: 4.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+            background: linear-gradient(to right, #ffffff, #cccccc, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073; }
+            to { text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6; }
+        }
+
         .content {
             text-align: center;
             z-index: 1;
@@ -132,8 +151,8 @@
         }
 
         .krnl-logo {
-            width: 250px;
-            height: 250px;
+            width: 280px;
+            height: 280px;
             border-radius: 20px;
             object-fit: contain;
             border: 3px solid #fff;
@@ -286,6 +305,10 @@
 
         /* Responsive design */
         @media (max-width: 768px) {
+            .mustafa-name {
+                font-size: 3rem;
+            }
+            
             h1 {
                 font-size: 2.5rem;
             }
@@ -334,10 +357,12 @@
     </div>
 
     <div class="content">
+        <div class="mustafa-name">MUSTAFA</div>
+        
         <div class="logo-container">
-            <img src="https://discord.do/wp-content/uploads/2025/06/Krnl-Discord-server.png" 
+            <img src="https://krnlexecutorios.com/wp-content/uploads/2025/09/Krnl-Executor-Site-Logo.webp" 
                  alt="Krnl Executor" class="krnl-logo" 
-                 onerror="this.src='https://via.placeholder.com/250x250/000000/FFFFFF?text=Krnl+Executor'">
+                 onerror="this.src='https://via.placeholder.com/280x280/000000/FFFFFF?text=Krnl+Executor'">
         </div>
         
         <h1>Krnl Executor</h1>
