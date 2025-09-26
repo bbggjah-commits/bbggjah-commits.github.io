@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ING.COM</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- خطوط Google Fonts احترافية -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -23,11 +22,13 @@
             --card-bg: rgba(30, 30, 30, 0.7);
         }
 
+        /* تأثير خلفية زجاجية سوداء وبيضاء متحركة */
         body {
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            overflow-x: hidden;
+            background: linear-gradient(120deg, #000 70%, #fff 110%);
             min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+            transition: background 2s cubic-bezier(.77,0,.175,1);
         }
 
         /* Cosmic Background */
@@ -38,7 +39,15 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            background: radial-gradient(ellipse at center, #0a0e2a 0%, #000000 70%);
+            /* خلفية محسّنة */
+            background: radial-gradient(ellipse at top right, #fff 2%, #222 30%, #000 90%);
+            filter: blur(4px) brightness(0.7);
+            animation: cosmicBgMove 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes cosmicBgMove {
+            0% {background-position: 0 0;}
+            100% {background-position: 100vw 100vh;}
         }
 
         .stars {
@@ -49,18 +58,25 @@
             height: 100%;
         }
 
+        /* نجوم متوهجة */
         .star {
             position: absolute;
             background-color: #fff;
             border-radius: 50%;
-            animation: twinkle var(--duration) infinite ease-in-out;
+            box-shadow: 0 0 6px 2px #fff, 0 0 12px 3px #fff9;
+            animation: twinkle var(--duration) infinite ease-in-out, starFloat 12s infinite linear;
         }
 
         @keyframes twinkle {
             0%, 100% { opacity: 0.2; }
             50% { opacity: 1; }
         }
+        @keyframes starFloat {
+            0% { transform: translateY(0);}
+            100% { transform: translateY(40px);}
+        }
 
+        /* ثقب أسود بحواف بيضاء متوهجة */
         .black-hole {
             position: absolute;
             top: 20%;
@@ -69,9 +85,16 @@
             height: 200px;
             border-radius: 50%;
             background: radial-gradient(circle at center, #1a1a1a 0%, #000000 70%);
-            box-shadow: 0 0 100px rgba(255, 255, 255, 0.1);
+            border: 4px solid #fff;
+            box-shadow: 0 0 40px 20px #ffffff1a, 0 0 80px 40px #0006 inset;
+            animation: blackHolePulse 4s infinite alternate;
+        }
+        @keyframes blackHolePulse {
+            0% {box-shadow: 0 0 40px 20px #fff2, 0 0 80px 40px #0006 inset;}
+            100% {box-shadow: 0 0 70px 40px #fff7, 0 0 100px 60px #0009 inset;}
         }
 
+        /* غبار كوني متحرك */
         .cosmic-dust {
             position: absolute;
             top: 0;
@@ -85,7 +108,9 @@
                 radial-gradient(2px 2px at 80% 10%, rgba(255, 255, 255, 0.2), transparent),
                 radial-gradient(2px 2px at 90% 50%, rgba(255, 255, 255, 0.3), transparent);
             background-size: 200px 200px;
-            animation: dustMove 100s linear infinite;
+            filter: blur(2px) brightness(.9) contrast(1.2);
+            opacity: .7;
+            animation: dustMove 60s linear infinite;
         }
 
         @keyframes dustMove {
@@ -93,21 +118,27 @@
             100% { background-position: 1000px 1000px; }
         }
 
-        /* Quickly Download New Updates Text */
+        /* نص التحديثات - تأثير إنعكاس أبيض متوهج */
         .updates-text {
             text-align: center;
             font-size: 3rem;
             font-weight: 700;
             margin: 2rem 0;
-            color: #000;
-            background-color: #fff;
             padding: 1rem 2rem;
             border-radius: 20px;
             display: inline-block;
-            border: 3px solid #fff;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
             font-family: 'Orbitron', sans-serif;
             letter-spacing: 1px;
+            /* التحديثات */
+            background: linear-gradient(90deg, #fff 80%, #000 100%);
+            color: #000;
+            box-shadow: 0 0 40px #fff9, 0 0 10px #0006 inset;
+            animation: textPulse 2s infinite alternate;
+            border: none;
+        }
+        @keyframes textPulse {
+            0% {box-shadow: 0 0 20px #fff9, 0 0 4px #0003 inset;}
+            100% {box-shadow: 0 0 40px #fff7, 0 0 10px #0003 inset;}
         }
 
         /* Header */
@@ -116,12 +147,19 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 2rem;
-            background-color: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            /* التحديثات */
+            background: rgba(16,16,16,0.85);
+            box-shadow: 0 2px 22px #fff2, 0 1px 8px #0008;
+            border-bottom: 2px solid #fff2;
+            animation: fadeInDown 1.2s cubic-bezier(.77,.21,.19,1.01);
+        }
+        @keyframes fadeInDown {
+            from {transform: translateY(-30px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
         }
 
         .logo {
@@ -131,12 +169,34 @@
             display: flex;
             align-items: center;
             font-family: 'Orbitron', sans-serif;
-            letter-spacing: 1px;
+            /* التحديثات */
+            text-shadow: 0 0 16px #fff6, 0 0 6px #0006;
+            letter-spacing: 3px;
+            color: #fff;
+            animation: logoGlow 2.5s infinite alternate;
+        }
+        @keyframes logoGlow {
+            0% {text-shadow: 0 0 16px #fff2, 0 0 6px #0001;}
+            100% {text-shadow: 0 0 26px #fff8, 0 0 9px #0005;}
         }
 
         .logo i {
             margin-left: 10px;
             color: var(--accent-color);
+            /* التحديثات */
+            text-shadow: 0 0 16px #fff7;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.8rem;
+            transition: color 0.45s;
+        }
+        .menu-toggle:hover {
+            color: #fff;
+            text-shadow: 0 0 8px #fff, 0 0 3px #000;
         }
 
         /* Platform Menu - Centered */
@@ -153,6 +213,7 @@
             display: block;
         }
 
+        /* القائمة المنبثقة */
         .platform-options-center {
             background-color: rgba(0, 0, 0, 0.95);
             border-radius: 15px;
@@ -161,6 +222,15 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             border: 2px solid rgba(255, 255, 255, 0.2);
             text-align: center;
+            /* التحديثات */
+            background: linear-gradient(120deg, #fff2 40%, #000 120%);
+            box-shadow: 0 0 36px #fff6, 0 0 10px #0008;
+            animation: fadeInUp 1s cubic-bezier(.45,.6,.09,1.01);
+            border: none;
+        }
+        @keyframes fadeInUp {
+            from {transform: translateY(50px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
         }
 
         .platform-options-center h3 {
@@ -176,17 +246,29 @@
             align-items: center;
             justify-content: center;
             padding: 1rem;
-            color: var(--text-color);
             text-decoration: none;
             border-radius: 8px;
-            transition: background 0.3s;
             margin: 0.5rem 0;
             font-weight: 500;
+            /* التحديثات */
+            background: linear-gradient(90deg, #fff2 10%, #000 90%);
+            color: #fff;
+            box-shadow: 0 0 10px #fff3, 0 0 4px #0008;
+            border: none;
+            animation: optionEnter 1s;
+            transition: color .3s, background .3s, transform .3s;
         }
 
         .platform-option-center:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
+            /* التحديثات */
+            background: linear-gradient(90deg, #fff 30%, #000 100%);
+            color: #000;
+            box-shadow: 0 0 20px #fff, 0 0 10px #0008;
+            transform: scale(1.08) translateY(-5px);
+        }
+        @keyframes optionEnter {
+            from {opacity: 0; transform: translateY(10px);}
+            to {opacity: 1; transform: translateY(0);}
         }
 
         .platform-option-center i {
@@ -194,21 +276,26 @@
             font-size: 1.5rem;
         }
 
+        /* زر الإغلاق */
         .close-menu {
             position: absolute;
             top: 10px;
             right: 15px;
             background: none;
             border: none;
-            color: var(--primary-color);
             font-size: 1.2rem;
             cursor: pointer;
             padding: 0.5rem;
+            /* التحديثات */
+            color: #fff;
+            text-shadow: 0 0 8px #fff;
             transition: color 0.3s;
         }
 
         .close-menu:hover {
-            color: var(--accent-color);
+            /* التحديثات */
+            color: #000;
+            text-shadow: 0 0 20px #fff;
         }
 
         /* Overlay */
@@ -235,133 +322,202 @@
             text-align: center;
         }
 
+        /* الصفحة الرئيسية والعناوين */
         .page-title {
             text-align: center;
             margin-bottom: 1rem;
             font-size: 2.5rem;
-            background: linear-gradient(to right, #fff, #aaa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
             font-family: 'Orbitron', sans-serif;
             font-weight: 600;
             letter-spacing: 1px;
+            /* التحديثات */
+            background: linear-gradient(90deg, #fff 60%, #000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px #fff6, 0 0 6px #0008;
+            animation: fadeInDown 1.4s;
         }
 
         .subtitle {
             text-align: center;
             margin-bottom: 3rem;
             font-size: 1.5rem;
-            color: #ccc;
             font-weight: 300;
             letter-spacing: 0.5px;
+            /* التحديثات */
+            color: #fff;
+            text-shadow: 0 0 10px #fff5, 0 0 4px #0006;
+            font-weight: 400;
+            animation: fadeInDown 1.7s;
         }
 
+        /* Grid التطبيقات */
         .apps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+            /* التحديثات */
+            gap: 2.5rem;
             margin-top: 2rem;
+            animation: fadeInUp 2s;
         }
 
+        /* كرت التطبيق */
         .app-card {
-            background: var(--card-bg);
-            border-radius: 15px;
             overflow: hidden;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
             display: flex;
             flex-direction: column;
+            /* التحديثات */
+            background: linear-gradient(120deg, #222 70%, #fff2 100%);
+            border-radius: 15px;
+            box-shadow: 0 0 30px #fff6, 0 0 20px #0008;
+            border: none;
+            animation: cardAppear 1.4s cubic-bezier(.77,.21,.19,1.01);
+        }
+        @keyframes cardAppear {
+            from {opacity: 0; transform: scale(.95) translateY(40px);}
+            to {opacity: 1; transform: scale(1) translateY(0);}
         }
 
         .app-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            /* التحديثات */
+            box-shadow: 0 0 60px #fff, 0 0 30px #000b;
+            transform: scale(1.04) translateY(-16px);
         }
 
+        /* صورة التطبيق */
         .app-image {
             height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 1.5rem;
-            background: rgba(0, 0, 0, 0.3);
+            /* التحديثات */
+            background: linear-gradient(120deg, #fff1 40%, #000 100%);
+            box-shadow: 0 0 16px #fff6, 0 0 5px #0009 inset;
+            transition: background .4s;
         }
 
         .app-image img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            border-radius: 10px;
-            transition: transform 0.3s;
+            /* التحديثات */
+            filter: drop-shadow(0 0 8px #fff8) grayscale(0.2);
+            border-radius: 15px;
+            transition: filter .3s, transform .3s;
         }
 
         .app-card:hover .app-image img {
-            transform: scale(1.05);
+            /* التحديثات */
+            filter: drop-shadow(0 0 18px #fff) grayscale(0);
+            transform: scale(1.09) rotate(-2deg);
         }
 
+        /* معلومات التطبيق */
         .app-info {
             padding: 1.5rem;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
+            /* التحديثات */
+            box-shadow: 0 0 12px #fff3, 0 0 3px #0002;
         }
 
+        /* عنوان التطبيق */
         .app-title {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
-            color: var(--primary-color);
             font-weight: 600;
             font-family: 'Orbitron', sans-serif;
+            /* التحديثات */
+            color: #fff;
+            text-shadow: 0 0 14px #fff8, 0 0 4px #0009;
+            letter-spacing: 2px;
+            animation: textPulse 2s infinite alternate;
         }
 
+        /* وصف التطبيق */
         .app-description {
-            color: #ccc;
             margin-bottom: 1.5rem;
             line-height: 1.5;
             flex-grow: 1;
-            font-weight: 300;
-            letter-spacing: 0.3px;
+            /* التحديثات */
+            color: #eee;
+            text-shadow: 0 0 2px #fff5;
+            font-weight: 400;
+            letter-spacing: .5px;
         }
 
+        /* زر التحميل */
         .download-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(45deg, #000, #333);
-            color: white;
             font-weight: 600;
             padding: 0.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
             margin-top: auto;
-            letter-spacing: 0.5px;
             position: relative;
             overflow: hidden;
+            /* التحديثات */
+            background: linear-gradient(120deg, #fff 60%, #000 100%);
+            color: #000;
+            box-shadow: 0 0 12px #fff9, 0 0 6px #0005;
+            border: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
-
-        .download-btn:hover {
-            background: linear-gradient(45deg, #333, #555);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .download-btn:active {
-            transform: translateY(0);
+        
+        .download-btn span {
+            position: relative;
+            z-index: 2;
         }
 
         .download-btn i {
             margin-left: 8px;
             transition: transform 0.3s;
+            /* التحديثات */
+            filter: drop-shadow(0 0 6px #fff);
+        }
+        
+        /* تأثير التوهج عند التمرير */
+        .download-btn:after {
+            content: "";
+            position: absolute;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(120deg, #fff3 20%, #000 90%);
+            opacity: 0;
+            transition: opacity .4s;
+            z-index: 1;
+        }
+
+        .download-btn:hover {
+            /* التحديثات */
+            background: linear-gradient(120deg, #fff 90%, #000 100%);
+            color: #000;
+            box-shadow: 0 0 24px #fff, 0 0 12px #000a;
+            transform: translateY(-2px);
+        }
+        
+        .download-btn:hover:after {
+            opacity: 1;
         }
 
         .download-btn:hover i {
-            transform: translateY(2px);
+            /* التحديثات */
+            transform: translateY(3px) scale(1.2);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
         }
 
         /* Windows Page */
@@ -377,34 +533,29 @@
             display: block;
         }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #888;
-            font-size: 0.9rem;
-            font-weight: 300;
-        }
-
-        /* Back Button */
+        /* زر العودة */
         .back-btn {
             display: inline-flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
             padding: 0.5rem 1rem;
             border-radius: 5px;
             text-decoration: none;
             margin-bottom: 2rem;
-            transition: background 0.3s;
             font-weight: 500;
+            /* التحديثات */
+            background: linear-gradient(90deg, #fff2 10%, #000 90%);
+            color: #fff;
+            box-shadow: 0 0 12px #fff5, 0 0 6px #0005;
+            border: none;
+            font-family: 'Exo 2', sans-serif;
+            transition: background .3s, color .3s, transform .3s;
         }
 
         .back-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateX(-5px);
+            /* التحديثات */
+            background: linear-gradient(90deg, #fff 50%, #000 100%);
+            color: #000;
+            transform: scale(1.08) translateX(-6px);
         }
 
         .back-btn i {
@@ -414,6 +565,23 @@
 
         .back-btn:hover i {
             transform: translateX(-3px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            font-weight: 300;
+            /* التحديثات */
+            background: linear-gradient(90deg, #fff 10%, #000 100%);
+            color: #fff;
+            box-shadow: 0 0 12px #fff4, 0 0 6px #0002;
+            border-top: none;
+            font-size: 1.1rem;
+            letter-spacing: .8px;
+            animation: fadeInUp 2.6s;
         }
 
         /* Responsive Design */
@@ -431,7 +599,8 @@
             }
 
             .page-title {
-                font-size: 2rem;
+                /* التحديثات */
+                font-size: 1.3rem;
             }
 
             .subtitle {
@@ -439,7 +608,8 @@
             }
 
             .updates-text {
-                font-size: 2rem;
+                /* التحديثات */
+                font-size: 1.3rem;
                 padding: 0.5rem 1rem;
             }
 
@@ -458,21 +628,23 @@
                 min-width: 200px;
                 padding: 1rem;
             }
+            /* التحديثات الإضافية للاستجابة */
+            .app-title { font-size: 1.1rem; }
+            .app-image { padding: 0.7rem; }
+            .download-btn { font-size: 1rem; }
+            .app-description { font-size: .9rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Cosmic Background -->
     <div class="cosmic-background">
         <div class="stars" id="stars-container"></div>
         <div class="black-hole"></div>
         <div class="cosmic-dust"></div>
     </div>
 
-    <!-- Overlay -->
     <div class="overlay" id="overlay"></div>
 
-    <!-- Centered Platform Menu -->
     <div class="platform-menu-center" id="platform-menu-center">
         <div class="platform-options-center">
             <button class="close-menu" id="close-menu">
@@ -494,7 +666,6 @@
         </div>
     </div>
 
-    <!-- Header -->
     <header>
         <div class="logo">
             <i class="fas fa-rocket"></i>
@@ -508,14 +679,12 @@
         </div>
     </header>
 
-    <!-- Main Android/iOS Page -->
     <div class="container" id="main-page">
         <div class="updates-text">Quickly Download New Updates</div>
         <h1 class="page-title">Premium Apps</h1>
         <div class="subtitle">Download</div>
         
         <div class="apps-grid">
-            <!-- DLTA Executor -->
             <div class="app-card">
                 <div class="app-image">
                     <img src="https://delta-executor.blog/wp-content/uploads/2025/08/cropped-Delta-Executor.webp" 
@@ -535,7 +704,6 @@
                 </div>
             </div>
             
-            <!-- Krnl Executor -->
             <div class="app-card">
                 <div class="app-image">
                     <img src="https://krnlexecutorios.com/wp-content/uploads/2025/09/Krnl-Executor-Site-Logo.webp" 
@@ -557,7 +725,6 @@
         </div>
     </div>
 
-    <!-- Windows Page -->
     <div class="windows-page" id="windows-page">
         <a href="#" class="back-btn" id="back-btn">
             <i class="fas fa-arrow-left"></i>
@@ -569,7 +736,6 @@
         <div class="subtitle">Download</div>
         
         <div class="apps-grid">
-            <!-- Xeno Executor -->
             <div class="app-card">
                 <div class="app-image">
                     <img src="https://xeno-now.pages.dev/images/xenos.png" 
@@ -591,7 +757,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>© 2025 ING.COM. All rights reserved.</p>
     </footer>
@@ -709,4 +874,4 @@
         });
     </script>
 </body>
-    </html>
+</html>
