@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ING.COM</title>
+    <title>ING.GROUP.io</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- خطوط Google Fonts احترافية -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -16,81 +15,118 @@
         }
 
         :root {
-            --primary-color: #ffffff;
-            --secondary-color: #000000;
-            --accent-color: #00a8ff;
-            --text-color: #f0f0f0;
-            --card-bg: rgba(30, 30, 30, 0.7);
+            --primary-color: #000000;
+            --secondary-color: #ffffff;
+            --accent-color: #0066cc;
+            --text-color: #333333;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --header-bg: rgba(255, 255, 255, 0.95);
         }
 
         body {
-            background-color: var(--secondary-color);
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 50%, #000000 50%, #000000 100%);
             color: var(--text-color);
             overflow-x: hidden;
             min-height: 100vh;
+            position: relative;
         }
 
-        /* Cosmic Background */
-        .cosmic-background {
+        /* شريط العنوان المتحرك */
+        .moving-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, var(--accent-color), #000000);
+            color: white;
+            padding: 8px 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: slideInDown 0.8s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        /* تأثيرات الخلفية */
+        .background-effects {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -2;
-            background: radial-gradient(ellipse at center, #0a0e2a 0%, #000000 70%);
+            overflow: hidden;
         }
 
-        .stars {
+        .gradient-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.8) 50%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.8) 100%);
         }
 
-        .star {
+        .floating-shapes {
             position: absolute;
-            background-color: #fff;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
             border-radius: 50%;
-            animation: twinkle var(--duration) infinite ease-in-out;
+            opacity: 0.1;
+            animation: float 15s infinite linear;
         }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
+        .shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            background: var(--accent-color);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
         }
 
-        .black-hole {
-            position: absolute;
-            top: 20%;
-            right: 10%;
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            background: var(--primary-color);
+            top: 60%;
+            left: 80%;
+            animation-delay: -5s;
+        }
+
+        .shape:nth-child(3) {
             width: 200px;
             height: 200px;
-            border-radius: 50%;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 70%);
-            box-shadow: 0 0 100px rgba(255, 255, 255, 0.1);
+            background: var(--accent-color);
+            top: 30%;
+            left: 60%;
+            animation-delay: -10s;
         }
 
-        .cosmic-dust {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.3), transparent),
-                radial-gradient(2px 2px at 40% 70%, rgba(255, 255, 255, 0.2), transparent),
-                radial-gradient(2px 2px at 60% 80%, rgba(255, 255, 255, 0.3), transparent),
-                radial-gradient(2px 2px at 80% 10%, rgba(255, 255, 255, 0.2), transparent),
-                radial-gradient(2px 2px at 90% 50%, rgba(255, 255, 255, 0.3), transparent);
-            background-size: 200px 200px;
-            animation: dustMove 100s linear infinite;
-        }
-
-        @keyframes dustMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 1000px 1000px; }
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            50% {
+                transform: translate(20px, 20px) rotate(180deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
         }
 
         /* Quickly Download New Updates Text */
@@ -99,15 +135,16 @@
             font-size: 3rem;
             font-weight: 700;
             margin: 2rem 0;
-            color: #000;
-            background-color: #fff;
+            color: #fff;
+            background: linear-gradient(90deg, var(--accent-color), #000000);
             padding: 1rem 2rem;
             border-radius: 20px;
             display: inline-block;
             border: 3px solid #fff;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             font-family: 'Orbitron', sans-serif;
             letter-spacing: 1px;
+            animation: fadeInUp 1s ease-out;
         }
 
         /* Header */
@@ -116,12 +153,14 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 2rem;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: var(--header-bg);
             backdrop-filter: blur(10px);
             position: sticky;
-            top: 0;
+            top: 40px;
             z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-out;
+            margin-top: 40px;
         }
 
         .logo {
@@ -139,31 +178,53 @@
             color: var(--accent-color);
         }
 
-        /* Platform Menu - Centered */
-        .platform-menu-center {
+        .header-controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .menu-toggle, .settings-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .menu-toggle:hover, .settings-toggle:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            transform: scale(1.1);
+        }
+
+        /* القوائم المنبثقة */
+        .popup-menu {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scale(0.9);
             z-index: 1000;
-            display: none;
-        }
-
-        .platform-menu-center.active {
-            display: block;
-        }
-
-        .platform-options-center {
-            background-color: rgba(0, 0, 0, 0.95);
+            background-color: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             padding: 1.5rem;
             min-width: 250px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(0, 0, 0, 0.1);
             text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-out;
         }
 
-        .platform-options-center h3 {
+        .popup-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .popup-menu h3 {
             margin-bottom: 1rem;
             color: var(--primary-color);
             font-size: 1.5rem;
@@ -171,7 +232,7 @@
             font-weight: 600;
         }
 
-        .platform-option-center {
+        .popup-option {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -182,22 +243,23 @@
             transition: background 0.3s;
             margin: 0.5rem 0;
             font-weight: 500;
+            cursor: pointer;
         }
 
-        .platform-option-center:hover {
-            background: rgba(255, 255, 255, 0.1);
+        .popup-option:hover {
+            background: rgba(0, 0, 0, 0.1);
             transform: translateY(-2px);
         }
 
-        .platform-option-center i {
-            margin-right: 10px;
+        .popup-option i {
+            margin-left: 10px;
             font-size: 1.5rem;
         }
 
         .close-menu {
             position: absolute;
             top: 10px;
-            right: 15px;
+            left: 15px;
             background: none;
             border: none;
             color: var(--primary-color);
@@ -218,13 +280,16 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 999;
-            display: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
         }
 
         .overlay.active {
-            display: block;
+            opacity: 1;
+            visibility: visible;
         }
 
         /* Main Content */
@@ -239,22 +304,24 @@
             text-align: center;
             margin-bottom: 1rem;
             font-size: 2.5rem;
-            background: linear-gradient(to right, #fff, #aaa);
+            background: linear-gradient(to right, #000, #666);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             font-family: 'Orbitron', sans-serif;
             font-weight: 600;
             letter-spacing: 1px;
+            animation: fadeInUp 1s ease-out 0.2s both;
         }
 
         .subtitle {
             text-align: center;
             margin-bottom: 3rem;
             font-size: 1.5rem;
-            color: #ccc;
+            color: #666;
             font-weight: 300;
             letter-spacing: 0.5px;
+            animation: fadeInUp 1s ease-out 0.4s both;
         }
 
         .apps-grid {
@@ -269,15 +336,28 @@
             border-radius: 15px;
             overflow: hidden;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
             display: flex;
             flex-direction: column;
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        .app-card:nth-child(1) {
+            animation-delay: 0.6s;
+        }
+
+        .app-card:nth-child(2) {
+            animation-delay: 0.8s;
+        }
+
+        .app-card:nth-child(3) {
+            animation-delay: 1s;
         }
 
         .app-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
 
         .app-image {
@@ -286,7 +366,7 @@
             align-items: center;
             justify-content: center;
             padding: 1.5rem;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.5);
         }
 
         .app-image img {
@@ -317,7 +397,7 @@
         }
 
         .app-description {
-            color: #ccc;
+            color: #666;
             margin-bottom: 1.5rem;
             line-height: 1.5;
             flex-grow: 1;
@@ -329,11 +409,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(45deg, #000, #333);
+            background: linear-gradient(45deg, var(--accent-color), #004499);
             color: white;
             font-weight: 600;
             padding: 0.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: none;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
@@ -345,10 +425,9 @@
         }
 
         .download-btn:hover {
-            background: linear-gradient(45deg, #333, #555);
-            border-color: rgba(255, 255, 255, 0.5);
+            background: linear-gradient(45deg, #004499, var(--accent-color));
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .download-btn:active {
@@ -356,7 +435,7 @@
         }
 
         .download-btn i {
-            margin-left: 8px;
+            margin-right: 8px;
             transition: transform 0.3s;
         }
 
@@ -382,8 +461,8 @@
             text-align: center;
             padding: 2rem;
             margin-top: 3rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #888;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            color: #666;
             font-size: 0.9rem;
             font-weight: 300;
         }
@@ -392,8 +471,8 @@
         .back-btn {
             display: inline-flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text-color);
             padding: 0.5rem 1rem;
             border-radius: 5px;
             text-decoration: none;
@@ -403,12 +482,12 @@
         }
 
         .back-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.2);
             transform: translateX(-5px);
         }
 
         .back-btn i {
-            margin-right: 5px;
+            margin-left: 5px;
             transition: transform 0.3s;
         }
 
@@ -416,10 +495,37 @@
             transform: translateX(-3px);
         }
 
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             header {
                 padding: 1rem;
+                margin-top: 30px;
+            }
+
+            .moving-header {
+                font-size: 1rem;
+                padding: 6px 0;
             }
 
             .logo {
@@ -447,14 +553,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .black-hole {
-                width: 150px;
-                height: 150px;
-                top: 15%;
-                right: 5%;
-            }
-
-            .platform-options-center {
+            .popup-menu {
                 min-width: 200px;
                 padding: 1rem;
             }
@@ -462,35 +561,62 @@
     </style>
 </head>
 <body>
-    <!-- Cosmic Background -->
-    <div class="cosmic-background">
-        <div class="stars" id="stars-container"></div>
-        <div class="black-hole"></div>
-        <div class="cosmic-dust"></div>
+    <!-- شريط العنوان المتحرك -->
+    <div class="moving-header">
+        ING.GROUP.io - منصة التطبيقات المميزة
+    </div>
+
+    <!-- تأثيرات الخلفية -->
+    <div class="background-effects">
+        <div class="gradient-overlay"></div>
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
     </div>
 
     <!-- Overlay -->
     <div class="overlay" id="overlay"></div>
 
-    <!-- Centered Platform Menu -->
-    <div class="platform-menu-center" id="platform-menu-center">
-        <div class="platform-options-center">
-            <button class="close-menu" id="close-menu">
+    <!-- قائمة المنصة المركزية -->
+    <div class="popup-menu" id="platform-menu">
+        <div class="popup-content">
+            <button class="close-menu" id="close-platform-menu">
                 <i class="fas fa-times"></i>
             </button>
-            <h3>Choose Platform</h3>
-            <a href="#" class="platform-option-center" data-platform="android">
+            <h3>اختر المنصة</h3>
+            <a href="#" class="popup-option" data-platform="android">
                 <i class="fab fa-android"></i>
-                <span>Android</span>
+                <span>أندرويد</span>
             </a>
-            <a href="#" class="platform-option-center" data-platform="ios">
+            <a href="#" class="popup-option" data-platform="ios">
                 <i class="fab fa-apple"></i>
                 <span>iOS</span>
             </a>
-            <a href="#" class="platform-option-center" data-platform="windows">
+            <a href="#" class="popup-option" data-platform="windows">
                 <i class="fab fa-windows"></i>
-                <span>Windows</span>
+                <span>ويندوز</span>
             </a>
+        </div>
+    </div>
+
+    <!-- قائمة الإعدادات -->
+    <div class="popup-menu" id="settings-menu">
+        <div class="popup-content">
+            <button class="close-menu" id="close-settings-menu">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3>الإعدادات</h3>
+            <div class="popup-option" id="language-option">
+                <i class="fas fa-globe"></i>
+                <span>تغيير اللغة</span>
+            </div>
+            <div class="language-options" id="language-options" style="display: none;">
+                <div class="popup-option language-option" data-lang="en">English</div>
+                <div class="popup-option language-option" data-lang="ar">العربية</div>
+                <div class="popup-option language-option" data-lang="fr">Français</div>
+            </div>
         </div>
     </div>
 
@@ -498,11 +624,14 @@
     <header>
         <div class="logo">
             <i class="fas fa-rocket"></i>
-            <span>ING.COM</span>
+            <span>ING.GROUP.io</span>
         </div>
         
-        <div class="platform-menu">
-            <button class="menu-toggle" id="menu-toggle-center">
+        <div class="header-controls">
+            <button class="settings-toggle" id="settings-toggle">
+                <i class="fas fa-cog"></i>
+            </button>
+            <button class="menu-toggle" id="menu-toggle">
                 <i class="fas fa-ellipsis-v"></i>
             </button>
         </div>
@@ -510,9 +639,9 @@
 
     <!-- Main Android/iOS Page -->
     <div class="container" id="main-page">
-        <div class="updates-text">Quickly Download New Updates</div>
-        <h1 class="page-title">Premium Apps</h1>
-        <div class="subtitle">Download</div>
+        <div class="updates-text">حمّل التحديثات الجديدة بسرعة</div>
+        <h1 class="page-title">التطبيقات المميزة</h1>
+        <div class="subtitle">حمّل الآن</div>
         
         <div class="apps-grid">
             <!-- DLTA Executor -->
@@ -520,16 +649,16 @@
                 <div class="app-image">
                     <img src="https://delta-executor.blog/wp-content/uploads/2025/08/cropped-Delta-Executor.webp" 
                          alt="DLTA Executor" 
-                         onerror="this.src='https://via.placeholder.com/300x200/000000/FFFFFF?text=DLTA+Executor'">
+                         onerror="this.src='https://via.placeholder.com/300x200/FFFFFF/000000?text=DLTA+Executor'">
                 </div>
                 <div class="app-info">
                     <h2 class="app-title">DLTA Executor</h2>
                     <p class="app-description">
-                        DLTA Executor is a revolutionary new way to experience the world of scripting with its extensive library of features that will make your life easier.
+                        DLTA Executor هي طريقة ثورية جديدة لتجربة عالم البرمجة النصية مع مكتبة واسعة من الميزات التي ستجعل حياتك أسهل.
                     </p>
-                    <a href="https://updowncontent.com/file/Delta-2.690.721.apk" 
+                    <a href="https://www.mediafire.com/file/ob1rdgg0yqwnw75/%25E3%2580%2594ING_GROUP%25E3%2580%2595_Delta-Executor%25E3%2580%25982.690.721%25E3%2580%2599.apk/file" 
                        class="download-btn" target="_blank">
-                        <span>Download App</span>
+                        <span>حمّل التطبيق</span>
                         <i class="fas fa-download"></i>
                     </a>
                 </div>
@@ -540,16 +669,36 @@
                 <div class="app-image">
                     <img src="https://krnlexecutorios.com/wp-content/uploads/2025/09/Krnl-Executor-Site-Logo.webp" 
                          alt="Krnl Executor" 
-                         onerror="this.src='https://via.placeholder.com/300x200/000000/FFFFFF?text=Krnl+Executor'">
+                         onerror="this.src='https://via.placeholder.com/300x200/FFFFFF/000000?text=Krnl+Executor'">
                 </div>
                 <div class="app-info">
                     <h2 class="app-title">Krnl Executor</h2>
                     <p class="app-description">
-                        Krnl Executor is one of the most powerful applications for running Roblox scripts. Features high performance and regular updates.
+                        Krnl Executor هو أحد أقوى التطبيقات لتشغيل نصوص Roblox. يتميز بأداء عالي وتحديثات منتظمة.
                     </p>
-                    <a href="https://download2430.mediafire.com/u2jhmrgnq0fg2Q-w0SOu7p36NricZ0hRFmwEI9I2N_DccI6Uf7qfo38Js83gdY98O_Ss8KDc4F2gkNdA85DjsWRM3D8RApa3jwyEMOV7smX4TAdVbWoGoUYQkv-2zKfs_toA1BQcHJy3j1ZZjMzNmkaSQJeUoMDNgh2Znp7RrSzS/txw7kcgvtha757h/krnl+Executor+%281ing_1%29.apk" 
+                    <a href="https://www.mediafire.com/file/a7bz4fu84hqas80/%25E3%2580%2594ING_GROUP%25E3%2580%2595_KRNL_Executor%25E3%2580%25982.691.868%25E3%2580%2599.apk/file" 
                        class="download-btn" target="_blank">
-                        <span>Download App</span>
+                        <span>حمّل التطبيق</span>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Ronix -->
+            <div class="app-card">
+                <div class="app-image">
+                    <img src="https://cdn.discordapp.com/attachments/1410679561842327592/1421357475759653004/Polish__.png" 
+                         alt="Ronix" 
+                         onerror="this.src='https://via.placeholder.com/300x200/FFFFFF/000000?text=Ronix'">
+                </div>
+                <div class="app-info">
+                    <h2 class="app-title">Ronix</h2>
+                    <p class="app-description">
+                        Ronix هو تطبيق مبتكر يوفر أدوات متقدمة لتشغيل النصوص البرمجية مع واجهة مستخدم سهلة الاستخدام وميزات فريدة.
+                    </p>
+                    <a href="https://www.mediafire.com/file/cjtc3movc6r45tz/%25E3%2580%2594ING_GROUP%25E3%2580%2595Ronix%25E3%2580%25982.691.868%25E3%2580%2599.apk/file" 
+                       class="download-btn" target="_blank">
+                        <span>حمّل التطبيق</span>
                         <i class="fas fa-download"></i>
                     </a>
                 </div>
@@ -560,13 +709,13 @@
     <!-- Windows Page -->
     <div class="windows-page" id="windows-page">
         <a href="#" class="back-btn" id="back-btn">
-            <i class="fas fa-arrow-left"></i>
-            Back to Main
+            <i class="fas fa-arrow-right"></i>
+            العودة للرئيسية
         </a>
         
-        <div class="updates-text">Quickly Download New Updates</div>
-        <h1 class="page-title">Windows Applications</h1>
-        <div class="subtitle">Download</div>
+        <div class="updates-text">حمّل التحديثات الجديدة بسرعة</div>
+        <h1 class="page-title">تطبيقات ويندوز</h1>
+        <div class="subtitle">حمّل الآن</div>
         
         <div class="apps-grid">
             <!-- Xeno Executor -->
@@ -574,16 +723,16 @@
                 <div class="app-image">
                     <img src="https://xeno-now.pages.dev/images/xenos.png" 
                          alt="Xeno Executor" 
-                         onerror="this.src='https://via.placeholder.com/300x200/000000/FFFFFF?text=Xeno+Executor'">
+                         onerror="this.src='https://via.placeholder.com/300x200/FFFFFF/000000?text=Xeno+Executor'">
                 </div>
                 <div class="app-info">
                     <h2 class="app-title">Xeno Executor</h2>
                     <p class="app-description">
-                        Xeno Executor is a powerful Windows application for advanced script execution. Perfect for developers and power users with premium features.
+                        Xeno Executor هو تطبيق قوي لنظام ويندوز لتنفيذ النصوص البرمجية المتقدمة. مثالي للمطورين والمستخدمين المتقدمين بميزات مميزة.
                     </p>
                     <a href="https://download2340.mediafire.com/n8kb7ohk1vigbaDJWK63_hIF-MN6FpnDesrdbrCwxiI3jmKmJLotYKvydnXjG9rZID0VS71l8s3X9XVU4IJvUQszy22PNg4L6mGUxRyxD063dN0-tpTx0sS8SDH5FIDYP0LL7AEpE10uVKQUDim4ezuuL4g9t2W5hqDty4mn-rtb/jiyom2u60r8sw8p/Xeno-v1.2.65.zip" 
                        class="download-btn" target="_blank">
-                        <span>Download Executor</span>
+                        <span>حمّل التطبيق</span>
                         <i class="fas fa-download"></i>
                     </a>
                 </div>
@@ -593,72 +742,72 @@
 
     <!-- Footer -->
     <footer>
-        <p>© 2025 ING.COM. All rights reserved.</p>
+        <p>© 2025 ING.GROUP.io. جميع الحقوق محفوظة.</p>
     </footer>
 
     <script>
-        // Create twinkling stars
-        function createStars() {
-            const starsContainer = document.getElementById('stars-container');
-            const starCount = 200;
-            
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                
-                // Random position
-                const x = Math.random() * 100;
-                const y = Math.random() * 100;
-                
-                // Random size (1-3px)
-                const size = Math.random() * 2 + 1;
-                
-                // Random animation duration (2-5s)
-                const duration = Math.random() * 3 + 2;
-                
-                star.style.left = `${x}%`;
-                star.style.top = `${y}%`;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                star.style.setProperty('--duration', `${duration}s`);
-                
-                // Random delay for animation
-                star.style.animationDelay = `${Math.random() * 5}s`;
-                
-                starsContainer.appendChild(star);
-            }
-        }
-        
-        // Platform menu functionality
+        // إنشاء تأثيرات الرسوم المتحركة
         document.addEventListener('DOMContentLoaded', function() {
-            createStars();
-            
-            const menuToggleCenter = document.getElementById('menu-toggle-center');
-            const platformMenuCenter = document.getElementById('platform-menu-center');
+            const menuToggle = document.getElementById('menu-toggle');
+            const settingsToggle = document.getElementById('settings-toggle');
+            const platformMenu = document.getElementById('platform-menu');
+            const settingsMenu = document.getElementById('settings-menu');
             const overlay = document.getElementById('overlay');
-            const closeMenu = document.getElementById('close-menu');
+            const closePlatformMenu = document.getElementById('close-platform-menu');
+            const closeSettingsMenu = document.getElementById('close-settings-menu');
             const mainPage = document.getElementById('main-page');
             const windowsPage = document.getElementById('windows-page');
             const backBtn = document.getElementById('back-btn');
+            const languageOption = document.getElementById('language-option');
+            const languageOptions = document.getElementById('language-options');
             
-            // Toggle centered platform menu
-            menuToggleCenter.addEventListener('click', function(e) {
+            // فتح قائمة المنصة
+            menuToggle.addEventListener('click', function(e) {
                 e.stopPropagation();
-                platformMenuCenter.classList.add('active');
+                platformMenu.classList.add('active');
                 overlay.classList.add('active');
             });
             
-            // Close menu functions
-            function closePlatformMenu() {
-                platformMenuCenter.classList.remove('active');
+            // فتح قائمة الإعدادات
+            settingsToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                settingsMenu.classList.add('active');
+                overlay.classList.add('active');
+            });
+            
+            // إغلاق القوائم
+            function closeAllMenus() {
+                platformMenu.classList.remove('active');
+                settingsMenu.classList.remove('active');
                 overlay.classList.remove('active');
+                languageOptions.style.display = 'none';
             }
             
-            closeMenu.addEventListener('click', closePlatformMenu);
-            overlay.addEventListener('click', closePlatformMenu);
+            closePlatformMenu.addEventListener('click', closeAllMenus);
+            closeSettingsMenu.addEventListener('click', closeAllMenus);
+            overlay.addEventListener('click', closeAllMenus);
             
-            // Platform selection
-            document.querySelectorAll('.platform-option-center').forEach(option => {
+            // تبديل خيارات اللغة
+            languageOption.addEventListener('click', function() {
+                if (languageOptions.style.display === 'none') {
+                    languageOptions.style.display = 'block';
+                } else {
+                    languageOptions.style.display = 'none';
+                }
+            });
+            
+            // اختيار اللغة
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    // هنا يمكن إضافة منطق تغيير اللغة
+                    alert(`تم تغيير اللغة إلى: ${this.textContent}`);
+                    closeAllMenus();
+                });
+            });
+            
+            // اختيار المنصة
+            document.querySelectorAll('.popup-option[data-platform]').forEach(option => {
                 option.addEventListener('click', function(e) {
                     e.preventDefault();
                     const platform = this.getAttribute('data-platform');
@@ -667,24 +816,24 @@
                         mainPage.style.display = 'none';
                         windowsPage.classList.add('active');
                     } else {
-                        // For Android and iOS, stay on main page
+                        // لأندرويد و iOS، البقاء على الصفحة الرئيسية
                         mainPage.style.display = 'block';
                         windowsPage.classList.remove('active');
                     }
                     
-                    closePlatformMenu();
+                    closeAllMenus();
                 });
             });
             
-            // Back button functionality
+            // زر العودة
             backBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 windowsPage.classList.remove('active');
                 mainPage.style.display = 'block';
             });
             
-            // Scroll animations for cards
-            const appCards = document.querySelectorAll('.app-card');
+            // إضافة تأثيرات الظهور للعناصر
+            const animatedElements = document.querySelectorAll('.app-card, .page-title, .subtitle, .updates-text');
             
             const observerOptions = {
                 threshold: 0.1,
@@ -700,13 +849,13 @@
                 });
             }, observerOptions);
             
-            appCards.forEach(card => {
-                card.style.opacity = 0;
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.5s, transform 0.5s';
-                observer.observe(card);
+            animatedElements.forEach(element => {
+                element.style.opacity = 0;
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.5s, transform 0.5s';
+                observer.observe(element);
             });
         });
     </script>
 </body>
-    </html>
+</html>
