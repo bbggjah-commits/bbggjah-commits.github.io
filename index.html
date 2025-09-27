@@ -3,59 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ING.GROUP.io</title>
+    <title>ING.GROUP.io - صفحة الترويج</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* ============================== */
+        /* التنسيقات الأساسية والمتغيرات */
+        /* ============================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Exo 2', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', 'Exo 2', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         :root {
             --primary-color: #000000;
             --secondary-color: #ffffff;
-            --accent-color: #0066cc;
+            --accent-color: #0066cc; /* لون التمييز - أزرق للتباين */
             --text-color: #333333;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --header-bg: rgba(255, 255, 255, 0.95);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --header-bg: rgba(0, 0, 0, 0.9); /* أسود شبه شفاف للترويسة */
         }
 
+        /* تنسيق الجسم والخلفية */
         body {
+            /* خلفية مقسمة بالأبيض والأسود */
             background: linear-gradient(135deg, #ffffff 0%, #ffffff 50%, #000000 50%, #000000 100%);
+            direction: rtl; 
+            text-align: center;
             color: var(--text-color);
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
+            padding-top: 50px; /* مسافة لشريط الترويسة المتحرك */
         }
 
-        .moving-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(90deg, var(--accent-color), #000000);
-            color: white;
-            padding: 8px 0;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            animation: slideInDown 0.8s ease-out;
-        }
-
-        @keyframes slideInDown {
-            from {
-                transform: translateY(-100%);
-            }
-            to {
-                transform: translateY(0);
-            }
-        }
-
+        /* ============================== */
+        /* عناصر الخلفية والتأثيرات */
+        /* ============================== */
         .background-effects {
             position: fixed;
             top: 0;
@@ -66,15 +57,18 @@
             overflow: hidden;
         }
 
+        /* تراكب التدرج اللوني فوق خلفية الجسم */
         .gradient-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.8) 50%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.8) 100%);
+            /* شفافية أقل قليلاً لجعل الخلفية أكثر وضوحاً */
+            background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.7) 50%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.7) 100%);
         }
 
+        /* الأشكال العائمة */
         .floating-shapes {
             position: absolute;
             width: 100%;
@@ -87,85 +81,80 @@
             opacity: 0.1;
             animation: float 15s infinite linear;
         }
-
+        /* تحديد الأشكال لليمين واليسار */
         .shape:nth-child(1) {
-            width: 100px;
-            height: 100px;
-            background: var(--accent-color);
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
+            width: 100px; height: 100px; background: var(--secondary-color); /* أبيض */
+            top: 10%; right: 10%; animation-delay: 0s;
         }
-
         .shape:nth-child(2) {
-            width: 150px;
-            height: 150px;
-            background: var(--primary-color);
-            top: 60%;
-            left: 80%;
-            animation-delay: -5s;
+            width: 150px; height: 150px; background: var(--primary-color); /* أسود */
+            top: 60%; left: 80%; animation-delay: -5s;
         }
-
         .shape:nth-child(3) {
-            width: 200px;
-            height: 200px;
-            background: var(--accent-color);
-            top: 30%;
-            left: 60%;
-            animation-delay: -10s;
+            width: 200px; height: 200px; background: var(--secondary-color); /* أبيض */
+            top: 30%; right: 60%; animation-delay: -10s;
         }
 
         @keyframes float {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            50% {
-                transform: translate(20px, 20px) rotate(180deg);
-            }
-            100% {
-                transform: translate(0, 0) rotate(360deg);
-            }
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(20px, 20px) rotate(180deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
         }
 
-        .updates-text {
+        /* ============================== */
+        /* شريط الترويسة الثابت (Moving Header) */
+        /* ============================== */
+        .moving-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            /* دمج ألوان Header 1: أسود وشبه شفاف */
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 10px 0;
             text-align: center;
-            font-size: 3rem;
-            font-weight: 700;
-            margin: 2rem 0;
-            color: #fff;
-            background: linear-gradient(90deg, var(--accent-color), #000000);
-            padding: 1rem 2rem;
-            border-radius: 20px;
-            display: inline-block;
-            border: 3px solid #fff;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 1px;
-            animation: fadeInUp 1s ease-out;
+            font-weight: 700; /* Cairo Bold */
+            font-size: 1.2em;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            animation: slideInDown 0.8s ease-out;
+            font-family: 'Cairo', sans-serif;
+            letter-spacing: 2px;
         }
 
+        @keyframes slideInDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        /* ============================== */
+        /* ترويسة الصفحة الرئيسية (Header) */
+        /* ============================== */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1rem 2rem;
-            background-color: var(--header-bg);
+            background-color: var(--card-bg); /* أبيض شبه شفاف */
             backdrop-filter: blur(10px);
             position: sticky;
-            top: 40px;
-            z-index: 100;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            top: 50px; /* تحت الـ moving-header */
+            z-index: 900;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             animation: fadeIn 1s ease-out;
-            margin-top: 40px;
+            max-width: 1200px;
+            margin: 10px auto;
         }
-
+        
         .logo {
             font-size: 2rem;
             font-weight: 700;
             color: var(--primary-color);
             display: flex;
             align-items: center;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Orbitron', sans-serif; /* استخدام Orbitron للشعار */
             letter-spacing: 1px;
         }
 
@@ -195,17 +184,20 @@
             transform: scale(1.1);
         }
 
+        /* ============================== */
+        /* القوائم المنبثقة (Popups) و Overlay */
+        /* ============================== */
         .popup-menu {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.9);
             z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: var(--card-bg);
             border-radius: 15px;
             padding: 1.5rem;
             min-width: 250px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             border: 2px solid rgba(0, 0, 0, 0.1);
             text-align: center;
             opacity: 0;
@@ -218,16 +210,16 @@
             visibility: visible;
             transform: translate(-50%, -50%) scale(1);
         }
-
+        
         .popup-menu h3 {
             margin-bottom: 1rem;
             color: var(--primary-color);
             font-size: 1.5rem;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 600;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
         }
 
-        .popup-option {
+        a.popup-option, .popup-option {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -237,26 +229,11 @@
             border-radius: 8px;
             transition: background 0.3s;
             margin: 0.5rem 0;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        
-        a.popup-option {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            color: var(--text-color);
-            text-decoration: none;
-            border-radius: 8px;
-            transition: background 0.3s;
-            margin: 0.5rem 0;
-            font-weight: 500;
+            font-weight: 700;
             cursor: pointer;
         }
 
-
-        .popup-option:hover {
+        a.popup-option:hover, .popup-option:hover {
             background: rgba(0, 0, 0, 0.1);
             transform: translateY(-2px);
         }
@@ -265,7 +242,7 @@
             margin-left: 10px;
             font-size: 1.5rem;
         }
-
+        
         .close-menu {
             position: absolute;
             top: 10px;
@@ -301,23 +278,45 @@
             visibility: visible;
         }
 
+        /* ============================== */
+        /* المحتوى الرئيسي (Container) */
+        /* ============================== */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
             text-align: center;
+            min-height: calc(100vh - 100px); /* تقليل ارتفاع لترك مساحة للشريط العلوي والتذييل */
+        }
+        
+        /* شريط التحديثات المميز */
+        .updates-text {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 4rem 0 2rem; /* مسافة أعلى أكبر */
+            color: #fff;
+            background: linear-gradient(90deg, var(--accent-color), #000000);
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            display: inline-block;
+            border: 3px solid #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            animation: fadeInUp 1s ease-out;
         }
 
         .page-title {
             text-align: center;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             font-size: 2.5rem;
             background: linear-gradient(to right, #000, #666);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 600;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
             letter-spacing: 1px;
             animation: fadeInUp 1s ease-out 0.2s both;
         }
@@ -326,12 +325,13 @@
             text-align: center;
             margin-bottom: 3rem;
             font-size: 1.5rem;
-            color: #666;
-            font-weight: 300;
+            color: #444;
+            font-weight: 400;
             letter-spacing: 0.5px;
             animation: fadeInUp 1s ease-out 0.4s both;
         }
 
+        /* شبكة التطبيقات */
         .apps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -351,21 +351,9 @@
             animation: fadeInUp 0.8s ease-out both;
         }
 
-        .app-card:nth-child(1) {
-            animation-delay: 0.6s;
-        }
-
-        .app-card:nth-child(2) {
-            animation-delay: 0.8s;
-        }
-
-        .app-card:nth-child(3) {
-            animation-delay: 1s;
-        }
-
         .app-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
         .app-image {
@@ -374,7 +362,7 @@
             align-items: center;
             justify-content: center;
             padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.8);
         }
 
         .app-image img {
@@ -383,10 +371,6 @@
             object-fit: contain;
             border-radius: 10px;
             transition: transform 0.3s;
-        }
-
-        .app-card:hover .app-image img {
-            transform: scale(1.05);
         }
 
         .app-info {
@@ -400,8 +384,8 @@
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
             color: var(--primary-color);
-            font-weight: 600;
-            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
         }
 
         .app-description {
@@ -409,41 +393,34 @@
             margin-bottom: 1.5rem;
             line-height: 1.5;
             flex-grow: 1;
-            font-weight: 300;
-            letter-spacing: 0.3px;
+            font-weight: 400;
         }
 
         .download-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(45deg, var(--accent-color), #004499);
+            background-color: var(--primary-color); /* أسود */
             color: white;
-            font-weight: 600;
+            font-weight: 700;
             padding: 0.8rem;
-            border: none;
+            border: 2px solid var(--primary-color);
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
             margin-top: auto;
             letter-spacing: 0.5px;
-            position: relative;
-            overflow: hidden;
         }
 
         .download-btn:hover {
-            background: linear-gradient(45deg, #004499, var(--accent-color));
+            background-color: #333; /* رمادي داكن */
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .download-btn:active {
-            transform: translateY(0);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .download-btn i {
-            margin-right: 8px;
+            margin-left: 8px;
             transition: transform 0.3s;
         }
 
@@ -451,43 +428,37 @@
             transform: translateY(2px);
         }
 
+        /* ============================== */
+        /* صفحة ويندوز (Windows Page) */
+        /* ============================== */
         .windows-page {
             display: none;
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
             text-align: center;
+            min-height: calc(100vh - 100px);
         }
 
         .windows-page.active {
             display: block;
         }
 
-        footer {
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            color: #666;
-            font-size: 0.9rem;
-            font-weight: 300;
-        }
-
         .back-btn {
             display: inline-flex;
             align-items: center;
-            background: rgba(0, 0, 0, 0.1);
-            color: var(--text-color);
+            background: var(--primary-color);
+            color: var(--secondary-color);
             padding: 0.5rem 1rem;
-            border-radius: 5px;
+            border-radius: 8px;
             text-decoration: none;
-            margin-bottom: 2rem;
-            transition: background 0.3s;
-            font-weight: 500;
+            margin: 2rem 0;
+            transition: background 0.3s, transform 0.3s;
+            font-weight: 700;
         }
 
         .back-btn:hover {
-            background: rgba(0, 0, 0, 0.2);
+            background: #333;
             transform: translateX(-5px);
         }
 
@@ -496,46 +467,53 @@
             transition: transform 0.3s;
         }
 
-        .back-btn:hover i {
-            transform: translateX(-3px);
+        /* ============================== */
+        /* التذييل (Footer) */
+        /* ============================== */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 400;
+            background-color: rgba(255, 255, 255, 0.8);
         }
 
+        /* ============================== */
+        /* الرسوم المتحركة (Animations) */
+        /* ============================== */
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
+        /* ============================== */
+        /* تنسيقات الشاشات الصغيرة (Media Queries) */
+        /* ============================== */
         @media (max-width: 768px) {
             header {
                 padding: 1rem;
-                margin-top: 30px;
+                top: 50px;
+                margin: 5px;
             }
 
             .moving-header {
                 font-size: 1rem;
-                padding: 6px 0;
+                padding: 8px 0;
             }
 
             .logo {
                 font-size: 1.5rem;
             }
 
-            .container {
+            .container, .windows-page {
                 padding: 1rem;
             }
 
@@ -555,15 +533,11 @@
             .apps-grid {
                 grid-template-columns: 1fr;
             }
-
-            .popup-menu {
-                min-width: 200px;
-                padding: 1rem;
-            }
         }
     </style>
 </head>
 <body>
+    
     <div class="moving-header">
         ING.GROUP.io - منصة التطبيقات المميزة
     </div>
@@ -605,20 +579,15 @@
             <button class="close-menu" id="close-settings-menu">
                 <i class="fas fa-times"></i>
             </button>
-            <h3>الإعدادات</h3>
+            <h3>الإعدادات والمزيد</h3>
             <a href="https://sd-community1.github.io/" target="_blank" class="popup-option">
                 <i class="fas fa-code"></i>
                 <span>مشاريعي الأخرى</span>
             </a>
-            <div class="popup-option" id="language-option">
-                <i class="fas fa-globe"></i>
-                <span>تغيير اللغة</span>
-            </div>
-            <div class="language-options" id="language-options" style="display: none;">
-                <div class="popup-option language-option" data-lang="en">English</div>
-                <div class="popup-option language-option" data-lang="ar">العربية</div>
-                <div class="popup-option language-option" data-lang="fr">Français</div>
-            </div>
+            <a href="https://discord.gg/8h8xtAe6YT" target="_blank" class="popup-option">
+                <i class="fab fa-discord"></i>
+                <span>سيرفري الديسكورد</span>
+            </a>
         </div>
     </div>
 
@@ -640,8 +609,8 @@
 
     <div class="container" id="main-page">
         <div class="updates-text">حمّل التحديثات الجديدة بسرعة</div>
-        <h1 class="page-title">التطبيقات المميزة</h1>
-        <div class="subtitle">حمّل الآن</div>
+        <h1 class="page-title">التطبيقات المميزة (أندرويد)</h1>
+        <div class="subtitle">حمّل الآن تطبيقاتنا الحصرية لنظام أندرويد.</div>
         
         <div class="apps-grid">
             <div class="app-card">
@@ -665,7 +634,7 @@
             
             <div class="app-card">
                 <div class="app-image">
-                    <img src="https://krnlexecutorios.com/wp-content/uploads/2025/09/Krnl-Executor-Site-Logo.webp" 
+                    <img src="https://cdn.discordapp.com/attachments/1410679561842327592/1421450828996284527/Polish__.png?ex=68d914be&is=68d7c33e&hm=7cdb627a7bc6ec49743ac8e93beb9b426f7c4e1ebaa5da95864bca6ff7418783&" 
                          alt="Krnl Executor" 
                          onerror="this.src='https://via.placeholder.com/300x200/FFFFFF/000000?text=Krnl+Executor'">
                 </div>
@@ -711,7 +680,7 @@
         
         <div class="updates-text">حمّل التحديثات الجديدة بسرعة</div>
         <h1 class="page-title">تطبيقات ويندوز</h1>
-        <div class="subtitle">حمّل الآن</div>
+        <div class="subtitle">حمّل الآن تطبيقاتنا الحصرية لنظام ويندوز.</div>
         
         <div class="apps-grid">
             <div class="app-card">
@@ -751,73 +720,64 @@
             const mainPage = document.getElementById('main-page');
             const windowsPage = document.getElementById('windows-page');
             const backBtn = document.getElementById('back-btn');
-            const languageOption = document.getElementById('language-option');
-            const languageOptions = document.getElementById('language-options');
             
+            // إظهار وإخفاء قائمة المنصات
             menuToggle.addEventListener('click', function(e) {
                 e.stopPropagation();
                 platformMenu.classList.add('active');
-                settingsMenu.classList.remove('active'); // إغلاق الإعدادات إذا كانت مفتوحة
+                settingsMenu.classList.remove('active');
                 overlay.classList.add('active');
             });
             
+            // إظهار وإخفاء قائمة الإعدادات
             settingsToggle.addEventListener('click', function(e) {
                 e.stopPropagation();
                 settingsMenu.classList.add('active');
-                platformMenu.classList.remove('active'); // إغلاق المنصة إذا كانت مفتوحة
+                platformMenu.classList.remove('active');
                 overlay.classList.add('active');
             });
             
+            // إغلاق جميع القوائم
             function closeAllMenus() {
                 platformMenu.classList.remove('active');
                 settingsMenu.classList.remove('active');
                 overlay.classList.remove('active');
-                languageOptions.style.display = 'none';
             }
             
             closePlatformMenu.addEventListener('click', closeAllMenus);
             closeSettingsMenu.addEventListener('click', closeAllMenus);
             overlay.addEventListener('click', closeAllMenus);
             
-            languageOption.addEventListener('click', function() {
-                if (languageOptions.style.display === 'none') {
-                    languageOptions.style.display = 'block';
-                } else {
-                    languageOptions.style.display = 'none';
-                }
-            });
-            
-            document.querySelectorAll('.language-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const lang = this.getAttribute('data-lang');
-                    alert(`تم تغيير اللغة إلى: ${this.textContent}`);
-                    closeAllMenus();
-                });
-            });
-            
+            // التبديل بين الصفحات حسب المنصة المختارة
             document.querySelectorAll('.popup-option[data-platform]').forEach(option => {
                 option.addEventListener('click', function(e) {
                     e.preventDefault();
                     const platform = this.getAttribute('data-platform');
                     
+                    // إخفاء الرئيسية وإظهار ويندوز
                     if (platform === 'windows') {
                         mainPage.style.display = 'none';
                         windowsPage.classList.add('active');
-                    } else {
+                    } 
+                    // إظهار الرئيسية (لأندرويد أو iOS) وإخفاء ويندوز
+                    else {
                         mainPage.style.display = 'block';
                         windowsPage.classList.remove('active');
+                        // يمكن إضافة منطق لإظهار تطبيقات iOS هنا إذا لزم الأمر لاحقاً
                     }
                     
                     closeAllMenus();
                 });
             });
             
+            // زر العودة للرئيسية في صفحة ويندوز
             backBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 windowsPage.classList.remove('active');
                 mainPage.style.display = 'block';
             });
             
+            // منطق Intersection Observer للحركة (Fade In Up)
             const animatedElements = document.querySelectorAll('.app-card, .page-title, .subtitle, .updates-text');
             
             const observerOptions = {
