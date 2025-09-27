@@ -5,194 +5,202 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RONIX - The Best Roblox Utility</title>
     <style>
-        :root {
-            --primary-blue: #1a73e8;
-            --dark-blue: #0d47a1;
-            --light-blue: #e8f0fe;
-            --text-dark: #202124;
-            --text-light: #5f6368;
-            --white: #ffffff;
-            --gray: #f8f9fa;
-            --border-gray: #dadce0;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Arial', sans-serif;
         }
         
         body {
-            background-color: var(--gray);
-            color: var(--text-dark);
-            line-height: 1.6;
+            background: #0a0a1a;
+            color: white;
+            min-height: 100vh;
         }
         
-        /* Header & Navigation */
-        header {
-            background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .nav-container {
+        .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Navigation */
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
+            padding: 20px 0;
+            border-bottom: 1px solid #2a2a4a;
         }
         
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-blue);
+            font-size: 28px;
+            font-weight: bold;
+            color: #4a86e8;
         }
         
-        .logo span {
-            display: block;
-            font-size: 1.2rem;
-            font-weight: 400;
-            color: var(--text-light);
-        }
-        
-        nav ul {
+        .nav-links {
             display: flex;
-            list-style: none;
+            gap: 30px;
         }
         
-        nav ul li {
-            margin-left: 2rem;
-        }
-        
-        nav ul li a {
+        .nav-links a {
+            color: #ccc;
             text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
             transition: color 0.3s;
         }
         
-        nav ul li a:hover {
-            color: var(--primary-blue);
+        .nav-links a:hover {
+            color: #4a86e8;
         }
         
         .theme-selector {
             display: flex;
             align-items: center;
+            gap: 10px;
+            color: #ccc;
         }
         
         .theme-selector select {
-            padding: 0.5rem;
-            border: 1px solid var(--border-gray);
-            border-radius: 4px;
-            background-color: var(--white);
-            margin-left: 1rem;
+            background: #1a1a2a;
+            color: white;
+            border: 1px solid #2a2a4a;
+            padding: 5px;
+            border-radius: 3px;
         }
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            color: var(--white);
-            padding: 5rem 2rem;
             text-align: center;
-        }
-        
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #1a1a2a 0%, #0a0a1a 100%);
         }
         
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
+            font-size: 48px;
+            color: #4a86e8;
+            margin-bottom: 10px;
         }
         
         .hero h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            font-weight: 300;
+            font-size: 24px;
+            color: #ccc;
+            margin-bottom: 20px;
         }
         
         .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-            line-height: 1.8;
+            font-size: 18px;
+            color: #999;
+            margin-bottom: 30px;
+            line-height: 1.6;
         }
         
         .download-btn {
             display: inline-block;
-            background-color: var(--white);
-            color: var(--primary-blue);
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
+            background: #4a86e8;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: bold;
+            transition: background 0.3s;
         }
         
         .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            background: #3a76d8;
+        }
+        
+        /* Download Section */
+        .download-section {
+            padding: 60px 20px;
+        }
+        
+        .download-card {
+            background: #1a1a2a;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 500px;
+            margin: 0 auto;
+            border: 1px solid #2a2a4a;
+        }
+        
+        .download-card h2 {
+            color: #4a86e8;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .platform-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .platform-btn {
+            flex: 1;
+            background: #2a2a4a;
+            border: none;
+            color: #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .platform-btn.active {
+            background: #4a86e8;
+            color: white;
+        }
+        
+        .platform-info {
+            background: #2a2a4a;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .status {
+            display: inline-block;
+            background: #00a000;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .version {
+            background: #4a86e8;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin: 10px 0;
+            display: inline-block;
         }
         
         /* Features Section */
         .features {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-        }
-        
-        .section-title p {
-            color: var(--text-light);
-            font-size: 1.1rem;
+            padding: 60px 20px;
         }
         
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 20px;
+            margin-top: 30px;
         }
         
         .feature-card {
-            background-color: var(--white);
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
+            background: #1a1a2a;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #2a2a4a;
         }
         
         .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
-        }
-        
-        .feature-card p {
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
+            color: #4a86e8;
+            margin-bottom: 15px;
         }
         
         .feature-list {
@@ -200,174 +208,46 @@
         }
         
         .feature-list li {
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
+            padding: 5px 0;
+            color: #ccc;
         }
         
         .feature-list li:before {
-            content: "✓";
-            color: #34a853;
+            content: "• ";
+            color: #4a86e8;
             font-weight: bold;
-            margin-right: 0.5rem;
         }
         
-        /* Download Section */
-        .download-section {
-            background-color: var(--white);
-            padding: 5rem 2rem;
-            text-align: center;
-        }
-        
-        .download-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .platform-selector {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-        
-        .platform-tab {
-            padding: 1rem 2rem;
-            background-color: var(--gray);
-            border: none;
-            border-radius: 5px 5px 0 0;
-            margin: 0 0.5rem;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        
-        .platform-tab.active {
-            background-color: var(--primary-blue);
-            color: var(--white);
-        }
-        
-        .platform-info {
-            background-color: var(--light-blue);
-            border-radius: 10px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .platform-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
-        }
-        
-        .platform-info p {
-            color: var(--text-light);
-            margin-bottom: 1rem;
-        }
-        
-        .version {
-            display: inline-block;
-            background-color: var(--primary-blue);
-            color: var(--white);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--text-dark);
-            color: var(--white);
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-        
-        .footer-links a {
-            color: var(--white);
-            text-decoration: none;
-            margin: 0 1rem;
-            opacity: 0.8;
-            transition: opacity 0.3s;
-        }
-        
-        .footer-links a:hover {
-            opacity: 1;
-        }
-        
-        .copyright {
-            opacity: 0.7;
-            font-size: 0.9rem;
-        }
-        
-        /* Responsive Design */
+        /* Responsive */
         @media (max-width: 768px) {
-            .nav-container {
+            nav {
                 flex-direction: column;
-                padding: 1rem;
-            }
-            
-            nav ul {
-                margin-top: 1rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            nav ul li {
-                margin: 0.5rem;
-            }
-            
-            .theme-selector {
-                margin-top: 1rem;
+                gap: 20px;
             }
             
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 36px;
             }
             
-            .hero h2 {
-                font-size: 1.5rem;
-            }
-            
-            .platform-selector {
-                flex-direction: column;
-            }
-            
-            .platform-tab {
-                margin: 0.2rem 0;
-                border-radius: 5px;
+            .nav-links {
+                gap: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header & Navigation -->
-    <header>
-        <div class="nav-container">
-            <div class="logo">
-                RONIX
-                <span>The Best Roblox Utility</span>
+    <div class="container">
+        <!-- Navigation -->
+        <nav>
+            <div class="logo">RONIX</div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Download</a>
+                <a href="#">Premium</a>
+                <a href="#">Contributors</a>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Download</a></li>
-                    <li><a href="#">Premium</a></li>
-                    <li><a href="#">Contributors</a></li>
-                </ul>
-            </nav>
             <div class="theme-selector">
-                <span>Choose Theme</span>
+                Choose Theme:
                 <select>
                     <option>Purple</option>
                     <option>Gray</option>
@@ -376,113 +256,92 @@
                     <option selected>Blue</option>
                 </select>
             </div>
-        </div>
-    </header>
+        </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
+        <!-- Hero Section -->
+        <section class="hero">
             <h1>RONIX</h1>
             <h2>The Best Roblox Utility</h2>
-            <p>The ultimate solution for undetected, stable, and performant automation</p>
+            <p>The ultimate solution for undetected,<br>stable, and performant automation</p>
             <a href="#" class="download-btn">Download</a>
-        </div>
-    </section>
+        </section>
 
-    <!-- Features Section -->
-    <section class="features">
-        <div class="section-title">
-            <h2>Platform Features</h2>
-            <p>Everything you need for the best Roblox experience</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3>Security & Performance</h3>
-                <p>Advanced features to ensure your safety and optimal performance</p>
-                <ul class="feature-list">
-                    <li>100% Undetected</li>
-                    <li>Stable & Reliable</li>
-                    <li>High Performance</li>
-                    <li>Regular Updates</li>
-                </ul>
-            </div>
-            <div class="feature-card">
-                <h3>Platform Info</h3>
-                <p>Comprehensive information about our utility</p>
-                <ul class="feature-list">
-                    <li>Android Utility</li>
-                    <li>Status: Released</li>
-                    <li>Version: 1.0.0</li>
-                    <li>Free with Key System</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Download Section -->
-    <section class="download-section">
-        <div class="download-container">
-            <div class="section-title">
+        <!-- Download Section -->
+        <section class="download-section">
+            <div class="download-card">
                 <h2>Download Ronix</h2>
-                <p>Choose your platform and download the utility you want</p>
+                <p style="text-align: center; color: #ccc; margin-bottom: 20px;">
+                    Choose your platform and download the utility you want that is available to you.
+                </p>
+                
+                <div class="platform-selector">
+                    <button class="platform-btn active">Android</button>
+                    <button class="platform-btn">iOS</button>
+                    <button class="platform-btn">Windows</button>
+                </div>
+                
+                <div class="platform-info">
+                    <h3>Android Utility</h3>
+                    <p>Status: <span class="status">Released</span></p>
+                    <div class="version">v1.0.0</div>
+                    <a href="#" class="download-btn" style="display: block; text-align: center;">Download for Android</a>
+                </div>
             </div>
-            
-            <div class="platform-selector">
-                <button class="platform-tab active">Android</button>
-                <button class="platform-tab">iOS</button>
-                <button class="platform-tab">Windows</button>
-            </div>
-            
-            <div class="platform-info">
-                <h3>Android Utility</h3>
-                <p>Status: <strong>Released</strong></p>
-                <div class="version">v1.0.0</div>
-                <br>
-                <a href="#" class="download-btn">Download for Android</a>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="#">Home</a>
-                <a href="#">Download</a>
-                <a href="#">Premium</a>
-                <a href="#">Contributors</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
+        <!-- Features Section -->
+        <section class="features">
+            <h2 style="text-align: center; color: #4a86e8; margin-bottom: 10px;">Platform Features</h2>
+            <p style="text-align: center; color: #ccc; margin-bottom: 30px;">Everything you need for the best experience</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Security Features</h3>
+                    <ul class="feature-list">
+                        <li>100% Undetected</li>
+                        <li>Stable & Reliable</li>
+                        <li>Secure Connection</li>
+                        <li>Regular Updates</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>Platform Info</h3>
+                    <ul class="feature-list">
+                        <li>Android Utility Available</li>
+                        <li>Status: Released</li>
+                        <li>Version 1.0.0</li>
+                        <li>Free with Key System</li>
+                    </ul>
+                </div>
             </div>
-            <div class="copyright">
-                &copy; 2023 RONIX. All rights reserved.
-            </div>
-        </div>
-    </footer>
+        </section>
+    </div>
 
     <script>
-        // Theme selector functionality
-        document.querySelector('select').addEventListener('change', function() {
-            const theme = this.value.toLowerCase();
-            document.body.className = theme;
-            
-            // Update active theme indicator
-            document.querySelector('.theme-selector span:first-child').textContent = `Current: ${this.value}`;
-        });
-        
-        // Platform tabs functionality
-        const platformTabs = document.querySelectorAll('.platform-tab');
-        platformTabs.forEach(tab => {
-            tab.addEventListener('click', function() {
-                platformTabs.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
+        // Platform selector
+        const platformBtns = document.querySelectorAll('.platform-btn');
+        platformBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                platformBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
                 
-                // Update platform info based on selection
-                const platform = this.textContent;
+                // Update platform info
+                const platform = btn.textContent;
                 const platformInfo = document.querySelector('.platform-info');
                 platformInfo.querySelector('h3').textContent = `${platform} Utility`;
                 platformInfo.querySelector('.download-btn').textContent = `Download for ${platform}`;
             });
+        });
+
+        // Theme selector
+        const themeSelect = document.querySelector('select');
+        themeSelect.addEventListener('change', (e) => {
+            const theme = e.target.value.toLowerCase();
+            document.body.style.background = theme === 'blue' ? '#0a0a1a' : 
+                                           theme === 'purple' ? '#1a0a1a' :
+                                           theme === 'red' ? '#1a0a0a' :
+                                           theme === 'gray' ? '#1a1a1a' : '#0a1a1a';
         });
     </script>
 </body>
