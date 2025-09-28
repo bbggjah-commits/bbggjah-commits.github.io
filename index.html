@@ -3,109 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المود الخارق: الأحمر والأسود والبالون الطائر</title>
+    <title>ING.GROUP.io - المود الخارق (أحمر/أسود)</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* ------------------------------------- */
-        /* التجهيزات الأساسية: الأحمر والأسود والتوهج */
-        /* ------------------------------------- */
-        
-        :root {
-            --red-main: #ff0033; /* أحمر ناري جذاب */
-            --black-deep: #0a0a0a; /* أسود عميق */
-            --light-text: #f0f0f0; /* نص فاتح */
-        }
-
-        body {
+        /* ================================================= */
+        /* التجهيزات والمتغيرات الجديدة (أحمر/أسود) */
+        /* ================================================= */
+        * {
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: var(--black-deep);
-            color: var(--light-text);
-            /* تأثير الخلفية المتوهج */
-            background: radial-gradient(circle at 50% 50%, rgba(255, 0, 51, 0.1) 0%, rgba(10, 10, 10, 1) 70%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden; /* لمنع ظهور شريط التمرير الناتج عن حركة البالونات */
-            position: relative;
+            box-sizing: border-box;
+            font-family: 'Cairo', 'Exo 2', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* ------------------------------------- */
-        /* الرسوم المتحركة للبالونات (مفتاح الجمال) */
-        /* ------------------------------------- */
+        :root {
+            --primary-color: #ff0033; /* أحمر ناري (اللون المميز) */
+            --secondary-color: #f0f0f0; /* نص فاتح */
+            --accent-color: #ff0033; 
+            --dark-bg: #0a0a0a; /* أسود عميق للخلفية */
+            --card-bg: rgba(255, 255, 255, 0.05); /* بطاقة شبه شفافة على الأسود */
+            --header-bg: rgba(0, 0, 0, 0.8);
+            --text-color-dark: #333333; /* النص الداكن الأصلي (مهم لبعض العناصر) */
+        }
 
-        /* الطبقة الحاوية للبالونات */
+        /* تنسيق الجسم والخلفية - التوهج الخارق */
+        body {
+            direction: rtl; 
+            text-align: center;
+            color: var(--secondary-color); /* لون النص الأساسي أبيض/فاتح */
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            padding-top: 70px; /* مسافة لشريط الترويسة المتحرك */
+            /* خلفية سوداء متدرجة بتوهج أحمر */
+            background-color: var(--dark-bg);
+            background: radial-gradient(circle at 50% 50%, rgba(255, 0, 51, 0.1) 0%, rgba(10, 10, 10, 1) 70%);
+        }
+
+        /* ================================================= */
+        /* حركة البالونات الخارقة (جديد) */
+        /* ================================================= */
+
         .balloon-container {
-            position: absolute;
+            position: fixed; /* Fixed ليغطي كل الشاشة */
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* لتمرير النقرات من خلالها إلى المحتوى */
-            z-index: 0; /* لتبقى خلف المحتوى */
+            pointer-events: none;
+            z-index: -1; 
+            overflow: hidden;
         }
 
         .balloon {
             position: absolute;
-            bottom: -150px; /* يبدأ من الأسفل خارج الشاشة */
+            bottom: -150px;
             width: 80px;
             height: 100px;
             border-radius: 50%;
-            opacity: 0.8;
-            box-shadow: 0 0 15px rgba(255, 0, 51, 0.5); /* توهج حول البالون */
-            /* Animation: الحركة (float) والتأرجح (swing) */
+            opacity: 0.6;
+            transition: opacity 0.3s;
+            box-shadow: 0 0 10px rgba(255, 0, 51, 0.5); 
             animation: float 15s infinite linear, swing 5s infinite alternate ease-in-out;
             transform-origin: bottom center;
         }
         
-        /* البالونات الحمراء */
         .balloon.red {
-            background-color: var(--red-main);
-            left: 10%;
-            animation-duration: 18s; /* حركة أبطأ */
-            animation-delay: 1s;
+            background-color: var(--primary-color);
         }
         
-        .balloon.red:nth-child(2) {
-            left: 45%;
-            width: 100px;
-            height: 120px;
-            animation-duration: 14s;
-            animation-delay: 5s;
-        }
-
-        .balloon.red:nth-child(4) {
-            left: 70%;
-            animation-duration: 20s;
-            animation-delay: 8s;
-        }
-
-        /* البالونات السوداء */
         .balloon.black {
-            background-color: var(--black-deep);
-            border: 2px solid var(--red-main); /* حدود حمراء لتمييزه عن الخلفية */
-            left: 25%;
-            animation-duration: 16s;
-            animation-delay: 3s;
+            background-color: var(--dark-bg);
+            border: 2px solid var(--primary-color); /* حدود حمراء لتمييزه */
         }
 
-        .balloon.black:nth-child(3) {
-            left: 85%;
-            width: 90px;
-            height: 110px;
-            animation-duration: 12s;
-            animation-delay: 6s;
-        }
-
-        .balloon.black:nth-child(5) {
-            left: 55%;
-            animation-duration: 19s;
-            animation-delay: 0s;
-        }
-
-        /* خط البالون */
         .balloon::after {
             content: '';
             position: absolute;
@@ -114,125 +91,531 @@
             transform: translateX(-50%);
             width: 2px;
             height: 50px;
-            background-color: var(--light-text);
+            background-color: var(--secondary-color);
         }
 
-        /* ------------------------------------- */
-        /* أنماط المحتوى المتحرك */
-        /* ------------------------------------- */
-
-        .content {
-            z-index: 10; /* ليظهر فوق البالونات */
-            text-align: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.5); /* خلفية شبه شفافة للمحتوى */
-            border-radius: 10px;
-            box-shadow: 0 0 40px rgba(255, 0, 51, 0.7); /* توهج حول المحتوى */
-            animation: fadeIn 2s ease-out; /* ظهور المحتوى */
-        }
-
-        h1 {
-            font-size: 4em;
-            margin-bottom: 0.2em;
-            color: var(--red-main);
-            text-shadow: 0 0 10px var(--red-main);
-            animation: heartbeat 1.5s infinite alternate; /* نبض خفيف للعنوان */
-        }
-
-        p {
-            font-size: 1.5em;
-            opacity: 0.9;
-            transition: color 0.3s;
-        }
-
-        p:hover {
-            color: var(--red-main);
-            animation: pulse 0.8s infinite alternate; /* نبض عند مرور الماوس */
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 15px 30px;
-            margin-top: 30px;
-            background-color: var(--red-main);
-            color: var(--light-text);
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 1.2em;
-            font-weight: bold;
-            border: 2px solid var(--red-main);
-            transition: all 0.3s ease;
-            animation: flash 4s infinite; /* وميض مستمر */
-        }
-
-        .cta-button:hover {
-            background-color: var(--black-deep);
-            border-color: var(--light-text);
-            color: var(--red-main);
-            transform: scale(1.1) rotate(2deg); /* تكبير ودوران خفيف */
-            box-shadow: 0 0 20px var(--red-main);
-        }
-
-        /* ------------------------------------- */
-        /* تعريفات الـ @keyframes للحركات */
-        /* ------------------------------------- */
-
-        /* حركة طفو البالون للأعلى */
         @keyframes float {
             0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(-120vh) rotate(360deg); } /* يطير خارج الشاشة ويدور */
+            100% { transform: translateY(-120vh) rotate(360deg); }
         }
 
-        /* حركة تأرجح البالون الجانبية */
         @keyframes swing {
             0% { transform: translateX(0) rotate(-2deg); }
             100% { transform: translateX(50px) rotate(2deg); }
         }
 
-        /* ظهور المحتوى */
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1); }
+        /* ================================================= */
+        /* تعديلات العناصر الرئيسية لثيم الأحمر/الأسود */
+        /* ================================================= */
+
+        /* إزالة الخلفية القديمة واستخدام البالونات */
+        .background-effects { display: none; } 
+        .gradient-overlay, .floating-shapes, .shape { display: none; }
+
+        /* شريط الترويسة الثابت */
+        .moving-header {
+            background-color: var(--header-bg);
+            color: var(--primary-color);
+            font-family: 'Orbitron', sans-serif;
+            border-bottom: 3px solid var(--primary-color);
+            text-shadow: 0 0 5px var(--primary-color);
+            animation: slideInDown 0.8s ease-out, heartbeat 4s infinite alternate; /* إضافة نبض */
         }
 
-        /* نبض خفيف للعنوان */
+        /* ترويسة الصفحة الرئيسية */
+        header {
+            top: 50px;
+            background-color: var(--header-bg);
+            backdrop-filter: blur(5px);
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.5); /* توهج أحمر */
+        }
+        
+        .logo {
+            color: var(--secondary-color);
+            text-shadow: 0 0 5px var(--primary-color);
+        }
+
+        .logo i {
+            color: var(--primary-color);
+            animation: pulse 1s infinite alternate;
+        }
+
+        .menu-toggle, .settings-toggle {
+            color: var(--secondary-color);
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .menu-toggle:hover, .settings-toggle:hover {
+            background-color: rgba(255, 0, 51, 0.1);
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* القوائم المنبثقة (Popups) */
+        .popup-menu {
+            background-color: var(--header-bg); /* أسود شفاف */
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 30px rgba(255, 0, 51, 0.8);
+        }
+        
+        .popup-menu h3 {
+            color: var(--primary-color);
+            text-shadow: 0 0 5px var(--primary-color);
+            animation: flash 3s infinite;
+        }
+
+        a.popup-option, .popup-option {
+            color: var(--secondary-color);
+            border-bottom: 1px solid rgba(255, 0, 51, 0.3);
+        }
+
+        a.popup-option:hover, .popup-option:hover {
+            background: rgba(255, 0, 51, 0.2);
+            color: var(--primary-color);
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        .close-menu {
+            color: var(--primary-color);
+        }
+
+        .close-menu:hover {
+            transform: rotate(90deg);
+        }
+
+        /* شريط التحديثات المميز */
+        .updates-text {
+            color: var(--secondary-color);
+            background: linear-gradient(90deg, var(--primary-color), var(--dark-bg));
+            border: 3px solid var(--secondary-color);
+            box-shadow: 0 0 25px var(--primary-color);
+            animation: fadeInUp 1s ease-out, pulse 2s infinite;
+        }
+
+        .page-title {
+            color: var(--primary-color);
+            background: none;
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: unset;
+            text-shadow: 0 0 10px var(--primary-color);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .subtitle {
+            color: var(--secondary-color);
+            opacity: 0.8;
+            animation: fadeInDown 1s ease-out 0.2s both;
+        }
+
+        /* شبكة التطبيقات */
+        .app-card {
+            background: var(--dark-bg);
+            border: 1px solid var(--primary-color);
+            box-shadow: 0 0 10px rgba(255, 0, 51, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInRight 0.8s ease-out both;
+        }
+
+        .app-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 0 30px var(--primary-color); /* توهج أكبر عند التمرير */
+        }
+
+        .app-title {
+            color: var(--primary-color);
+            text-shadow: 0 0 3px rgba(255, 0, 51, 0.5);
+        }
+
+        .app-description {
+            color: var(--secondary-color);
+            opacity: 0.7;
+        }
+
+        .app-image {
+            background: rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        .download-btn {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: 2px solid var(--primary-color);
+            animation: heartbeat 2s infinite;
+        }
+
+        .download-btn:hover {
+            background-color: var(--dark-bg);
+            border-color: var(--secondary-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+        
+        .download-btn i {
+            animation: shake 0.5s infinite alternate; /* حركة أيقونة التحميل */
+        }
+
+        /* صفحة ويندوز */
+        .back-btn {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 10px rgba(255, 0, 51, 0.5);
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        .back-btn:hover {
+            background: var(--dark-bg);
+            border-color: var(--secondary-color);
+            color: var(--primary-color);
+            transform: translateX(-5px) scale(1.05);
+        }
+
+        /* التذييل */
+        footer {
+            color: var(--secondary-color);
+            background-color: var(--header-bg);
+            border-top: 1px solid var(--primary-color);
+        }
+
+        /* ================================================= */
+        /* تعريفات الـ @keyframes للحركات المضافة */
+        /* ================================================= */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
         @keyframes heartbeat {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.02); opacity: 0.95; }
-            100% { transform: scale(1); opacity: 1; }
+            0% { transform: scale(1); box-shadow: 0 0 10px var(--primary-color); }
+            50% { transform: scale(1.02); box-shadow: 0 0 20px var(--primary-color); }
+            100% { transform: scale(1); box-shadow: 0 0 10px var(--primary-color); }
         }
 
-        /* وميض الزر */
-        @keyframes flash {
-            0%, 100% { box-shadow: 0 0 15px var(--red-main); }
-            50% { box-shadow: 0 0 30px var(--red-main); }
-        }
-
-        /* نبض عند التمرير على النص */
         @keyframes pulse {
             0% { transform: scale(1); }
-            100% { transform: scale(1.02); }
+            100% { transform: scale(1.01); }
+        }
+        
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
         }
 
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            50% { transform: translateX(2px); }
+            75% { transform: translateX(-2px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* ================================================= */
+        /* تنسيقات الشاشات الصغيرة (Media Queries) */
+        /* ================================================= */
+        @media (max-width: 768px) {
+            header { padding: 1rem; top: 50px; margin: 5px; }
+            .moving-header { font-size: 1rem; padding: 8px 0; }
+            .logo { font-size: 1.5rem; }
+            .container, .windows-page { padding: 1rem; }
+            .page-title { font-size: 2rem; }
+            .subtitle { font-size: 1.2rem; }
+            .updates-text { font-size: 2rem; padding: 0.5rem 1rem; }
+            .apps-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-
+    
     <div class="balloon-container">
         <div class="balloon red" style="left: 15%; animation-duration: 17s; animation-delay: 0s;"></div>
-        <div class="balloon red" style="left: 40%; animation-duration: 13s; animation-delay: 4s;"></div>
+        <div class="balloon black" style="left: 40%; animation-duration: 13s; animation-delay: 4s;"></div>
         <div class="balloon red" style="left: 75%; animation-duration: 21s; animation-delay: 9s;"></div>
-        
         <div class="balloon black" style="left: 25%; animation-duration: 19s; animation-delay: 2s;"></div>
-        <div class="balloon black" style="left: 60%; animation-duration: 15s; animation-delay: 6s;"></div>
+        <div class="balloon red" style="left: 60%; animation-duration: 15s; animation-delay: 6s;"></div>
         <div class="balloon black" style="left: 90%; animation-duration: 23s; animation-delay: 11s;"></div>
     </div>
-
-    <div class="content">
-        <h1>مود الجمال الخارق</h1>
-        <p>هنا يتجسد الفن بالحركة واللون. الأحمر والأسود يحكيان قصة الإبداع.</p>
-        <a href="#" class="cta-button">اكتشف المزيد الآن</a>
+    
+    <div class="moving-header">
+        ING.GROUP.io - منصة التطبيقات المميزة
     </div>
 
+    <div class="background-effects">
+        <div class="gradient-overlay"></div>
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="popup-menu" id="platform-menu">
+        <div class="popup-content">
+            <button class="close-menu" id="close-platform-menu">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3>اختر المنصة</h3>
+            <a href="#" class="popup-option" data-platform="android">
+                <i class="fab fa-android"></i>
+                <span>أندرويد</span>
+            </a>
+            <a href="#" class="popup-option" data-platform="ios">
+                <i class="fab fa-apple"></i>
+                <span>iOS</span>
+            </a>
+            <a href="#" class="popup-option" data-platform="windows">
+                <i class="fab fa-windows"></i>
+                <span>ويندوز</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="popup-menu" id="settings-menu">
+        <div class="popup-content">
+            <button class="close-menu" id="close-settings-menu">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3>الإعدادات والمزيد</h3>
+            <a href="https://sd-community1.github.io/" target="_blank" class="popup-option">
+                <i class="fas fa-code"></i>
+                <span>مشاريعي الأخرى</span>
+            </a>
+            <a href="https://discord.gg/8h8xtAe6YT" target="_blank" class="popup-option">
+                <i class="fab fa-discord"></i>
+                <span>سيرفري الديسكورد</span>
+            </a>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo">
+            <i class="fas fa-rocket"></i>
+            <span>ING.GROUP.io</span>
+        </div>
+        
+        <div class="header-controls">
+            <button class="settings-toggle" id="settings-toggle">
+                <i class="fas fa-cog"></i>
+            </button>
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="container" id="main-page">
+        <div class="updates-text">حمّل التحديثات الجديدة بسرعة</div>
+        <h1 class="page-title">التطبيقات المميزة (أندرويد)</h1>
+        <div class="subtitle">حمّل الآن تطبيقاتنا الحصرية لنظام أندرويد.</div>
+        
+        <div class="apps-grid">
+            <div class="app-card">
+                <div class="app-image">
+                    <img src="https://delta-executor.blog/wp-content/uploads/2025/08/cropped-Delta-Executor.webp" 
+                         alt="DLTA Executor" 
+                         onerror="this.src='https://via.placeholder.com/300x200/FFFFFF/000000?text=DLTA+Executor'">
+                </div>
+                <div class="app-info">
+                    <h2 class="app-title">DLTA Executor</h2>
+                    <p class="app-description">
+                        DLTA Executor هي طريقة ثورية جديدة لتجربة عالم البرمجة النصية مع مكتبة واسعة من الميزات التي ستجعل حياتك أسهل.
+                    </p>
+                    <a href="https://www.mediafire.com/file/ob1rdgg0yqwnw75/%25E3%2580%2594ING_GROUP%25E3%2580%2595_Delta-Executor%25E3%2580%25982.690.721%25E3%2580%2599.apk/file" 
+                       class="download-btn" target="_blank">
+                        <span>حمّل التطبيق</span>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-image">
+                    <img src="https://cdn.discordapp.com/attachments/1410679561842327592/1421450828996284527/Polish__.png?ex=68d914be&is=68d7c33e&hm=7cdb627a7bc6ec49743ac8e93beb9b426f7c4e1ebaa5da95864bca6ff7418783&" 
+                         alt="Krnl Executor" 
+                         onerror="this.src='https://via.placeholder.com/300x200/FFFFFF/000000?text=Krnl+Executor'">
+                </div>
+                <div class="app-info">
+                    <h2 class="app-title">Krnl Executor</h2>
+                    <p class="app-description">
+                        Krnl Executor هو أحد أقوى التطبيقات لتشغيل نصوص Roblox. يتميز بأداء عالي وتحديثات منتظمة.
+                    </p>
+                    <a href="https://www.mediafire.com/file/a7bz4fu84hqas80/%25E3%2580%2594ING_GROUP%25E3%2580%2595_KRNL_Executor%25E3%2580%25982.691.868%25E3%2580%2599.apk/file" 
+                       class="download-btn" target="_blank">
+                        <span>حمّل التطبيق</span>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_WK8ToQSioblMpQE5kdCG5PuS6vQt0RBvICOwX4KPkg&s=10" 
+                         alt="Ronix" 
+                         onerror="this.src='https://via.placeholder.com/300x200/FFFFFF/000000?text=Ronix'">
+                </div>
+                <div class="app-info">
+                    <h2 class="app-title">Ronix</h2>
+                    <p class="app-description">
+                        Ronix هو تطبيق مبتكر يوفر أدوات متقدمة لتشغيل النصوص البرمجية مع واجهة مستخدم سهلة الاستخدام وميزات فريدة.
+                    </p>
+                    <a href="https://www.mediafire.com/file/cjtc3movc6r45tz/%25E3%2580%2594ING_GROUP%25E3%2580%2595Ronix%25E3%2580%25982.691.868%25E3%2580%2599.apk/file" 
+                       class="download-btn" target="_blank">
+                        <span>حمّل التطبيق</span>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="windows-page" id="windows-page">
+        <a href="#" class="back-btn" id="back-btn">
+            <i class="fas fa-arrow-right"></i>
+            العودة للرئيسية
+        </a>
+        
+        <div class="updates-text">حمّل التحديثات الجديدة بسرعة</div>
+        <h1 class="page-title">تطبيقات ويندوز</h1>
+        <div class="subtitle">حمّل الآن تطبيقاتنا الحصرية لنظام ويندوز.</div>
+        
+        <div class="apps-grid">
+            <div class="app-card">
+                <div class="app-image">
+                    <img src="https://xeno-now.pages.dev/images/xenos.png" 
+                         alt="Xeno Executor" 
+                         onerror="this.src='https://via.placeholder.com/300x200/FFFFFF/000000?text=Xeno+Executor'">
+                </div>
+                <div class="app-info">
+                    <h2 class="app-title">Xeno Executor</h2>
+                    <p class="app-description">
+                        Xeno Executor هو تطبيق قوي لنظام ويندوز لتنفيذ النصوص البرمجية المتقدمة. مثالي للمطورين والمستخدمين المتقدمين بميزات مميزة.
+                    </p>
+                    <a href="https://download2340.mediafire.com/n8kb7ohk1vigbaDJWK63_hIF-MN6FpnDesrdbrCwxiI3jmKmJLotYKvydnXjG9rZID0VS71l8s3X9XVU4IJvUQszy22PNg4L6mGUxRyxD063dN0-tpTx0sS8SDH5FIDYP0LL7AEpE10uVKQUDim4ezuuL4g9t2W5hqDty4mn-rtb/jiyom2u60r8sw8p/Xeno-v1.2.65.zip" 
+                       class="download-btn" target="_blank">
+                        <span>حمّل التطبيق</span>
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 ING.GROUP.io. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const settingsToggle = document.getElementById('settings-toggle');
+            const platformMenu = document.getElementById('platform-menu');
+            const settingsMenu = document.getElementById('settings-menu');
+            const overlay = document.getElementById('overlay');
+            const closePlatformMenu = document.getElementById('close-platform-menu');
+            const closeSettingsMenu = document.getElementById('close-settings-menu');
+            const mainPage = document.getElementById('main-page');
+            const windowsPage = document.getElementById('windows-page');
+            const backBtn = document.getElementById('back-btn');
+            
+            // إظهار وإخفاء قائمة المنصات
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                platformMenu.classList.add('active');
+                settingsMenu.classList.remove('active');
+                overlay.classList.add('active');
+            });
+            
+            // إظهار وإخفاء قائمة الإعدادات
+            settingsToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                settingsMenu.classList.add('active');
+                platformMenu.classList.remove('active');
+                overlay.classList.add('active');
+            });
+            
+            // إغلاق جميع القوائم
+            function closeAllMenus() {
+                platformMenu.classList.remove('active');
+                settingsMenu.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+            
+            closePlatformMenu.addEventListener('click', closeAllMenus);
+            closeSettingsMenu.addEventListener('click', closeAllMenus);
+            overlay.addEventListener('click', closeAllMenus);
+            
+            // التبديل بين الصفحات حسب المنصة المختارة
+            document.querySelectorAll('.popup-option[data-platform]').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const platform = this.getAttribute('data-platform');
+                    
+                    // إخفاء الرئيسية وإظهار ويندوز
+                    if (platform === 'windows') {
+                        mainPage.style.display = 'none';
+                        windowsPage.classList.add('active');
+                    } 
+                    // إظهار الرئيسية (لأندرويد أو iOS) وإخفاء ويندوز
+                    else {
+                        mainPage.style.display = 'block';
+                        windowsPage.classList.remove('active');
+                        // يمكن إضافة منطق لإظهار تطبيقات iOS هنا إذا لزم الأمر لاحقاً
+                    }
+                    
+                    closeAllMenus();
+                });
+            });
+            
+            // زر العودة للرئيسية في صفحة ويندوز
+            backBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                windowsPage.classList.remove('active');
+                mainPage.style.display = 'block';
+            });
+            
+            // منطق Intersection Observer للحركة (Fade In Up)
+            // تم تعديل هذا الجزء ليناسب الثيم الجديد (FadeInDown/FadeInRight)
+            const animatedElements = document.querySelectorAll('.page-title, .subtitle, .updates-text, .app-card');
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0) translateX(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            animatedElements.forEach(element => {
+                element.style.opacity = 0;
+                // تطبيق حركة مختلفة حسب العنصر
+                if (element.classList.contains('app-card')) {
+                    element.style.transform = 'translateX(30px)'; // حركة من اليمين
+                    element.style.transition = 'opacity 0.8s, transform 0.8s';
+                } else if (element.classList.contains('page-title') || element.classList.contains('subtitle')) {
+                    element.style.transform = 'translateY(-30px)'; // حركة من الأعلى
+                    element.style.transition = 'opacity 1s, transform 1s';
+                } else {
+                    element.style.transform = 'translateY(30px)';
+                    element.style.transition = 'opacity 1s, transform 1s';
+                }
+                observer.observe(element);
+            });
+        });
+    </script>
 </body>
 </html>
