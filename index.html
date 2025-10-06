@@ -3,60 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ING.GROUP.io - Dark Executor Hub</title>
+    <title>ING.GROUP.io - منصة التطبيقات المميزة</title>
     
+    <!-- الخطوط المميزة -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Black+Ops+One&family=Orbitron:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Tajawal:wght@300;400;500;700;800&family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* ============================== */
-        /* التنسيقات الأساسية والمتغيرات - الثيم الأسود الطاغي */
+        /* التنسيقات الأساسية والمتغيرات */
         /* ============================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            /* استخدام Almarai للعربية و Orbitron/Black Ops One للإنجليزية التقنية */
-            font-family: 'Almarai', 'Orbitron', 'Black Ops One', sans-serif;
         }
 
         :root {
-            --primary-color: #000000;       /* أسود طاغي */
-            --secondary-color: #1a1a1a;     /* أسود داكن للخلفيات الداخلية */
-            --accent-color: #00ff7f;        /* أخضر نيون (Neon Green) للتباين */
-            --text-color: #f0f0f0;          /* نص فاتح على خلفية داكنة */
-            --text-secondary: #aaaaaa;      /* نص ثانوي */
-            --card-bg: rgba(0, 0, 0, 0.9);  /* خلفية البطاقة شبه شفافة (أسود) */
-            --header-bg: rgba(0, 0, 0, 0.95); /* أسود شبه شفاف للترويسة */
+            --primary-color: #000000;
+            --secondary-color: #ffffff;
+            --accent-gold: #FFD700;
+            --accent-silver: #C0C0C0;
+            --text-light: #f8f9fa;
+            --text-dark: #2c3e50;
+            --card-bg: rgba(15, 15, 15, 0.95);
+            --header-bg: rgba(0, 0, 0, 0.98);
+            --gradient-primary: linear-gradient(135deg, #000000 0%, #2c3e50 100%);
+            --gradient-accent: linear-gradient(135deg, #FFD700 0%, #C0C0C0 100%);
         }
 
         /* تنسيق الجسم والخلفية */
         body {
-            /* خلفية سوداء خالصة أو تدرج داكن */
-            background: var(--primary-color);
-            direction: rtl; 
+            background: var(--gradient-primary);
+            direction: rtl;
             text-align: center;
-            color: var(--text-color);
+            color: var(--text-light);
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
-            padding-top: 50px; /* مسافة لشريط الترويسة المتحرك */
-        }
-        
-        /* إعداد الخط الإنجليزي القوي */
-        .logo span, .moving-header, .updates-text {
-            font-family: 'Black Ops One', sans-serif;
-            letter-spacing: 2px;
+            padding-top: 60px;
+            font-family: 'Tajawal', 'El Messiri', sans-serif;
         }
 
         /* ============================== */
-        /* عناصر الخلفية والتأثيرات (Dark/Cyber) */
+        /* عناصر الخلفية والتأثيرات */
         /* ============================== */
         .background-effects {
-            /* ... (إبقاء نفس التأثيرات مع تعديل الألوان) ... */
             position: fixed;
             top: 0;
             left: 0;
@@ -66,274 +61,594 @@
             overflow: hidden;
         }
 
-        /* تراكب التدرج اللوني - داكن جداً */
         .gradient-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 100%);
+            background: radial-gradient(circle at 20% 80%, rgba(255,215,0,0.1) 0%, transparent 50%),
+                       radial-gradient(circle at 80% 20%, rgba(192,192,192,0.1) 0%, transparent 50%),
+                       radial-gradient(circle at 40% 40%, rgba(0,0,0,0.8) 0%, transparent 50%);
         }
 
-        /* الأشكال العائمة - بلون التمييز */
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
         .shape {
-            /* ... (تأثيرات الأشكال كما هي) ... */
             position: absolute;
             border-radius: 50%;
-            opacity: 0.05; /* شفافية قليلة جداً */
+            opacity: 0.05;
             animation: float 20s infinite linear;
-            filter: blur(5px);
+            background: var(--gradient-accent);
         }
+
         .shape:nth-child(1) {
-            width: 100px; height: 100px; background: var(--accent-color); /* نيون */
-            top: 10%; right: 10%; animation-delay: 0s;
+            width: 120px; height: 120px;
+            top: 15%; right: 10%; animation-delay: 0s;
         }
         .shape:nth-child(2) {
-            width: 150px; height: 150px; background: #333; /* رمادي داكن */
-            top: 60%; left: 80%; animation-delay: -7s;
+            width: 180px; height: 180px;
+            top: 65%; left: 15%; animation-delay: -7s;
         }
         .shape:nth-child(3) {
-            width: 200px; height: 200px; background: var(--accent-color); /* نيون */
-            top: 30%; right: 60%; animation-delay: -14s;
+            width: 220px; height: 220px;
+            top: 35%; right: 65%; animation-delay: -14s;
         }
 
         @keyframes float {
             0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            50% { transform: translate(25px, 25px) rotate(180deg) scale(1.05); }
+            33% { transform: translate(30px, 30px) rotate(120deg) scale(1.1); }
+            66% { transform: translate(-20px, 20px) rotate(240deg) scale(0.9); }
             100% { transform: translate(0, 0) rotate(360deg) scale(1); }
         }
 
         /* ============================== */
-        /* شريط الترويسة الثابت (Moving Header) */
+        /* شريط الترويسة المتحرك */
         /* ============================== */
         .moving-header {
-            /* ... (تنسيقات شريط الترويسة) ... */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background-color: var(--primary-color); 
-            color: var(--accent-color); /* نيون */
-            padding: 10px 0;
+            background: var(--gradient-primary);
+            color: var(--accent-gold);
+            padding: 15px 0;
             text-align: center;
-            font-weight: 900; 
-            font-size: 1.2em;
+            font-weight: 800;
+            font-size: 1.3em;
             z-index: 1000;
-            box-shadow: 0 0 15px rgba(0, 255, 127, 0.5); /* ظل نيون */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
             animation: slideInDown 0.8s ease-out;
-            border-bottom: 2px solid var(--accent-color);
+            font-family: 'El Messiri', sans-serif;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 10px rgba(255,215,0,0.3);
+            border-bottom: 2px solid var(--accent-gold);
+        }
+
+        @keyframes slideInDown {
+            from { 
+                transform: translateY(-100%); 
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0); 
+                opacity: 1;
+            }
         }
 
         /* ============================== */
-        /* ترويسة الصفحة الرئيسية (Header) */
+        /* ترويسة الصفحة الرئيسية */
         /* ============================== */
         header {
-            /* ... (تنسيقات الترويسة) ... */
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
-            background-color: var(--card-bg); /* أسود شبه شفاف */
-            backdrop-filter: blur(10px);
+            padding: 1.2rem 2.5rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
             position: sticky;
-            top: 50px;
+            top: 60px;
             z-index: 900;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 255, 127, 0.2);
-            max-width: 1200px;
-            margin: 10px auto;
-            border: 1px solid rgba(0, 255, 127, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 1s ease-out;
+            max-width: 1300px;
+            margin: 15px auto;
+            border: 1px solid rgba(255,215,0,0.2);
         }
         
         .logo {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--text-color);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--accent-gold);
             display: flex;
             align-items: center;
-            font-family: 'Black Ops One', sans-serif; /* استخدام Black Ops One للشعار */
-            letter-spacing: 3px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(255,215,0,0.5);
         }
 
         .logo i {
-            margin-left: 10px;
-            color: var(--accent-color); /* أيقونة بلون التمييز النيون */
-            text-shadow: 0 0 5px var(--accent-color);
+            margin-left: 12px;
+            color: var(--accent-gold);
+            filter: drop-shadow(0 0 10px rgba(255,215,0,0.7));
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 20px;
         }
 
         .menu-toggle, .settings-toggle {
-            /* ... (أزرار التحكم) ... */
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--accent-color);
+            background: rgba(255,215,0,0.1);
+            border: 2px solid var(--accent-gold);
+            font-size: 1.6rem;
+            color: var(--accent-gold);
             cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 5px;
-            transition: all 0.3s;
-            text-shadow: 0 0 3px var(--accent-color);
+            padding: 8px 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
         }
 
         .menu-toggle:hover, .settings-toggle:hover {
-            background-color: rgba(0, 255, 127, 0.1);
+            background: rgba(255,215,0,0.2);
             transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 20px rgba(255,215,0,0.4);
         }
 
         /* ============================== */
-        /* القوائم المنبثقة (Popups) */
+        /* القوائم المنبثقة */
         /* ============================== */
         .popup-menu {
-            /* ... (تنسيقات القائمة المنبثقة) ... */
-            background-color: var(--secondary-color);
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 255, 127, 0.4);
-            border: 2px solid var(--accent-color);
-            color: var(--text-color);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            z-index: 1000;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            min-width: 280px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--accent-gold);
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .popup-menu h3 {
-            color: var(--accent-color);
-            font-family: 'Almarai', sans-serif;
-        }
-
-        a.popup-option {
-            color: var(--text-color);
-            font-weight: 700;
-        }
-
-        a.popup-option:hover {
-            background: rgba(0, 255, 127, 0.1);
-            color: var(--accent-color);
-        }
-
-        .close-menu {
-            color: var(--accent-color);
+        .popup-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
         }
         
-        .overlay {
-            background: rgba(0, 0, 0, 0.8); /* تظليل أعمق */
+        .popup-menu h3 {
+            margin-bottom: 1.5rem;
+            color: var(--accent-gold);
+            font-size: 1.8rem;
+            font-family: 'El Messiri', sans-serif;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(255,215,0,0.3);
         }
 
-        /* ============================== */
-        /* المحتوى الرئيسي والبطاقات (Dark Theme) */
-        /* ============================== */
-        .updates-text {
-            /* ... (شريط التحديثات) ... */
-            text-align: center;
-            font-size: 3rem;
-            font-weight: 900;
-            margin: 4rem 0 2rem; 
-            color: var(--primary-color); /* نص أسود */
-            background: var(--accent-color); /* خلفية نيون */
-            padding: 1rem 2rem;
-            border-radius: 20px;
-            display: inline-block;
-            border: 3px solid #fff;
-            box-shadow: 0 0 30px rgba(0, 255, 127, 0.8);
-            font-family: 'Black Ops One', sans-serif;
-        }
-
-        .page-title {
-            /* ... (عنوان الصفحة) ... */
-            font-size: 2.5rem;
-            background: linear-gradient(to right, var(--accent-color), #f0f0f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(0, 255, 127, 0.5);
-            font-family: 'Almarai', sans-serif;
-            font-weight: 800;
-        }
-
-        .subtitle {
-            /* ... (العنوان الفرعي) ... */
-            color: var(--text-secondary);
-            font-family: 'Almarai', sans-serif;
-        }
-
-        .app-card {
-            /* ... (تنسيقات بطاقة التطبيق) ... */
-            background: var(--secondary-color);
-            border-radius: 15px;
-            border: 1px solid rgba(0, 255, 127, 0.1);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .app-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6), 0 0 15px var(--accent-color); /* ظل نيون على التحويم */
-        }
-
-        .app-image {
-            /* ... (صورة التطبيق) ... */
-            background: var(--primary-color);
-        }
-
-        .app-title {
-            /* ... (عنوان التطبيق) ... */
-            color: var(--accent-color);
-            font-weight: 800;
-            font-family: 'Almarai', sans-serif;
-        }
-
-        .app-description {
-            /* ... (وصف التطبيق) ... */
-            color: var(--text-secondary);
-            font-family: 'Almarai', sans-serif;
-        }
-
-        /* تحديث: تبديل اسم الزر إلى "Download Executor" */
-        .download-btn {
-            /* ... (زر التحميل) ... */
+        a.popup-option, .popup-option {
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: var(--accent-color); /* خلفية نيون */
-            color: var(--primary-color); /* نص أسود */
+            padding: 1.2rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            margin: 0.8rem 0;
+            font-weight: 600;
+            cursor: pointer;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,215,0,0.3);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        a.popup-option:hover, .popup-option:hover {
+            background: rgba(255,215,0,0.15);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(255,215,0,0.2);
+            border-color: var(--accent-gold);
+        }
+
+        .popup-option i {
+            margin-left: 12px;
+            font-size: 1.6rem;
+            color: var(--accent-gold);
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background: none;
+            border: none;
+            color: var(--accent-gold);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 0.6rem;
+            transition: all 0.3s ease;
+            border-radius: 50%;
+        }
+
+        .close-menu:hover {
+            color: var(--accent-silver);
+            transform: rotate(90deg);
+            background: rgba(255,215,0,0.1);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ============================== */
+        /* المحتوى الرئيسي */
+        /* ============================== */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            text-align: center;
+            min-height: calc(100vh - 120px);
+        }
+        
+        /* شريط التحديثات المميز */
+        .updates-text {
+            text-align: center;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin: 3rem 0 2rem;
+            color: var(--accent-gold);
+            background: var(--gradient-primary);
+            padding: 1.5rem 3rem;
+            border-radius: 25px;
+            display: inline-block;
+            border: 3px solid var(--accent-gold);
+            box-shadow: 0 0 30px rgba(255,215,0,0.3);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            animation: glow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px rgba(255,215,0,0.3);
+                text-shadow: 0 0 20px rgba(255,215,0,0.5);
+            }
+            to {
+                box-shadow: 0 0 30px rgba(255,215,0,0.6);
+                text-shadow: 0 0 30px rgba(255,215,0,0.8);
+            }
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-silver));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255,215,0,0.3);
+            font-family: 'El Messiri', sans-serif;
             font-weight: 800;
-            padding: 1rem;
-            border: 3px solid var(--accent-color);
-            border-radius: 10px;
-            transition: all 0.3s;
+            letter-spacing: 1.5px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 4rem;
+            font-size: 1.6rem;
+            color: var(--accent-silver);
+            font-weight: 400;
+            letter-spacing: 1px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        /* شبكة التطبيقات */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .app-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,215,0,0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            animation: fadeInUp 0.8s ease-out both;
+            position: relative;
+        }
+
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255,215,0,0.2);
+            border-color: var(--accent-gold);
+        }
+
+        .app-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .app-image {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,215,0,0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .app-card:hover .app-image::after {
+            transform: translateX(100%);
+        }
+
+        .app-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+            transition: transform 0.4s ease;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+        }
+
+        .app-card:hover .app-image img {
+            transform: scale(1.05);
+        }
+
+        .app-info {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-family: 'El Messiri', sans-serif;
+            text-shadow: 0 2px 10px rgba(255,215,0,0.3);
+        }
+
+        .app-description {
+            color: var(--accent-silver);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            flex-grow: 1;
+            font-weight: 400;
+            font-size: 1.1rem;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-accent);
+            color: var(--primary-color);
+            font-weight: 800;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-decoration: none;
             margin-top: auto;
             letter-spacing: 1px;
-            font-family: 'Almarai', sans-serif;
-            font-size: 1.1em;
-            text-shadow: none;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(255,215,0,0.3);
         }
 
         .download-btn:hover {
-            background-color: var(--primary-color); /* العكس: خلفية سوداء */
-            color: var(--accent-color); /* نص نيون */
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(0, 255, 127, 0.8);
+            background: linear-gradient(135deg, #FFE55C, #D4D4D4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,215,0,0.5);
+            letter-spacing: 1.5px;
+        }
+
+        .download-btn i {
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .download-btn:hover i {
+            transform: translateY(2px) scale(1.1);
         }
 
         /* ============================== */
-        /* التذييل (Footer) */
+        /* صفحة ويندوز */
+        /* ============================== */
+        .windows-page {
+            display: none;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            text-align: center;
+            min-height: calc(100vh - 120px);
+        }
+
+        .windows-page.active {
+            display: block;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            background: var(--gradient-accent);
+            color: var(--primary-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            box-shadow: 0 5px 15px rgba(255,215,0,0.3);
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, #FFE55C, #D4D4D4);
+            transform: translateX(-5px);
+            box-shadow: 0 8px 20px rgba(255,215,0,0.5);
+        }
+
+        .back-btn i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover i {
+            transform: translateX(-3px);
+        }
+
+        /* ============================== */
+        /* التذييل */
         /* ============================== */
         footer {
-            /* ... (تذييل بلون داكن) ... */
-            border-top: 1px solid rgba(0, 255, 127, 0.1);
-            color: var(--text-secondary);
-            background-color: var(--secondary-color);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 2px solid rgba(255,215,0,0.3);
+            color: var(--accent-silver);
+            font-size: 1rem;
+            font-weight: 400;
+            background: var(--card-bg);
+            font-family: 'Tajawal', sans-serif;
         }
-        
-        /* ... (بقية التنسيقات والسكريبت تبقى كما هي) ... */
-        
-        /* الرسوم المتحركة (Animations) */
+
+        /* ============================== */
+        /* الرسوم المتحركة */
+        /* ============================== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(50px); } /* زيادة الحركة */
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0; 
+                transform: translateY(40px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
-        
+
+        /* ============================== */
+        /* تنسيقات الشاشات الصغيرة */
+        /* ============================== */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+                top: 60px;
+                margin: 10px;
+            }
+
+            .moving-header {
+                font-size: 1.1rem;
+                padding: 12px 0;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .container, .windows-page {
+                padding: 2rem 1rem;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .subtitle {
+                font-size: 1.3rem;
+            }
+
+            .updates-text {
+                font-size: 2.2rem;
+                padding: 1rem 2rem;
+            }
+
+            .apps-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .app-card {
+                margin: 0 10px;
+            }
+        }
     </style>
 </head>
 <body>
     
     <div class="moving-header">
-        ING.GROUP.io - THE ULTIMATE EXECUTOR HUB
+        🚀 ING.GROUP.io - منصة التطبيقات المميزة 🚀
     </div>
 
     <div class="background-effects">
@@ -346,7 +661,7 @@
     </div>
 
     <div class="overlay" id="overlay"></div>
-    
+
     <div class="popup-menu" id="platform-menu">
         <div class="popup-content">
             <button class="close-menu" id="close-platform-menu">
@@ -387,31 +702,31 @@
 
     <header>
         <div class="logo">
-            <i class="fas fa-ghost"></i> 
-            <span>ING.GROUP.io</span>
+            <i class="fas fa-crown"></i>
+            <span>ING.GROUP</span>
         </div>
         
         <div class="header-controls">
             <button class="settings-toggle" id="settings-toggle">
-                <i class="fas fa-cog"></i>
+                <i class="fas fa-sliders-h"></i>
             </button>
             <button class="menu-toggle" id="menu-toggle">
-                <i class="fas fa-ellipsis-v"></i>
+                <i class="fas fa-th-large"></i>
             </button>
         </div>
     </header>
 
     <div class="container" id="main-page">
-        <div class="updates-text">حمّل التحديثات الجديدة بسرعة</div>
-        <h1 class="page-title">التطبيقات المميزة (أندرويد)</h1>
-        <div class="subtitle">حمّل الآن تطبيقاتنا الحصرية لنظام أندرويد.</div>
+        <div class="updates-text">🚀 التحديثات الحصرية 🚀</div>
+        <h1 class="page-title">التطبيقات المميزة</h1>
+        <div class="subtitle">اكتشف أقوى التطبيقات والأدوات الحصرية</div>
         
         <div class="apps-grid">
             <div class="app-card">
                 <div class="app-image">
                     <img src="https://delta-executor.blog/wp-content/uploads/2025/08/cropped-Delta-Executor.webp" 
                          alt="DLTA Executor" 
-                         onerror="this.src='https://via.placeholder.com/300x200/000000/00ff7f?text=DLTA+Executor'">
+                         onerror="this.src='https://via.placeholder.com/300x200/000000/FFD700?text=DLTA+Executor'">
                 </div>
                 <div class="app-info">
                     <h2 class="app-title">DLTA Executor</h2>
@@ -430,7 +745,7 @@
                 <div class="app-image">
                     <img src="https://i.postimg.cc/7L6LTHQX/72ad0919879d7689ef088d8493088ad2.jpg" 
                          alt="Krnl Executor" 
-                         onerror="this.src='https://via.placeholder.com/300x200/000000/00ff7f?text=Krnl+Executor'">
+                         onerror="this.src='https://via.placeholder.com/300x200/000000/FFD700?text=Krnl+Executor'">
                 </div>
                 <div class="app-info">
                     <h2 class="app-title">Krnl Executor</h2>
@@ -449,7 +764,7 @@
                 <div class="app-image">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_WK8ToQSioblMpQE5kdCG5PuS6vQt0RBvICOwX4KPkg&s=10" 
                          alt="Ronix" 
-                         onerror="this.src='https://via.placeholder.com/300x200/000000/00ff7f?text=Ronix'">
+                         onerror="this.src='https://via.placeholder.com/300x200/000000/FFD700?text=Ronix'">
                 </div>
                 <div class="app-info">
                     <h2 class="app-title">Ronix</h2>
@@ -472,16 +787,16 @@
             العودة للرئيسية
         </a>
         
-        <div class="updates-text">حمّل التحديثات الجديدة بسرعة</div>
-        <h1 class="page-title">تطبيقات ويندوز</h1>
-        <div class="subtitle">حمّل الآن تطبيقاتنا الحصرية لنظام ويندوز.</div>
+        <div class="updates-text">🚀 تطبيقات ويندوز 🚀</div>
+        <h1 class="page-title">منصة ويندوز</h1>
+        <div class="subtitle">أقوى التطبيقات والأدوات لنظام ويندوز</div>
         
         <div class="apps-grid">
             <div class="app-card">
                 <div class="app-image">
                     <img src="https://xeno-now.pages.dev/images/xenos.png" 
                          alt="Xeno Executor" 
-                         onerror="this.src='https://via.placeholder.com/300x200/000000/00ff7f?text=Xeno+Executor'">
+                         onerror="this.src='https://via.placeholder.com/300x200/000000/FFD700?text=Xeno+Executor'">
                 </div>
                 <div class="app-info">
                     <h2 class="app-title">Xeno Executor</h2>
@@ -499,7 +814,7 @@
     </div>
 
     <footer>
-        <p>© 2025 ING.GROUP.io. جميع الحقوق محفوظة.</p>
+        <p>© 2025 ING.GROUP.io. جميع الحقوق محفوظة. | تصميم وتطوير حصري</p>
     </footer>
 
     <script>
@@ -548,16 +863,12 @@
                     e.preventDefault();
                     const platform = this.getAttribute('data-platform');
                     
-                    // إخفاء الرئيسية وإظهار ويندوز
                     if (platform === 'windows') {
                         mainPage.style.display = 'none';
                         windowsPage.classList.add('active');
-                    } 
-                    // إظهار الرئيسية (لأندرويد أو iOS) وإخفاء ويندوز
-                    else {
+                    } else {
                         mainPage.style.display = 'block';
                         windowsPage.classList.remove('active');
-                        // يمكن إضافة منطق لإظهار تطبيقات iOS هنا إذا لزم الأمر لاحقاً
                     }
                     
                     closeAllMenus();
@@ -571,7 +882,7 @@
                 mainPage.style.display = 'block';
             });
             
-            // منطق Intersection Observer للحركة (Fade In Up)
+            // منطق Intersection Observer للحركة
             const animatedElements = document.querySelectorAll('.app-card, .page-title, .subtitle, .updates-text');
             
             const observerOptions = {
@@ -581,19 +892,17 @@
             
             const observer = new IntersectionObserver(function(entries) {
                 entries.forEach(entry => {
-                    // زيادة الشفافية والتحويل فقط عند الدخول
                     if (entry.isIntersecting) {
                         entry.target.style.opacity = 1;
                         entry.target.style.transform = 'translateY(0)';
                     }
-                    // إبقاء العناصر مخفية عند الخروج حتى لا يتم تكرار الرسوم المتحركة
                 });
             }, observerOptions);
             
             animatedElements.forEach(element => {
                 element.style.opacity = 0;
-                element.style.transform = 'translateY(20px)';
-                element.style.transition = 'opacity 0.7s ease-out, transform 0.7s ease-out';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'opacity 0.6s, transform 0.6s';
                 observer.observe(element);
             });
         });
