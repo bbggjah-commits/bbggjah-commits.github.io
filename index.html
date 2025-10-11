@@ -1,429 +1,296 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VNDXS.Group - Discord Community</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>VX Community</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Hegarty&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
     <style>
+        /* أنماط CSS الأساسية */
         :root {
-            --dark-blue: #0a0a2a;
-            --medium-blue: #1a1a3a;
-            --light-blue: #2a2a5a;
-            --accent-blue: #5865F2;
-            --discord-purple: #7289DA;
-            --text-light: #ffffff;
-            --text-gold: #ffd700;
+            --navy-blue: #000080; /* لون كحلي */
+            --logo-url: url('https://imagizer.imageshack.com/v2/320xq70/r/924/qBbOtR.png');
+            --background-image-url: url('1000021297.jpg'); /* اسم ملف الخلفية المرفوع */
         }
-        
-        * {
+
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, var(--dark-blue) 0%, #000000 50%, var(--dark-blue) 100%);
-            color: var(--text-light);
-            line-height: 1.6;
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-            width: 100%;
-        }
-        
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--discord-purple) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(88, 101, 242, 0.5);
-            margin-bottom: 1rem;
-            letter-spacing: 3px;
-        }
-        
-        .subtitle {
-            font-family: 'Almarai', sans-serif;
-            font-size: 1.8rem;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-        
-        .discord-card {
-            background: rgba(30, 33, 58, 0.8);
-            border-radius: 20px;
-            padding: 3rem;
-            width: 100%;
-            max-width: 800px;
-            text-align: center;
-            border: 2px solid var(--accent-blue);
-            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.3);
-            margin-bottom: 3rem;
-            backdrop-filter: blur(10px);
-        }
-        
-        .discord-icon {
-            font-size: 4rem;
-            color: var(--discord-purple);
-            margin-bottom: 1.5rem;
-        }
-        
-        .discord-title {
-            font-family: 'Almarai', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--text-light);
-        }
-        
-        .discord-description {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: #cccccc;
-            line-height: 1.8;
-        }
-        
-        .discord-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--discord-purple) 100%);
             color: white;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            padding: 1.2rem 2.5rem;
-            border-radius: 12px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+            /* تطبيق الخط المخصص */
+            font-family: "BBH Sans Hegarty", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            min-height: 200vh; /* لجعل الصفحة قابلة للتمرير لاختبار شريط التنقل الثابت */
         }
-        
-        .discord-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(88, 101, 242, 0.6);
-        }
-        
-        .discord-btn i {
-            font-size: 1.8rem;
-            margin-left: 10px;
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            width: 100%;
-            margin-bottom: 3rem;
-        }
-        
-        .feature-card {
-            background: rgba(20, 23, 48, 0.7);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            border: 1px solid rgba(88, 101, 242, 0.3);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent-blue);
-            box-shadow: 0 10px 25px rgba(88, 101, 242, 0.3);
-        }
-        
-        .feature-icon {
-            font-size: 3rem;
-            color: var(--accent-blue);
-            margin-bottom: 1.5rem;
-        }
-        
-        .feature-title {
-            font-family: 'Almarai', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--text-light);
-        }
-        
-        .feature-description {
-            font-size: 1.1rem;
-            color: #bbbbbb;
-            line-height: 1.6;
-        }
-        
-        .special-text {
-            font-family: 'Almarai', sans-serif;
-            font-size: 2.2rem;
-            text-align: center;
-            margin: 3rem 0;
-            color: var(--text-gold);
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-            padding: 1.5rem;
-            border-radius: 15px;
-            background: rgba(30, 25, 0, 0.3);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            font-weight: 700;
-        }
-        
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            max-width: 800px;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--accent-blue);
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-            font-size: 1.2rem;
-            color: #cccccc;
-        }
-        
-        .stars {
+
+        /* ----------------------- */
+        /* قسم الخلفية المتحركة */
+        /* ----------------------- */
+        .animated-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background-image: var(--background-image-url);
+            background-size: cover;
+            background-position: center;
+            z-index: -1; /* خلف كل شيء */
+            overflow: hidden;
+            
+            /* تطبيق الحركة - تحريك طفيف جداً للخلفية */
+            animation: backgroundPan 30s linear infinite alternate;
+        }
+
+        @keyframes backgroundPan {
+            0% {
+                background-position: 0% 0%;
+                transform: scale(1);
+            }
+            100% {
+                background-position: 100% 100%;
+                transform: scale(1.05); /* تكبير طفيف للمحاكاة */
+            }
+        }
+        
+        /* ----------------------- */
+        /* شريط التنقل (Navbar) الثابت */
+        /* ----------------------- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            /* خلفية شبه شفافة لشريط التنقل */
+            background-color: rgba(0, 0, 0, 0.5); 
+            z-index: 1000; /* للتأكد من أنه فوق كل شيء آخر */
+        }
+
+        /* عنوان الموقع في الوسط */
+        .site-title {
+            position: absolute; /* لوضعها فوق الـ navbar */
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--navy-blue);
+            text-decoration: none;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        /* الوجو المتحرك (الشعار الصغير) في الوسط على شريط التنقل */
+        .navbar-logo {
+            display: block;
+            width: 50px; /* حجم صغير نسبياً */
+            height: 50px;
+            background-image: var(--logo-url);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 0 auto; /* للتوسيط في شريط التنقل */
+        }
+
+        /* زر قائمة النقاط الثلاثة في الزاوية اليسرى */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin-left: 20px; /* دفعها إلى اليسار */
+        }
+
+        .dropbtn {
+            background-color: transparent;
+            color: white;
+            padding: 10px;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #0d0d0d;
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            right: 0; /* لجعل القائمة تظهر من اليسار */
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #1a1a1a;
+        }
+
+        /* إظهار القائمة عند التمرير أو النقر */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        /* ----------------------- */
+        /* قسم النجوم المتحركة */
+        /* ----------------------- */
+        .star-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* لمنع النجوم من حجب النقر */
+            overflow: hidden;
             z-index: -1;
         }
-        
+
         .star {
             position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            animation: twinkle 5s infinite;
+            color: #ffffff; /* لون النجمة */
+            font-size: 10px;
+            animation: moveStar 10s linear infinite, blink 1s infinite alternate; /* حركة + وميض */
         }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
+
+        @keyframes moveStar {
+            0% {
+                transform: translateX(-100vw);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100vw);
+                opacity: 0;
+            }
         }
-        
-        footer {
-            margin-top: auto;
-            padding: 2rem 0;
+
+        @keyframes blink {
+            0% { opacity: 0.2; }
+            100% { opacity: 1; }
+        }
+
+        /* ----------------------- */
+        /* المحتوى الرئيسي */
+        /* ----------------------- */
+        .main-content {
+            padding-top: 100px; /* مساحة تحت شريط التنقل الثابت */
             text-align: center;
-            width: 100%;
-            border-top: 1px solid rgba(88, 101, 242, 0.2);
         }
-        
-        footer p {
-            font-size: 1.2rem;
-            color: #a0c0ff;
-            font-family: 'Tajawal', sans-serif;
+
+        .cta-button {
+            margin-top: 50px;
+            padding: 15px 30px;
+            background-color: var(--navy-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s;
         }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
+
+        .cta-button:hover {
+            background-color: #000066;
         }
-        
-        .social-link {
-            color: var(--text-light);
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        .social-link:hover {
-            color: var(--accent-blue);
-            transform: translateY(-3px);
-        }
-        
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 2.8rem;
-            }
-            
-            .subtitle {
-                font-size: 1.4rem;
-            }
-            
-            .discord-card {
-                padding: 2rem;
-            }
-            
-            .discord-title {
-                font-size: 2rem;
-            }
-            
-            .discord-description {
-                font-size: 1.1rem;
-            }
-            
-            .features {
-                grid-template-columns: 1fr;
-            }
-            
-            .special-text {
-                font-size: 1.8rem;
-            }
-            
-            .stat-number {
-                font-size: 2.5rem;
-            }
+
+        .english-translation {
+            color: var(--navy-blue);
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <!-- تأثير النجوم في الخلفية -->
-    <div class="stars" id="stars"></div>
+
+    <div class="animated-background"></div>
+
+    <div class="star-container" id="star-container"></div>
+
+    <nav class="navbar">
+        <div class="dropdown">
+            <button class="dropbtn" title="Contact / More">
+                <i class="fas fa-ellipsis-v"></i> </button>
+            <div class="dropdown-content">
+                <a href="YOUR_DISCORD_LINK_HERE" target="_blank" title="Contact on Discord">
+                    <i class="fab fa-discord"></i> <span>Contact Discord</span>
+                </a>
+                </div>
+        </div>
+        
+        <a href="#" class="navbar-logo" title="Home"></a>
+
+        <div></div> 
+    </nav>
     
-    <div class="container">
-        <header>
-            <h1 class="logo">VNDXS.Group</h1>
-            <p class="subtitle">مجتمع الديسكورد الأفضل للجيمرز والمطورين</p>
-        </header>
+    <div class="main-content">
+        <h1 class="site-title">VX Community</h1>
+
+        <h2>Welcome to the VX Community!</h2>
+        <p>Explore a new dimension of creativity and connection.</p>
+
+        <a href="YOUR_DISCORD_LINK_HERE" class="cta-button" target="_blank">
+            <i class="fab fa-discord"></i> 1_ing1
+        </a>
         
-        <div class="discord-card">
-            <i class="fab fa-discord discord-icon"></i>
-            <h2 class="discord-title">انضم إلى مجتمعنا على الديسكورد</h2>
-            <p class="discord-description">
-                مجتمع نشط يجمع عشاق الألعاب والمطورين من حول العالم. احصل على آخر التحديثات، شارك في المناقشات، وكن جزءاً من مجتمعنا المتميز.
-            </p>
-            <a href="https://discord.gg/Z3pTBcYq4T" class="discord-btn" target="_blank">
-                <i class="fab fa-discord"></i>
-                انضم إلينا الآن
-            </a>
+        <div class="english-translation">
+            <p>**English Translation**</p>
+            <ul>
+                <li>**Site Name:** VX Community</li>
+                <li>**Contact Discord Button:** 1_ing1</li>
+                <li>**Dropdown Menu Item:** Contact Discord</li>
+            </ul>
         </div>
         
-        <div class="special-text">اللهم صلي على محمد وعلى آل محمد</div>
-        
-        <div class="features">
-            <div class="feature-card">
-                <i class="fas fa-gamepad feature-icon"></i>
-                <h3 class="feature-title">مجتمع الجيمرز</h3>
-                <p class="feature-description">
-                    انضم إلى آلاف اللاعبين، شارك في البطولات، وتعلم استراتيجيات جديدة في مختلف الألعاب.
-                </p>
-            </div>
-            
-            <div class="feature-card">
-                <i class="fas fa-code feature-icon"></i>
-                <h3 class="feature-title">قسم المطورين</h3>
-                <p class="feature-description">
-                    تعلم البرمجة، شارك مشاريعك، واحصل على الدعم من مجتمع المطورين المحترفين.
-                </p>
-            </div>
-            
-            <div class="feature-card">
-                <i class="fas fa-users feature-icon"></i>
-                <h3 class="feature-title">فعاليات دورية</h3>
-                <p class="feature-description">
-                    استمتع بفعاليات وجوائز أسبوعية، مسابقات، وأنشطة تفاعلية مستمرة.
-                </p>
-            </div>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-number">+5K</div>
-                <div class="stat-label">عضو نشط</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">24/7</div>
-                <div class="stat-label">دعم فني</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">50+</div>
-                <div class="stat-label">قناة متخصصة</div>
-            </div>
-        </div>
-        
-        <footer>
-            <p>VNDXS Group &copy; 2024 - جميع الحقوق محفوظة</p>
-            <div class="social-links">
-                <a href="https://discord.gg/Z3pTBcYq4T" class="social-link" target="_blank">
-                    <i class="fab fa-discord"></i>
-                </a>
-                <a href="https://tiktok.com/@script_f1" class="social-link" target="_blank">
-                    <i class="fab fa-tiktok"></i>
-                </a>
-                <a href="https://youtube.com/@script_f1?si=N5Tn4jtjBuP3MI34" class="social-link" target="_blank">
-                    <i class="fab fa-youtube"></i>
-                </a>
-            </div>
-        </footer>
+        <p style="margin-top: 500px;">Scroll down to see the Navbar and Logo remain fixed.</p>
     </div>
 
     <script>
-        // إنشاء تأثير النجوم في الخلفية
-        document.addEventListener('DOMContentLoaded', function() {
-            const starsContainer = document.getElementById('stars');
-            const starsCount = 150;
+        const starContainer = document.getElementById('star-container');
+        const numberOfStars = 15; // عدد النجوم المطلوب
+
+        function createStar() {
+            const star = document.createElement('span');
+            star.classList.add('star');
+            star.innerHTML = '&#9733;'; // رمز النجمة (أو استخدام أيقونة Font Awesome إذا أردت)
+
+            // وضع عشوائي للنجمة
+            star.style.top = `${Math.random() * 100}vh`; 
+            star.style.left = `${Math.random() * 100}vw`; 
             
-            for (let i = 0; i < starsCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                
-                // حجم عشوائي للنجوم
-                const size = Math.random() * 3;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                
-                // مواضع عشوائية
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                
-                // تأخير عشوائي للوميض
-                star.style.animationDelay = `${Math.random() * 5}s`;
-                
-                starsContainer.appendChild(star);
-            }
+            // سرعة وتأخير حركة عشوائي
+            const duration = Math.random() * 5 + 5; // 5 إلى 10 ثوان
+            const delay = Math.random() * 10; // 0 إلى 10 ثوان
+            star.style.animationDuration = `${duration}s, 1s`;
+            star.style.animationDelay = `${delay}s, ${Math.random() * 0.5}s`;
             
-            // تأثيرات تفاعلية للبطاقات
-            const featureCards = document.querySelectorAll('.feature-card');
-            featureCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-10px) scale(1.02)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
-            });
-        });
+            // حجم عشوائي
+            star.style.fontSize = `${Math.random() * 5 + 8}px`; // 8px إلى 13px
+
+            starContainer.appendChild(star);
+        }
+
+        for (let i = 0; i < numberOfStars; i++) {
+            createStar();
+        }
     </script>
 </body>
 </html>
