@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chiyo Script - VX Community</title>
+    <title>VX.Scripts</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Hegarty&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -53,15 +53,38 @@
 
         .nav-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 10px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-family: "PT Sans", sans-serif;
+            font-weight: 700;
+        }
+
+        .nav-btn:hover {
+            background: rgba(114, 137, 218, 0.7);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
         .logo {
-            height: 70px;
+            height: 60px;
         }
 
         .logo img {
@@ -82,18 +105,19 @@
         .script-header {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 30px;
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .script-image {
-            width: 120px;
-            height: 120px;
+            width: 640px;
+            height: 284px;
             border-radius: 10px;
             overflow: hidden;
             border: 2px solid rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
         }
 
         .script-image img {
@@ -104,15 +128,24 @@
 
         .script-info h1 {
             font-family: "BBH Sans Hegarty", sans-serif;
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 10px;
             color: white;
+        }
+
+        .script-subtitle {
+            font-family: "PT Sans", sans-serif;
+            font-size: 1.3rem;
+            opacity: 0.8;
+            margin-bottom: 15px;
+            font-style: italic;
         }
 
         .script-info .description {
             font-size: 1.1rem;
             opacity: 0.9;
             max-width: 600px;
+            line-height: 1.6;
         }
 
         .script-details {
@@ -351,6 +384,12 @@
                 text-align: center;
             }
             
+            .script-image {
+                width: 100%;
+                height: auto;
+                max-width: 640px;
+            }
+            
             .script-details {
                 grid-template-columns: 1fr;
             }
@@ -363,6 +402,15 @@
                 width: 95%;
                 padding: 20px;
             }
+            
+            .nav-buttons {
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -371,6 +419,10 @@
     
     <header>
         <div class="nav-container">
+            <div class="nav-buttons">
+                <a href="https://inggroupkeyless.vercel.app/" class="nav-btn">Home</a>
+                <a href="#" class="nav-btn">Scripts</a>
+            </div>
             <div class="logo">
                 <img src="https://imagizer.imageshack.com/v2/320xq70/r/924/qBbOtR.png" alt="VX Community Logo">
             </div>
@@ -385,6 +437,7 @@
                 </div>
                 <div class="script-info">
                     <h1>Chiyo</h1>
+                    <div class="script-subtitle">[Hntey Zombies]</div>
                     <p class="description">A powerful and efficient farming script with beautiful interface for enhanced gaming experience.</p>
                 </div>
             </div>
