@@ -431,6 +431,7 @@
     </header>
 
     <div class="container">
+        <!-- Chiyo Script -->
         <div class="script-container">
             <div class="script-header">
                 <div class="script-image">
@@ -460,21 +461,73 @@
                 </div>
             </div>
 
-            <button class="view-script-btn" id="viewScriptBtn">
+            <button class="view-script-btn" onclick="openModal('chiyo')">
+                View Script
+            </button>
+        </div>
+
+        <!-- New Script -->
+        <div class="script-container">
+            <div class="script-header">
+                <div class="script-image">
+                    <img src="https://imagizer.imageshack.com/v2/320xq70/r/922/zUWXMx.jpg" alt="Hitbox Script">
+                </div>
+                <div class="script-info">
+                    <h1>Hitbox Expander</h1>
+                    <div class="script-subtitle">[Combat Enhancement]</div>
+                    <p class="description">Advanced hitbox expansion script with customizable colors and sizes for improved combat experience.</p>
+                </div>
+            </div>
+
+            <div class="script-details">
+                <div class="pros-cons pros">
+                    <h3>Features</h3>
+                    <ul>
+                        <li>An effective hitbox that can be hovered over, has many colors, and can be easily resized</li>
+                        <li>Face beautiful</li>
+                    </ul>
+                </div>
+                
+                <div class="pros-cons cons">
+                    <h3>Disadvantages</h3>
+                    <ul>
+                        <li>The idea of the script is very simple</li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="view-script-btn" onclick="openModal('hitbox')">
                 View Script
             </button>
         </div>
     </div>
 
-    <div class="script-modal" id="scriptModal">
+    <!-- Chiyo Modal -->
+    <div class="script-modal" id="chiyoModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Chiyo Script Code</h2>
-                <button class="close-modal" id="closeModal">&times;</button>
+                <button class="close-modal" onclick="closeModal('chiyo')">&times;</button>
             </div>
             <div class="script-code">
-                <pre id="scriptText">loadstring(game:HttpGet("https://raw.githubusercontent.com/kaisenlmao/loader/refs/heads/main/chiyo.lua"))()</pre>
-                <button class="copy-btn" id="copyBtn">
+                <pre id="chiyoScriptText">loadstring(game:HttpGet("https://raw.githubusercontent.com/kaisenlmao/loader/refs/heads/main/chiyo.lua"))()</pre>
+                <button class="copy-btn" onclick="copyScript('chiyo')">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hitbox Modal -->
+    <div class="script-modal" id="hitboxModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Hitbox Expander Script Code</h2>
+                <button class="close-modal" onclick="closeModal('hitbox')">&times;</button>
+            </div>
+            <div class="script-code">
+                <pre id="hitboxScriptText">loadstring(game:HttpGet("https://raw.githubusercontent.com/bbggjah-commits/ggbo/main/my_script.lua"))()</pre>
+                <button class="copy-btn" onclick="copyScript('hitbox')">
                     <i class="fas fa-copy"></i> Copy
                 </button>
             </div>
@@ -510,37 +563,29 @@
         }
 
         // Modal functionality
-        const viewScriptBtn = document.getElementById('viewScriptBtn');
-        const scriptModal = document.getElementById('scriptModal');
-        const closeModal = document.getElementById('closeModal');
-        const copyBtn = document.getElementById('copyBtn');
-        const scriptText = document.getElementById('scriptText');
-        const toast = document.getElementById('toast');
+        function openModal(scriptType) {
+            const modal = document.getElementById(scriptType + 'Modal');
+            modal.style.display = 'block';
+        }
 
-        viewScriptBtn.addEventListener('click', () => {
-            scriptModal.style.display = 'block';
-        });
+        function closeModal(scriptType) {
+            const modal = document.getElementById(scriptType + 'Modal');
+            modal.style.display = 'none';
+        }
 
-        closeModal.addEventListener('click', () => {
-            scriptModal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (event) => {
-            if (event.target === scriptModal) {
-                scriptModal.style.display = 'none';
-            }
-        });
-
-        copyBtn.addEventListener('click', async () => {
-            try {
-                await navigator.clipboard.writeText(scriptText.textContent);
+        function copyScript(scriptType) {
+            const scriptText = document.getElementById(scriptType + 'ScriptText');
+            const textToCopy = scriptText.textContent;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
                 showToast('Successful copying process', 'success');
-            } catch (err) {
+            }).catch(err => {
                 showToast('Copy operation failed', 'error');
-            }
-        });
+            });
+        }
 
         function showToast(message, type) {
+            const toast = document.getElementById('toast');
             toast.textContent = message;
             toast.className = 'toast ' + type;
             
@@ -549,9 +594,18 @@
             }, 3000);
         }
 
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target.classList.contains('script-modal')) {
+                event.target.style.display = 'none';
+            }
+        });
+
         // Prevent text selection in script code
-        scriptText.addEventListener('mousedown', (e) => {
-            e.preventDefault();
+        document.querySelectorAll('.script-code pre').forEach(pre => {
+            pre.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+            });
         });
     </script>
 </body>
