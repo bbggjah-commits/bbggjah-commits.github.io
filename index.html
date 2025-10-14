@@ -431,7 +431,6 @@
     </header>
 
     <div class="container">
-        <!-- Chiyo Script -->
         <div class="script-container">
             <div class="script-header">
                 <div class="script-image">
@@ -466,7 +465,6 @@
             </button>
         </div>
 
-        <!-- New Script -->
         <div class="script-container">
             <div class="script-header">
                 <div class="script-image">
@@ -502,7 +500,6 @@
         </div>
     </div>
 
-    <!-- Chiyo Modal -->
     <div class="script-modal" id="chiyoModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -518,7 +515,6 @@
         </div>
     </div>
 
-    <!-- Hitbox Modal -->
     <div class="script-modal" id="hitboxModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -526,7 +522,7 @@
                 <button class="close-modal" onclick="closeModal('hitbox')">&times;</button>
             </div>
             <div class="script-code">
-                <pre id="hitboxScriptText">loadstring(game:HttpGet("https://raw.githubusercontent.com/bbggjah-commits/ggbo/main/my_script.lua"))()</pre>
+                <pre id="hitboxScriptText">loadstring(game:HttpGet("https://pastebin.com/raw/2hNBFrxE"))()</pre>
                 <button class="copy-btn" onclick="copyScript('hitbox')">
                     <i class="fas fa-copy"></i> Copy
                 </button>
@@ -540,7 +536,6 @@
     <div class="wave"></div>
 
     <script>
-        // Create stars
         const starsContainer = document.getElementById('stars');
         const starCount = 100;
         
@@ -562,7 +557,6 @@
             starsContainer.appendChild(star);
         }
 
-        // Modal functionality
         function openModal(scriptType) {
             const modal = document.getElementById(scriptType + 'Modal');
             modal.style.display = 'block';
@@ -594,14 +588,12 @@
             }, 3000);
         }
 
-        // Close modal when clicking outside
         window.addEventListener('click', (event) => {
             if (event.target.classList.contains('script-modal')) {
                 event.target.style.display = 'none';
             }
         });
 
-        // Prevent text selection in script code
         document.querySelectorAll('.script-code pre').forEach(pre => {
             pre.addEventListener('mousedown', (e) => {
                 e.preventDefault();
