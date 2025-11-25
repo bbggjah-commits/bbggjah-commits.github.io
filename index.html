@@ -64,7 +64,6 @@
             box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
         }
 
-        /* تأثيرات الصور */
         .post-image {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -74,7 +73,6 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        /* تأثيرات البطاقات */
         .post-card {
             transition: all 0.3s ease;
         }
@@ -84,13 +82,40 @@
             box-shadow: 0 20px 40px rgba(30, 64, 175, 0.2);
         }
 
-        /* إصلاح الأبعاد */
         .container-custom {
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* تحسين العرض على الجوال */
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 0 0 12px 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .search-result-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #333;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .search-result-item:hover {
+            background: #2a2a2a;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
         @media (max-width: 768px) {
             .container-custom {
                 padding-left: 1rem;
@@ -109,7 +134,6 @@
     </style>
 </head>
 <body class="bg-black text-white font-arabic min-h-screen dir-rtl">
-    <!-- Loading Screen -->
     <div id="loadingScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-black">
         <div class="text-center">
             <div class="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
@@ -117,7 +141,6 @@
         </div>
     </div>
 
-    <!-- Terms Modal -->
     <div id="termsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"></div>
         
@@ -225,21 +248,18 @@
         </div>
     </div>
 
-    <!-- Main Content -->
     <div id="mainContent" class="hidden-content">
-        <!-- الخلفية المتحركة -->
         <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
             <div class="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-[#0a1128] rounded-full blur-[120px] opacity-40 animate-pulse"></div>
             <div class="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] bg-[#1e40af] rounded-full blur-[100px] opacity-20"></div>
         </div>
 
-        <!-- الهيدر -->
         <header class="relative z-10 border-b border-white/10 bg-black/50 backdrop-blur-sm">
             <div class="container-custom px-4 sm:px-6 py-4">
                 <div class="header-content flex items-center justify-between">
                     <div class="flex items-center gap-3 sm:gap-4">
                         <img 
-                            src="https://g.top4top.io/p_36155s9os0.jpg" 
+                            src="https://d.top4top.io/p_3616filhy0.jpg" 
                             alt="VNDXS Logo" 
                             class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white/10 object-cover"
                         />
@@ -265,9 +285,7 @@
             </div>
         </header>
 
-        <!-- المحتوى الرئيسي -->
         <main class="relative z-10 container-custom px-4 sm:px-6 py-6 sm:py-8">
-            <!-- قسم إنشاء منشور -->
             <div id="createPostSection" class="mb-8 sm:mb-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 sm:p-6 hidden">
                 <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-3">
                     <i data-lucide="edit-3" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400"></i>
@@ -275,21 +293,18 @@
                 </h2>
                 
                 <div class="space-y-4 sm:space-y-6">
-                    <!-- عنوان المنشور -->
                     <div>
                         <label class="block text-gray-300 mb-2 text-sm sm:text-base">عنوان المنشور</label>
                         <input type="text" id="postTitle" placeholder="اكتب عنواناً جذاباً..." 
                                class="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none transition-colors text-sm sm:text-base">
                     </div>
                     
-                    <!-- محتوى المنشور -->
                     <div>
                         <label class="block text-gray-300 mb-2 text-sm sm:text-base">محتوى المنشور</label>
                         <textarea id="postContent" rows="4" placeholder="اكتب محتوى المنشور هنا..."
                                  class="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none transition-colors resize-none text-sm sm:text-base"></textarea>
                     </div>
                     
-                    <!-- رفع الصور -->
                     <div>
                         <label class="block text-gray-300 mb-2 text-sm sm:text-base">الصور (اختياري)</label>
                         <div class="border-2 border-dashed border-white/10 rounded-xl p-4 sm:p-6 text-center hover:border-blue-500/50 transition-colors cursor-pointer" onclick="document.getElementById('postImages').click()">
@@ -300,7 +315,6 @@
                         <div id="imagePreview" class="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3"></div>
                     </div>
                     
-                    <!-- رفع الملفات -->
                     <div>
                         <label class="block text-gray-300 mb-2 text-sm sm:text-base">الملفات (اختياري)</label>
                         <div class="border-2 border-dashed border-white/10 rounded-xl p-4 sm:p-6 text-center hover:border-blue-500/50 transition-colors cursor-pointer" onclick="document.getElementById('postFiles').click()">
@@ -311,7 +325,6 @@
                         <div id="filePreview" class="mt-3 space-y-2"></div>
                     </div>
                     
-                    <!-- أزرار التحكم -->
                     <div class="flex flex-col sm:flex-row gap-3 pt-4">
                         <button id="publishPostBtn" class="flex-1 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl font-bold transition-all duration-300 hover:scale-105 text-sm sm:text-base">
                             نشر المنشور
@@ -323,7 +336,36 @@
                 </div>
             </div>
 
-            <!-- قسم عرض المنشورات -->
+            <div id="editPostSection" class="mb-8 sm:mb-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 sm:p-6 hidden">
+                <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-3">
+                    <i data-lucide="edit" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400"></i>
+                    تعديل المنشور
+                </h2>
+                
+                <div class="space-y-4 sm:space-y-6">
+                    <div>
+                        <label class="block text-gray-300 mb-2 text-sm sm:text-base">عنوان المنشور</label>
+                        <input type="text" id="editPostTitle" placeholder="اكتب عنواناً جذاباً..." 
+                               class="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none transition-colors text-sm sm:text-base">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-300 mb-2 text-sm sm:text-base">محتوى المنشور</label>
+                        <textarea id="editPostContent" rows="4" placeholder="اكتب محتوى المنشور هنا..."
+                                 class="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none transition-colors resize-none text-sm sm:text-base"></textarea>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3 pt-4">
+                        <button id="updatePostBtn" class="flex-1 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-xl font-bold transition-all duration-300 hover:scale-105 text-sm sm:text-base">
+                            حفظ التعديلات
+                        </button>
+                        <button id="cancelEditBtn" class="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl transition-colors text-sm sm:text-base">
+                            إلغاء
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <div id="postsSection">
                 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4 sm:gap-0">
                     <h2 class="text-2xl sm:text-3xl font-bold flex items-center gap-3">
@@ -336,16 +378,14 @@
                             <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute right-3 top-1/2 transform -translate-y-1/2"></i>
                             <input type="text" id="searchPosts" placeholder="ابحث في المنشورات..."
                                    class="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none transition-colors text-sm">
+                            <div id="searchResults" class="search-results hidden"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- قائمة المنشورات -->
                 <div id="postsList" class="post-grid grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-                    <!-- المنشورات ستظهر هنا ديناميكياً -->
                 </div>
 
-                <!-- حالة عدم وجود منشورات -->
                 <div id="emptyState" class="text-center py-8 sm:py-12">
                     <i data-lucide="newspaper" class="w-12 h-12 sm:w-16 sm:h-16 text-gray-600 mx-auto mb-3 sm:mb-4"></i>
                     <h3 class="text-lg sm:text-xl text-gray-400 mb-2">لا توجد منشورات بعد</h3>
@@ -357,7 +397,6 @@
             </div>
         </main>
 
-        <!-- الفوتر -->
         <footer class="relative z-10 border-t border-white/5 mt-8 sm:mt-12 py-6 sm:py-8">
             <div class="container-custom px-4 sm:px-6 text-center">
                 <p class="text-gray-500 text-sm font-arabic mb-2">
@@ -371,23 +410,19 @@
     </div>
 
     <script>
-        // تهيئة الأيقونات
         lucide.createIcons();
 
-        // إصدار الشروط - سيتم تحديث هذا الرقم عند تغيير الشروط
         const TERMS_VERSION = '1.0';
         
-        // بيانات التخزين
         let posts = JSON.parse(localStorage.getItem('vndxs_posts')) || [];
         let currentImages = [];
         let currentFiles = [];
+        let editingPostIndex = -1;
 
-        // التحقق من الموافقة على الشروط
         function checkTermsAgreement() {
             const agreedVersion = localStorage.getItem('termsAgreedVersion');
             const hasAgreed = localStorage.getItem('termsAgreed');
             
-            // إذا لم يوافق مطلقاً أو كان الإصدار قديم
             if (!hasAgreed || agreedVersion !== TERMS_VERSION) {
                 showTermsModal();
             } else {
@@ -395,7 +430,6 @@
             }
         }
 
-        // الدوال الأساسية
         function showMainContent() {
             document.getElementById('loadingScreen').style.display = 'none';
             document.getElementById('termsModal').style.display = 'none';
@@ -408,7 +442,6 @@
             document.getElementById('termsModal').classList.remove('hidden');
         }
 
-        // إدارة المنشورات
         function loadPosts() {
             const postsList = document.getElementById('postsList');
             const emptyState = document.getElementById('emptyState');
@@ -421,16 +454,20 @@
             
             emptyState.classList.add('hidden');
             
-            // ترتيب المنشورات من الأحدث إلى الأقدم
             const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
             
             postsList.innerHTML = sortedPosts.map((post, index) => `
                 <div class="post-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 sm:p-6 hover:bg-white/10">
                     <div class="flex items-start justify-between mb-3 sm:mb-4">
                         <h3 class="text-lg sm:text-xl font-bold text-white flex-1">${post.title}</h3>
-                        <button onclick="deletePost(${posts.indexOf(post)})" class="text-gray-400 hover:text-red-400 transition-colors p-1">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
+                        <div class="flex items-center gap-2">
+                            <button onclick="editPost(${posts.indexOf(post)})" class="text-gray-400 hover:text-blue-400 transition-colors p-1">
+                                <i data-lucide="edit" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="deletePost(${posts.indexOf(post)})" class="text-gray-400 hover:text-red-400 transition-colors p-1">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
                     </div>
                     
                     <p class="text-gray-300 mb-3 sm:mb-4 leading-relaxed text-sm sm:text-base">${post.content}</p>
@@ -459,15 +496,13 @@
                     ` : ''}
                     
                     <div class="flex items-center justify-between pt-3 sm:pt-4 border-t border-white/10">
-                        <span class="text-gray-500 text-xs sm:text-sm">${new Date(post.date).toLocaleDateString('ar-EG')}</span>
+                        <div class="text-gray-500 text-xs sm:text-sm">
+                            ${post.edited ? `تم التعديل: ${new Date(post.editedDate).toLocaleDateString('ar-EG')}` : new Date(post.date).toLocaleDateString('ar-EG')}
+                        </div>
                         <div class="flex items-center gap-3 sm:gap-4 text-gray-400">
                             <button onclick="likePost(${posts.indexOf(post)})" class="flex items-center gap-1 hover:text-blue-400 transition-colors text-xs sm:text-sm">
                                 <i data-lucide="heart" class="w-3 h-3 sm:w-4 sm:h-4 ${post.liked ? 'text-red-500 fill-red-500' : ''}"></i>
                                 <span>${post.likes || 0}</span>
-                            </button>
-                            <button class="flex items-center gap-1 hover:text-green-400 transition-colors text-xs sm:text-sm">
-                                <i data-lucide="share-2" class="w-3 h-3 sm:w-4 sm:h-4"></i>
-                                <span class="hidden sm:inline">مشاركة</span>
                             </button>
                         </div>
                     </div>
@@ -494,16 +529,52 @@
                 images: [...currentImages],
                 files: [...currentFiles],
                 likes: 0,
-                liked: false
+                liked: false,
+                edited: false
             };
             
             posts.unshift(newPost);
             localStorage.setItem('vndxs_posts', JSON.stringify(posts));
             
-            // إعادة تعيين النموذج
             resetForm();
             loadPosts();
             alert('تم نشر المنشور بنجاح!');
+        }
+
+        function editPost(index) {
+            const post = posts[index];
+            editingPostIndex = index;
+            
+            document.getElementById('editPostTitle').value = post.title;
+            document.getElementById('editPostContent').value = post.content;
+            
+            document.getElementById('createPostSection').classList.add('hidden');
+            document.getElementById('editPostSection').classList.remove('hidden');
+        }
+
+        function updatePost() {
+            if (editingPostIndex === -1) return;
+            
+            const title = document.getElementById('editPostTitle').value.trim();
+            const content = document.getElementById('editPostContent').value.trim();
+            
+            if (!title || !content) {
+                alert('يرجى ملء العنوان والمحتوى');
+                return;
+            }
+            
+            posts[editingPostIndex].title = title;
+            posts[editingPostIndex].content = content;
+            posts[editingPostIndex].edited = true;
+            posts[editingPostIndex].editedDate = new Date().toISOString();
+            
+            localStorage.setItem('vndxs_posts', JSON.stringify(posts));
+            
+            document.getElementById('editPostSection').classList.add('hidden');
+            editingPostIndex = -1;
+            
+            loadPosts();
+            alert('تم تعديل المنشور بنجاح!');
         }
 
         function resetForm() {
@@ -543,7 +614,105 @@
             link.click();
         }
 
-        // معاينة الصور
+        function searchPosts(query) {
+            if (query.length < 3) {
+                document.getElementById('searchResults').classList.add('hidden');
+                return;
+            }
+            
+            const results = posts.filter(post => 
+                post.title.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            const searchResults = document.getElementById('searchResults');
+            searchResults.innerHTML = '';
+            
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="search-result-item text-gray-400">لا توجد نتائج</div>';
+            } else {
+                results.forEach(post => {
+                    const item = document.createElement('div');
+                    item.className = 'search-result-item';
+                    item.innerHTML = `
+                        <div class="font-medium">${post.title}</div>
+                        <div class="text-gray-400 text-xs mt-1">${post.content.substring(0, 50)}...</div>
+                    `;
+                    item.onclick = () => {
+                        document.getElementById('searchPosts').value = post.title;
+                        searchResults.classList.add('hidden');
+                        filterPostsBySearch(post.title);
+                    };
+                    searchResults.appendChild(item);
+                });
+            }
+            
+            searchResults.classList.remove('hidden');
+        }
+
+        function filterPostsBySearch(searchTerm) {
+            const filteredPosts = posts.filter(post => 
+                post.title.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            
+            const postsList = document.getElementById('postsList');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (filteredPosts.length === 0) {
+                postsList.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                emptyState.innerHTML = `
+                    <i data-lucide="search" class="w-12 h-12 sm:w-16 sm:h-16 text-gray-600 mx-auto mb-3 sm:mb-4"></i>
+                    <h3 class="text-lg sm:text-xl text-gray-400 mb-2">لا توجد نتائج للبحث</h3>
+                    <p class="text-gray-500 mb-4 sm:mb-6 text-sm sm:text-base">جرب استخدام كلمات بحث أخرى</p>
+                `;
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            const sortedPosts = [...filteredPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            postsList.innerHTML = sortedPosts.map((post, index) => `
+                <div class="post-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 sm:p-6 hover:bg-white/10">
+                    <div class="flex items-start justify-between mb-3 sm:mb-4">
+                        <h3 class="text-lg sm:text-xl font-bold text-white flex-1">${post.title}</h3>
+                        <div class="flex items-center gap-2">
+                            <button onclick="editPost(${posts.indexOf(post)})" class="text-gray-400 hover:text-blue-400 transition-colors p-1">
+                                <i data-lucide="edit" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="deletePost(${posts.indexOf(post)})" class="text-gray-400 hover:text-red-400 transition-colors p-1">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-3 sm:mb-4 leading-relaxed text-sm sm:text-base">${post.content}</p>
+                    
+                    ${post.images && post.images.length > 0 ? `
+                        <div class="grid grid-cols-2 gap-2 sm:gap-3 mb-3 sm:mb-4">
+                            ${post.images.map(img => `
+                                <img src="${img}" alt="صورة المنشور" class="post-image w-full h-24 sm:h-32 object-cover rounded-lg">
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                    
+                    <div class="flex items-center justify-between pt-3 sm:pt-4 border-t border-white/10">
+                        <div class="text-gray-500 text-xs sm:text-sm">
+                            ${post.edited ? `تم التعديل: ${new Date(post.editedDate).toLocaleDateString('ar-EG')}` : new Date(post.date).toLocaleDateString('ar-EG')}
+                        </div>
+                        <div class="flex items-center gap-3 sm:gap-4 text-gray-400">
+                            <button onclick="likePost(${posts.indexOf(post)})" class="flex items-center gap-1 hover:text-blue-400 transition-colors text-xs sm:text-sm">
+                                <i data-lucide="heart" class="w-3 h-3 sm:w-4 sm:h-4 ${post.liked ? 'text-red-500 fill-red-500' : ''}"></i>
+                                <span>${post.likes || 0}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            lucide.createIcons();
+        }
+
         document.getElementById('postImages').addEventListener('change', function(e) {
             const preview = document.getElementById('imagePreview');
             currentImages = [];
@@ -563,7 +732,6 @@
             });
         });
 
-        // معاينة الملفات
         document.getElementById('postFiles').addEventListener('change', function(e) {
             const preview = document.getElementById('filePreview');
             currentFiles = [];
@@ -592,9 +760,7 @@
             lucide.createIcons();
         });
 
-        // الأحداث
         document.getElementById('agreeBtn').addEventListener('click', function() {
-            // حفظ الموافقة مع الإصدار
             localStorage.setItem('termsAgreed', 'true');
             localStorage.setItem('termsAgreedVersion', TERMS_VERSION);
             showMainContent();
@@ -612,15 +778,25 @@
         
         document.getElementById('publishPostBtn').addEventListener('click', createPost);
         
+        document.getElementById('updatePostBtn').addEventListener('click', updatePost);
+        
+        document.getElementById('cancelEditBtn').addEventListener('click', function() {
+            document.getElementById('editPostSection').classList.add('hidden');
+            editingPostIndex = -1;
+        });
+        
         document.getElementById('termsBtn').addEventListener('click', showTermsModal);
 
-        // البحث
         document.getElementById('searchPosts').addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            // يمكن إضافة وظيفة البحث لاحقاً
+            searchPosts(e.target.value);
         });
 
-        // بدء التطبيق
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#searchPosts') && !e.target.closest('#searchResults')) {
+                document.getElementById('searchResults').classList.add('hidden');
+            }
+        });
+
         checkTermsAgreement();
     </script>
 </body>
