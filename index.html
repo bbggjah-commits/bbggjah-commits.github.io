@@ -11,8 +11,7 @@
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, updateDoc, doc, deleteDoc, onSnapshot, orderBy, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAk_Nb7MzG7D_hAXRAxZdt7jtsjwIj-zJw",
@@ -25,13 +24,19 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const storage = getStorage(app);
         
-        window.db = db;
-        window.storage = storage;
-        window.firebaseModules = { 
-            collection, addDoc, getDocs, updateDoc, doc, deleteDoc, onSnapshot, 
-            orderBy, query, where, serverTimestamp, ref, uploadBytes, getDownloadURL 
+        window.firebaseApp = {
+            db,
+            collection,
+            addDoc,
+            getDocs,
+            doc,
+            updateDoc,
+            deleteDoc,
+            onSnapshot,
+            orderBy,
+            query,
+            serverTimestamp
         };
     </script>
     
@@ -39,14 +44,28 @@
         .font-arabic { font-family: 'IBM Plex Sans Arabic', sans-serif; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         .font-inter { font-family: 'Inter', sans-serif; }
+        
         .dir-rtl { direction: rtl; }
         .dir-ltr { direction: ltr; }
         .hidden-content { display: none !important; }
-        .container-custom { max-width: 1200px; margin: 0 auto; }
         
-        .post-card, .post-image { transition: all 0.3s ease; }
-        .post-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(30, 64, 175, 0.2); }
-        .post-image:hover { transform: scale(1.02); }
+        /* تحسينات للجوال */
+        @media (max-width: 768px) {
+            .container-mobile { padding-left: 1rem; padding-right: 1rem; }
+            .text-mobile { font-size: 0.9rem; }
+            .text-title { font-size: 1.5rem; }
+            .btn-mobile { padding: 0.75rem 1rem; font-size: 0.9rem; }
+        }
+        
+        .post-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .post-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
         
         .search-results {
             position: absolute;
@@ -72,13 +91,17 @@
             background: #2a2a2a;
         }
         
-        .comment-section {
-            max-height: 300px;
-            overflow-y: auto;
+        .image-preview {
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
         }
         
-        @media (max-width: 768px) {
-            .container-custom { padding-left: 1rem; padding-right: 1rem; }
+        .file-item {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 8px 12px;
         }
     </style>
 </head>
@@ -91,252 +114,161 @@
     </div>
 </div>
 
+<!-- نافذة إنشاء المنشور -->
+<div id="createPostModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeCreatePostModal()"></div>
+    <div class="relative bg-gray-900 border border-gray-700 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div class="p-6 border-b border-gray-700">
+            <h2 class="text-xl font-bold">إنشاء منشور جديد</h2>
+        </div>
+        
+        <div class="p-6 space-y-4">
+            <div>
+                <label class="block text-gray-300 mb-2">عنوان المنشور</label>
+                <input type="text" id="postTitle" placeholder="اكتب عنواناً جذاباً..." 
+                       class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl focus:border-blue-500 focus:outline-none">
+            </div>
+            
+            <div>
+                <label class="block text-gray-300 mb-2">محتوى المنشور</label>
+                <textarea id="postContent" rows="4" placeholder="اكتب محتوى المنشور هنا..."
+                         class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-xl focus:border-blue-500 focus:outline-none resize-none"></textarea>
+            </div>
+            
+            <!-- رفع الصور -->
+            <div>
+                <label class="block text-gray-300 mb-2">الصور (يدعم GIF)</label>
+                <div class="border-2 border-dashed border-gray-600 rounded-xl p-6 text-center cursor-pointer" onclick="document.getElementById('imageInput').click()">
+                    <i data-lucide="image" class="w-12 h-12 text-gray-400 mx-auto mb-3"></i>
+                    <p class="text-gray-400">انقر لرفع الصور أو GIF</p>
+                    <input type="file" id="imageInput" multiple accept="image/*,.gif" class="hidden">
+                </div>
+                <div id="imagePreview" class="mt-3 grid grid-cols-2 gap-3"></div>
+            </div>
+            
+            <!-- رفع الملفات -->
+            <div>
+                <label class="block text-gray-300 mb-2">الملفات</label>
+                <div class="border-2 border-dashed border-gray-600 rounded-xl p-6 text-center cursor-pointer" onclick="document.getElementById('fileInput').click()">
+                    <i data-lucide="file" class="w-12 h-12 text-gray-400 mx-auto mb-3"></i>
+                    <p class="text-gray-400">انقر لرفع الملفات</p>
+                    <input type="file" id="fileInput" multiple class="hidden">
+                </div>
+                <div id="filePreview" class="mt-3 space-y-2"></div>
+            </div>
+        </div>
+        
+        <div class="p-6 border-t border-gray-700 flex gap-3">
+            <button onclick="publishPost()" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 rounded-xl font-bold transition-colors">
+                نشر المنشور
+            </button>
+            <button onclick="closeCreatePostModal()" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-xl transition-colors">
+                إلغاء
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- المحتوى الرئيسي -->
 <div id="mainContent" class="hidden-content">
+    <!-- الخلفية المتحركة -->
     <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
-        <div class="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-[#0a1128] rounded-full blur-[120px] opacity-40 animate-pulse"></div>
-        <div class="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] bg-[#1e40af] rounded-full blur-[100px] opacity-20"></div>
+        <div class="absolute top-[-10%] left-[20%] w-[300px] h-[300px] bg-[#0a1128] rounded-full blur-[80px] opacity-40 animate-pulse"></div>
+        <div class="absolute bottom-[-10%] right-[10%] w-[250px] h-[250px] bg-[#1e40af] rounded-full blur-[60px] opacity-20"></div>
     </div>
 
-    <header class="relative z-10 border-b border-white/10 bg-black/50 backdrop-blur-sm">
-        <div class="container-custom px-4 sm:px-6 py-4">
+    <!-- الهيدر -->
+    <header class="relative z-10 border-b border-white/10 bg-black/80 backdrop-blur-sm">
+        <div class="container-mobile py-3 px-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <img src="https://d.top4top.io/p_3616filhy0.jpg" alt="VNDXS Logo" class="w-10 h-10 rounded-full border-2 border-white/10 object-cover"/>
-                    <h1 class="text-xl font-bold font-orbitron bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-                        VNDXS Network
-                    </h1>
+                    <img src="https://d.top4top.io/p_3616filhy0.jpg" alt="VNDXS Logo" 
+                         class="w-10 h-10 rounded-full border-2 border-white/10 object-cover">
+                    <div>
+                        <h1 class="text-title font-bold font-orbitron bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+                            VNDXS Network
+                        </h1>
+                        <p class="text-gray-400 text-xs">التطوير والمشاركة</p>
+                    </div>
                 </div>
                 
-                <div class="flex items-center gap-3">
+                <!-- شريط البحث -->
+                <div class="relative flex-1 max-w-xs mx-4">
                     <div class="relative">
-                        <input type="text" id="searchPosts" placeholder="ابحث في المنشورات..." 
-                               class="pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none transition-colors w-64">
                         <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute right-3 top-1/2 transform -translate-y-1/2"></i>
+                        <input type="text" id="searchInput" placeholder="ابحث في المنشورات..."
+                               class="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none text-mobile">
                         <div id="searchResults" class="search-results hidden"></div>
                     </div>
-                    <button id="createPostBtn" class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl transition-all duration-300">
-                        <i data-lucide="plus" class="w-4 h-4"></i>
-                        <span>منشور جديد</span>
-                    </button>
                 </div>
+
+                <button onclick="openCreatePostModal()" class="btn-mobile flex items-center gap-2 bg-blue-600 hover:bg-blue-700 rounded-xl transition-all duration-300">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    <span class="hidden sm:block">منشور جديد</span>
+                </button>
             </div>
         </div>
     </header>
 
-    <main class="relative z-10 container-custom px-4 sm:px-6 py-6">
-        <!-- قسم إنشاء منشور -->
-        <div id="createPostSection" class="mb-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hidden">
-            <h2 class="text-xl font-bold mb-4 flex items-center gap-3">
-                <i data-lucide="edit-3" class="w-5 h-5 text-blue-400"></i>
-                إنشاء منشور جديد
-            </h2>
-            
-            <div class="space-y-4">
-                <input type="text" id="postTitle" placeholder="عنوان المنشور" 
-                       class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none transition-colors">
-                
-                <textarea id="postContent" rows="4" placeholder="محتوى المنشور..."
-                         class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none transition-colors resize-none"></textarea>
-                
-                <!-- رفع الصور والملفات -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="border-2 border-dashed border-white/10 rounded-xl p-6 text-center hover:border-blue-500/50 transition-colors cursor-pointer" 
-                         onclick="document.getElementById('postImages').click()">
-                        <i data-lucide="image" class="w-12 h-12 text-gray-400 mx-auto mb-3"></i>
-                        <p class="text-gray-400 mb-2">الصور و GIF</p>
-                        <p class="text-gray-500 text-sm">JPG, PNG, GIF</p>
-                        <input type="file" id="postImages" multiple accept="image/*,.gif" class="hidden">
-                    </div>
-                    
-                    <div class="border-2 border-dashed border-white/10 rounded-xl p-6 text-center hover:border-blue-500/50 transition-colors cursor-pointer"
-                         onclick="document.getElementById('postFiles').click()">
-                        <i data-lucide="file" class="w-12 h-12 text-gray-400 mx-auto mb-3"></i>
-                        <p class="text-gray-400 mb-2">الملفات</p>
-                        <p class="text-gray-500 text-sm">PDF, ZIP, etc.</p>
-                        <input type="file" id="postFiles" multiple class="hidden">
-                    </div>
-                </div>
-                
-                <div id="mediaPreview" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
-                <div id="filesPreview" class="space-y-2"></div>
-                
-                <div class="flex gap-3 pt-4">
-                    <button id="publishPostBtn" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 rounded-xl font-bold transition-all duration-300">
-                        نشر المنشور
-                    </button>
-                    <button id="cancelPostBtn" class="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl transition-colors">
-                        إلغاء
-                    </button>
+    <!-- المحتوى الرئيسي -->
+    <main class="relative z-10 container-mobile py-6">
+        <!-- قسم المنشورات -->
+        <div id="postsSection">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold">أحدث المنشورات</h2>
+                <div class="flex items-center gap-3 text-sm text-gray-400">
+                    <span id="postsCount">0</span> منشور
                 </div>
             </div>
-        </div>
 
-        <!-- قسم تعديل المنشور -->
-        <div id="editPostSection" class="mb-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hidden">
-            <h2 class="text-xl font-bold mb-4 flex items-center gap-3">
-                <i data-lucide="edit" class="w-5 h-5 text-green-400"></i>
-                تعديل المنشور
-            </h2>
-            <div class="space-y-4">
-                <input type="text" id="editPostTitle" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none">
-                <textarea id="editPostContent" rows="4" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none resize-none"></textarea>
-                <div class="flex gap-3">
-                    <button id="updatePostBtn" class="flex-1 py-3 bg-green-600 hover:bg-green-700 rounded-xl font-bold transition-all duration-300">
-                        حفظ التعديلات
-                    </button>
-                    <button id="cancelEditBtn" class="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl transition-colors">
-                        إلغاء
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- عرض المنشورات -->
-        <div id="postsContainer">
-            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
-                <i data-lucide="newspaper" class="w-6 h-6 text-blue-400"></i>
-                أحدث المنشورات
-            </h2>
-            
-            <div id="postsList" class="space-y-6">
+            <div id="postsList" class="space-y-4">
                 <!-- المنشورات تظهر هنا -->
             </div>
-            
+
             <div id="emptyState" class="text-center py-12">
                 <i data-lucide="newspaper" class="w-16 h-16 text-gray-600 mx-auto mb-4"></i>
                 <h3 class="text-xl text-gray-400 mb-2">لا توجد منشورات بعد</h3>
-                <p class="text-gray-500">كن أول من ينشر محتوى رائع!</p>
+                <p class="text-gray-500 mb-6">كن أول من ينشر محتوى رائع!</p>
+                <button onclick="openCreatePostModal()" class="btn-mobile bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors">
+                    ابدأ بنشر أول منشور
+                </button>
             </div>
         </div>
     </main>
 </div>
 
 <script>
+    // تهيئة الأيقونات
     lucide.createIcons();
     
-    let currentEditingPostId = null;
-    let currentMedia = [];
+    // بيانات التطبيق
+    let currentImages = [];
     let currentFiles = [];
+    let allPosts = [];
+    let editingPostId = null;
 
-    // 🔥 البحث المتقدم
-    document.getElementById('searchPosts').addEventListener('input', async function(e) {
-        const searchTerm = e.target.value.toLowerCase();
-        const searchResults = document.getElementById('searchResults');
-        
-        if (searchTerm.length < 2) {
-            searchResults.classList.add('hidden');
-            await loadPosts();
-            return;
-        }
-        
-        try {
-            const { collection, getDocs, query, where, orderBy } = window.firebaseModules;
-            const postsQuery = query(
-                collection(window.db, 'posts'),
-                orderBy('title')
-            );
-            
-            const snapshot = await getDocs(postsQuery);
-            const results = snapshot.docs.filter(doc => {
-                const post = doc.data();
-                return post.title.toLowerCase().includes(searchTerm) || 
-                       post.content.toLowerCase().includes(searchTerm);
-            });
-            
-            searchResults.innerHTML = '';
-            
-            if (results.length === 0) {
-                searchResults.innerHTML = '<div class="search-result-item text-gray-400">لا توجد نتائج</div>';
-            } else {
-                results.forEach(doc => {
-                    const post = doc.data();
-                    const item = document.createElement('div');
-                    item.className = 'search-result-item';
-                    item.innerHTML = `
-                        <div class="font-medium">${post.title}</div>
-                        <div class="text-gray-400 text-xs mt-1">${post.content.substring(0, 60)}...</div>
-                    `;
-                    item.onclick = () => {
-                        document.getElementById('searchPosts').value = '';
-                        searchResults.classList.add('hidden');
-                        filterPosts([doc.id]);
-                    };
-                    searchResults.appendChild(item);
-                });
-            }
-            
-            searchResults.classList.remove('hidden');
-        } catch (error) {
-            console.error('Search error:', error);
-        }
-    });
-
-    // 🔥 رفع الصور والملفات
-    document.getElementById('postImages').addEventListener('change', function(e) {
-        handleMediaUpload(e.target.files, 'image');
-    });
-
-    document.getElementById('postFiles').addEventListener('change', function(e) {
-        handleFileUpload(e.target.files);
-    });
-
-    async function handleMediaUpload(files, type) {
-        const preview = document.getElementById('mediaPreview');
-        
-        for (let file of files) {
-            if (type === 'image' && !file.type.startsWith('image/')) continue;
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const mediaItem = document.createElement('div');
-                mediaItem.className = 'relative';
-                
-                if (file.type.startsWith('image/')) {
-                    mediaItem.innerHTML = `
-                        <img src="${e.target.result}" class="w-full h-24 object-cover rounded-lg post-image">
-                        <button onclick="removeMedia(this)" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
-                            <i data-lucide="x" class="w-3 h-3"></i>
-                        </button>
-                    `;
-                    currentMedia.push({
-                        type: 'image',
-                        url: e.target.result,
-                        file: file
-                    });
-                }
-                
-                preview.appendChild(mediaItem);
-            };
-            reader.readAsDataURL(file);
-        }
-        lucide.createIcons();
+    // دوال إدارة النوافذ
+    function openCreatePostModal() {
+        document.getElementById('createPostModal').classList.remove('hidden');
     }
 
-    async function handleFileUpload(files) {
-        const preview = document.getElementById('filesPreview');
-        
-        for (let file of files) {
-            const fileItem = document.createElement('div');
-            fileItem.className = 'flex items-center gap-3 p-3 bg-white/5 rounded-lg border border-white/10';
-            fileItem.innerHTML = `
-                <i data-lucide="file" class="w-5 h-5 text-blue-400"></i>
-                <div class="flex-1">
-                    <div class="text-sm font-medium">${file.name}</div>
-                    <div class="text-gray-400 text-xs">${(file.size / 1024).toFixed(1)} KB</div>
-                </div>
-                <button onclick="removeFile(this)" class="text-red-400 hover:text-red-300">
-                    <i data-lucide="trash-2" class="w-4 h-4"></i>
-                </button>
-            `;
-            
-            currentFiles.push(file);
-            preview.appendChild(fileItem);
-        }
-        lucide.createIcons();
+    function closeCreatePostModal() {
+        document.getElementById('createPostModal').classList.add('hidden');
+        resetCreateForm();
     }
 
-    // 🔥 إنشاء منشور جديد
-    document.getElementById('publishPostBtn').addEventListener('click', async function() {
+    function resetCreateForm() {
+        document.getElementById('postTitle').value = '';
+        document.getElementById('postContent').value = '';
+        document.getElementById('imagePreview').innerHTML = '';
+        document.getElementById('filePreview').innerHTML = '';
+        currentImages = [];
+        currentFiles = [];
+        editingPostId = null;
+    }
+
+    // دالة النشر الرئيسية - تم إصلاحها
+    async function publishPost() {
         const title = document.getElementById('postTitle').value.trim();
         const content = document.getElementById('postContent').value.trim();
         
@@ -346,96 +278,77 @@
         }
         
         try {
-            // رفع الصور إلى Firebase Storage
-            const mediaUrls = [];
-            for (let media of currentMedia) {
-                if (media.file) {
-                    const storageRef = window.firebaseModules.ref(window.storage, `posts/${Date.now()}_${media.file.name}`);
-                    await window.firebaseModules.uploadBytes(storageRef, media.file);
-                    const url = await window.firebaseModules.getDownloadURL(storageRef);
-                    mediaUrls.push({ type: media.type, url });
-                } else {
-                    mediaUrls.push(media);
-                }
-            }
-            
-            // رفع الملفات
-            const fileUrls = [];
-            for (let file of currentFiles) {
-                const storageRef = window.firebaseModules.ref(window.storage, `files/${Date.now()}_${file.name}`);
-                await window.firebaseModules.uploadBytes(storageRef, file);
-                const url = await window.firebaseModules.getDownloadURL(storageRef);
-                fileUrls.push({ name: file.name, url, size: file.size });
-            }
-            
-            // حفظ المنشور في Firestore
-            await window.firebaseModules.addDoc(window.firebaseModules.collection(window.db, 'posts'), {
+            const postData = {
                 title,
                 content,
-                media: mediaUrls,
-                files: fileUrls,
+                images: currentImages,
+                files: currentFiles,
                 likes: 0,
-                likesCount: 0,
+                likesCount: [],
                 comments: [],
-                createdAt: window.firebaseModules.serverTimestamp(),
-                updatedAt: window.firebaseModules.serverTimestamp()
-            });
+                createdAt: firebaseApp.serverTimestamp(),
+                updatedAt: firebaseApp.serverTimestamp()
+            };
             
-            resetPostForm();
-            await loadPosts();
+            await firebaseApp.addDoc(firebaseApp.collection(firebaseApp.db, 'posts'), postData);
+            
+            closeCreatePostModal();
             alert('تم نشر المنشور بنجاح!');
+            loadPosts(); // إعادة تحميل المنشورات
         } catch (error) {
-            console.error('Error creating post:', error);
-            alert('حدث خطأ في نشر المنشور');
+            console.error('Error publishing post:', error);
+            alert('حدث خطأ في نشر المنشور: ' + error.message);
         }
-    });
+    }
 
-    // 🔥 تحميل المنشورات
+    // تحميل المنشورات
     async function loadPosts() {
         try {
-            const { collection, getDocs, query, orderBy } = window.firebaseModules;
-            const postsQuery = query(
-                collection(window.db, 'posts'),
-                orderBy('createdAt', 'desc')
+            const q = firebaseApp.query(
+                firebaseApp.collection(firebaseApp.db, 'posts'), 
+                firebaseApp.orderBy('createdAt', 'desc')
             );
             
-            const snapshot = await getDocs(postsQuery);
+            const querySnapshot = await firebaseApp.getDocs(q);
+            allPosts = [];
             const postsList = document.getElementById('postsList');
             const emptyState = document.getElementById('emptyState');
             
             postsList.innerHTML = '';
             
-            if (snapshot.empty) {
+            if (querySnapshot.empty) {
                 emptyState.classList.remove('hidden');
+                document.getElementById('postsCount').textContent = '0';
                 return;
             }
             
             emptyState.classList.add('hidden');
             
-            snapshot.forEach(doc => {
-                const post = doc.data();
-                const postElement = createPostElement(doc.id, post);
+            querySnapshot.forEach((doc) => {
+                const post = { id: doc.id, ...doc.data() };
+                allPosts.push(post);
+                const postElement = createPostElement(post);
                 postsList.appendChild(postElement);
             });
             
-            lucide.createIcons();
+            document.getElementById('postsCount').textContent = allPosts.length;
         } catch (error) {
             console.error('Error loading posts:', error);
         }
     }
 
-    // 🔥 إنشاء عنصر المنشور
-    function createPostElement(postId, post) {
+    // إنشاء عنصر المنشور
+    function createPostElement(post) {
         const div = document.createElement('div');
-        div.className = 'post-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6';
+        div.className = 'post-card bg-white/5 backdrop-blur-sm rounded-2xl p-4';
         div.innerHTML = `
-            <div class="flex items-start justify-between mb-4">
-                <h3 class="text-xl font-bold text-white flex-1">${post.title}</h3>
+            <div class="flex items-start justify-between mb-3">
+                <h3 class="text-lg font-bold text-white flex-1">${post.title}</h3>
                 <div class="flex items-center gap-2">
-                    <button onclick="editPost('${postId}')" class="text-gray-400 hover:text-blue-400 transition-colors p-1">
+                    <button onclick="editPost('${post.id}')" class="text-gray-400 hover:text-blue-400 transition-colors p-1">
                         <i data-lucide="edit" class="w-4 h-4"></i>
                     </button>
-                    <button onclick="deletePost('${postId}')" class="text-gray-400 hover:text-red-400 transition-colors p-1">
+                    <button onclick="deletePost('${post.id}')" class="text-gray-400 hover:text-red-400 transition-colors p-1">
                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -443,11 +356,10 @@
             
             <p class="text-gray-300 mb-4 leading-relaxed">${post.content}</p>
             
-            ${post.media && post.media.length > 0 ? `
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
-                    ${post.media.map(media => `
-                        <img src="${media.url}" alt="صورة المنشور" 
-                             class="post-image w-full h-32 object-cover rounded-lg ${media.type === 'gif' ? 'gif-border' : ''}">
+            ${post.images && post.images.length > 0 ? `
+                <div class="grid grid-cols-2 gap-2 mb-4">
+                    ${post.images.map(img => `
+                        <img src="${img}" alt="صورة المنشور" class="image-preview w-full rounded-lg">
                     `).join('')}
                 </div>
             ` : ''}
@@ -455,11 +367,10 @@
             ${post.files && post.files.length > 0 ? `
                 <div class="space-y-2 mb-4">
                     ${post.files.map(file => `
-                        <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg border border-white/10">
-                            <i data-lucide="file" class="w-4 h-4 text-blue-400"></i>
-                            <div class="flex-1">
-                                <div class="text-gray-300 text-sm">${file.name}</div>
-                                <div class="text-gray-500 text-xs">${(file.size / 1024).toFixed(1)} KB</div>
+                        <div class="file-item flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="file" class="w-4 h-4 text-blue-400"></i>
+                                <span class="text-gray-300 text-sm">${file.name}</span>
                             </div>
                             <button onclick="downloadFile('${file.url}', '${file.name}')" 
                                     class="text-blue-400 hover:text-blue-300 transition-colors">
@@ -470,189 +381,165 @@
                 </div>
             ` : ''}
             
-            <div class="flex items-center justify-between pt-4 border-t border-white/10">
-                <div class="text-gray-500 text-sm">
-                    ${post.updatedAt ? `تم التعديل: ${new Date(post.updatedAt.toDate()).toLocaleDateString('ar-EG')}` : 
-                      new Date(post.createdAt.toDate()).toLocaleDateString('ar-EG')}
-                </div>
-                
-                <div class="flex items-center gap-4 text-gray-400">
-                    <button onclick="likePost('${postId}')" class="flex items-center gap-2 hover:text-red-400 transition-colors">
-                        <i data-lucide="heart" class="w-4 h-4 ${post.liked ? 'text-red-500 fill-red-500' : ''}"></i>
-                        <span class="text-sm">${post.likesCount || 0}</span>
+            <div class="flex items-center justify-between pt-3 border-t border-white/10">
+                <div class="flex items-center gap-4 text-gray-400 text-sm">
+                    <button onclick="likePost('${post.id}')" class="flex items-center gap-1 hover:text-red-400 transition-colors">
+                        <i data-lucide="heart" class="w-4 h-4"></i>
+                        <span>${post.likes || 0}</span>
                     </button>
-                    
-                    <button onclick="toggleComments('${postId}')" class="flex items-center gap-2 hover:text-blue-400 transition-colors">
-                        <i data-lucide="message-square" class="w-4 h-4"></i>
-                        <span class="text-sm">${post.comments ? post.comments.length : 0}</span>
+                    <button onclick="addComment('${post.id}')" class="flex items-center gap-1 hover:text-blue-400 transition-colors">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        <span>تعليق</span>
                     </button>
                 </div>
+                <span class="text-gray-500 text-xs">${formatDate(post.createdAt)}</span>
             </div>
             
-            <div id="comments-${postId}" class="comment-section mt-4 hidden">
-                <div class="flex gap-2 mb-3">
-                    <input type="text" id="commentInput-${postId}" placeholder="اكتب تعليق..." 
-                           class="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none text-sm">
-                    <button onclick="addComment('${postId}')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-sm">
-                        تعليق
-                    </button>
-                </div>
-                <div id="commentsList-${postId}" class="space-y-2">
-                    ${post.comments ? post.comments.map(comment => `
-                        <div class="flex items-start gap-3 p-3 bg-white/5 rounded-lg">
-                            <div class="flex-1">
-                                <div class="text-sm text-gray-300">${comment.text}</div>
-                                <div class="text-gray-500 text-xs mt-1">${new Date(comment.timestamp).toLocaleDateString('ar-EG')}</div>
+            ${post.comments && post.comments.length > 0 ? `
+                <div class="mt-3 pt-3 border-t border-white/10">
+                    <div class="space-y-2">
+                        ${post.comments.slice(0, 3).map(comment => `
+                            <div class="text-sm text-gray-400">
+                                <span class="text-blue-400">${comment.author}:</span> ${comment.text}
                             </div>
-                            <button onclick="deleteComment('${postId}', '${comment.id}')" class="text-red-400 hover:text-red-300 text-xs">
-                                حذف
-                            </button>
-                        </div>
-                    `).join('') : ''}
+                        `).join('')}
+                    </div>
                 </div>
-            </div>
+            ` : ''}
         `;
+        
         return div;
     }
 
-    // 🔥 التعديل والحذف
-    async function editPost(postId) {
-        try {
-            const { doc, getDoc } = window.firebaseModules;
-            const postDoc = await getDoc(doc(window.db, 'posts', postId));
-            const post = postDoc.data();
-            
-            document.getElementById('editPostTitle').value = post.title;
-            document.getElementById('editPostContent').value = post.content;
-            currentEditingPostId = postId;
-            
-            document.getElementById('createPostSection').classList.add('hidden');
-            document.getElementById('editPostSection').classList.remove('hidden');
-        } catch (error) {
-            console.error('Error editing post:', error);
-        }
+    // تنسيق التاريخ
+    function formatDate(timestamp) {
+        if (!timestamp) return 'قبل قليل';
+        const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+        return date.toLocaleDateString('ar-EG');
     }
 
-    document.getElementById('updatePostBtn').addEventListener('click', async function() {
-        if (!currentEditingPostId) return;
+    // البحث في المنشورات
+    function searchPosts(query) {
+        const searchResults = document.getElementById('searchResults');
         
-        const title = document.getElementById('editPostTitle').value.trim();
-        const content = document.getElementById('editPostContent').value.trim();
-        
-        if (!title || !content) {
-            alert('يرجى ملء العنوان والمحتوى');
+        if (query.length < 2) {
+            searchResults.classList.add('hidden');
             return;
         }
         
-        try {
-            const { doc, updateDoc } = window.firebaseModules;
-            await updateDoc(doc(window.db, 'posts', currentEditingPostId), {
-                title,
-                content,
-                updatedAt: window.firebaseModules.serverTimestamp()
+        const results = allPosts.filter(post => 
+            post.title.toLowerCase().includes(query.toLowerCase()) ||
+            post.content.toLowerCase().includes(query.toLowerCase())
+        );
+        
+        searchResults.innerHTML = '';
+        
+        if (results.length === 0) {
+            searchResults.innerHTML = '<div class="search-result-item text-gray-400">لا توجد نتائج</div>';
+        } else {
+            results.forEach(post => {
+                const item = document.createElement('div');
+                item.className = 'search-result-item';
+                item.innerHTML = `
+                    <div class="font-medium">${post.title}</div>
+                    <div class="text-gray-400 text-xs mt-1">${post.content.substring(0, 50)}...</div>
+                `;
+                item.onclick = () => {
+                    document.getElementById('searchInput').value = post.title;
+                    searchResults.classList.add('hidden');
+                    // يمكن إضافة تصفية للمنشورات حسب البحث
+                };
+                searchResults.appendChild(item);
             });
-            
-            document.getElementById('editPostSection').classList.add('hidden');
-            currentEditingPostId = null;
-            await loadPosts();
-            alert('تم تعديل المنشور بنجاح!');
-        } catch (error) {
-            console.error('Error updating post:', error);
         }
+        
+        searchResults.classList.remove('hidden');
+    }
+
+    // معاينة الصور
+    document.getElementById('imageInput').addEventListener('change', function(e) {
+        const preview = document.getElementById('imagePreview');
+        currentImages = [];
+        
+        Array.from(e.target.files).forEach(file => {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'image-preview w-full rounded-lg';
+                    preview.appendChild(img);
+                    currentImages.push({
+                        url: e.target.result,
+                        name: file.name,
+                        type: file.type
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        });
     });
+
+    // معاينة الملفات
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+        const preview = document.getElementById('filePreview');
+        currentFiles = [];
+        
+        Array.from(e.target.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item flex items-center justify-between';
+                fileItem.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="file" class="w-4 h-4 text-blue-400"></i>
+                        <span class="text-gray-300 text-sm">${file.name}</span>
+                        <span class="text-gray-500 text-xs">${(file.size / 1024).toFixed(1)} KB</span>
+                    </div>
+                    <button onclick="this.parentElement.remove()" class="text-red-400 hover:text-red-300">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                `;
+                preview.appendChild(fileItem);
+                
+                currentFiles.push({
+                    url: e.target.result,
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+        
+        lucide.createIcons();
+    });
+
+    // دوال التفاعل (سيتم تطويرها)
+    async function likePost(postId) {
+        alert('ميزة الإعجاب قيد التطوير');
+    }
+
+    async function addComment(postId) {
+        const comment = prompt('اكتب تعليقك:');
+        if (comment) {
+            alert('ميزة التعليقات قيد التطوير');
+        }
+    }
+
+    async function editPost(postId) {
+        alert('ميزة التعديل قيد التطوير');
+    }
 
     async function deletePost(postId) {
         if (confirm('هل أنت متأكد من حذف هذا المنشور؟')) {
             try {
-                const { doc, deleteDoc } = window.firebaseModules;
-                await deleteDoc(doc(window.db, 'posts', postId));
-                await loadPosts();
-                alert('تم حذف المنشور بنجاح!');
+                await firebaseApp.deleteDoc(firebaseApp.doc(firebaseApp.db, 'posts', postId));
+                loadPosts();
             } catch (error) {
                 console.error('Error deleting post:', error);
             }
         }
-    }
-
-    // 🔥 الإعجابات والتعليقات
-    async function likePost(postId) {
-        try {
-            const { doc, getDoc, updateDoc } = window.firebaseModules;
-            const postRef = doc(window.db, 'posts', postId);
-            const postDoc = await getDoc(postRef);
-            const post = postDoc.data();
-            
-            const newLikesCount = (post.likesCount || 0) + 1;
-            await updateDoc(postRef, {
-                likesCount: newLikesCount,
-                liked: true
-            });
-            
-            await loadPosts();
-        } catch (error) {
-            console.error('Error liking post:', error);
-        }
-    }
-
-    async function addComment(postId) {
-        const commentInput = document.getElementById(`commentInput-${postId}`);
-        const commentText = commentInput.value.trim();
-        
-        if (!commentText) return;
-        
-        try {
-            const { doc, getDoc, updateDoc } = window.firebaseModules;
-            const postRef = doc(window.db, 'posts', postId);
-            const postDoc = await getDoc(postRef);
-            const post = postDoc.data();
-            
-            const newComment = {
-                id: Date.now().toString(),
-                text: commentText,
-                timestamp: new Date().toISOString(),
-                author: 'مستخدم'
-            };
-            
-            const updatedComments = [...(post.comments || []), newComment];
-            await updateDoc(postRef, {
-                comments: updatedComments
-            });
-            
-            commentInput.value = '';
-            await loadPosts();
-        } catch (error) {
-            console.error('Error adding comment:', error);
-        }
-    }
-
-    function toggleComments(postId) {
-        const commentsSection = document.getElementById(`comments-${postId}`);
-        commentsSection.classList.toggle('hidden');
-    }
-
-    // 🔥 أدوات مساعدة
-    function resetPostForm() {
-        document.getElementById('postTitle').value = '';
-        document.getElementById('postContent').value = '';
-        document.getElementById('mediaPreview').innerHTML = '';
-        document.getElementById('filesPreview').innerHTML = '';
-        document.getElementById('createPostSection').classList.add('hidden');
-        currentMedia = [];
-        currentFiles = [];
-    }
-
-    function removeMedia(button) {
-        const mediaItem = button.parentElement;
-        const index = Array.from(mediaItem.parentElement.children).indexOf(mediaItem);
-        currentMedia.splice(index, 1);
-        mediaItem.remove();
-    }
-
-    function removeFile(button) {
-        const fileItem = button.parentElement;
-        const index = Array.from(fileItem.parentElement.children).indexOf(fileItem);
-        currentFiles.splice(index, 1);
-        fileItem.remove();
     }
 
     function downloadFile(url, filename) {
@@ -662,42 +549,23 @@
         link.click();
     }
 
-    function filterPosts(postIds) {
-        // تصفية المنشورات حسب نتائج البحث
-        const posts = document.querySelectorAll('#postsList > div');
-        posts.forEach(post => {
-            const postId = post.getAttribute('data-post-id');
-            if (postIds.includes(postId)) {
-                post.style.display = 'block';
-            } else {
-                post.style.display = 'none';
-            }
-        });
-    }
-
-    // الأحداث
-    document.getElementById('createPostBtn').addEventListener('click', function() {
-        document.getElementById('createPostSection').classList.remove('hidden');
+    // أحداث البحث
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+        searchPosts(e.target.value);
     });
 
-    document.getElementById('cancelPostBtn').addEventListener('click', resetPostForm);
-
-    document.getElementById('cancelEditBtn').addEventListener('click', function() {
-        document.getElementById('editPostSection').classList.add('hidden');
-        currentEditingPostId = null;
-    });
-
-    // بدء التطبيق
-    document.getElementById('loadingScreen').style.display = 'none';
-    document.getElementById('mainContent').classList.remove('hidden-content');
-    loadPosts();
-
-    // إخفاء نتائج البحث عند النقر خارجها
     document.addEventListener('click', function(e) {
-        if (!e.target.closest('#searchPosts') && !e.target.closest('#searchResults')) {
+        if (!e.target.closest('#searchInput') && !e.target.closest('#searchResults')) {
             document.getElementById('searchResults').classList.add('hidden');
         }
     });
+
+    // بدء التطبيق
+    setTimeout(() => {
+        document.getElementById('loadingScreen').style.display = 'none';
+        document.getElementById('mainContent').classList.remove('hidden-content');
+        loadPosts();
+    }, 2000);
 </script>
 </body>
 </html>
