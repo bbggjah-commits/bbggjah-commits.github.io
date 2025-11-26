@@ -7,11 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=Inter:wght@300;400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, orderBy, query, serverTimestamp, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+        import { getFirestore, collection, addDoc, getDocs, orderBy, query, updateDoc, doc, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAk_Nb7MzG7D_hAXRAxZdt7jtsjwIj-zJw",
@@ -19,17 +17,16 @@
             projectId: "vndxs-network",
             storageBucket: "vndxs-network.firebasestorage.app",
             messagingSenderId: "252650626086",
-            appId: "1:252650626086:web:555f3cfbf77f3a193a9ae7",
-            measurementId: "G-QH8BCL29L3"
+            appId: "1:252650626086:web:555f3cfbf77f3a193a9ae7"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const storage = getStorage(app);
         
-        window.firebaseApp = { db, storage, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, orderBy, query, serverTimestamp, onSnapshot, ref, uploadBytes, getDownloadURL };
+        window.firebaseApp = app;
+        window.db = db;
+        window.firebaseModules = { collection, addDoc, getDocs, orderBy, query, updateDoc, doc, serverTimestamp, deleteDoc };
     </script>
-
     <style>
         .font-arabic { font-family: 'IBM Plex Sans Arabic', sans-serif; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
@@ -37,126 +34,106 @@
         .dir-rtl { direction: rtl; }
         .dir-ltr { direction: ltr; }
         .hidden-content { display: none !important; }
-        .container-custom { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        .container-custom { max-width: 1200px; margin: 0 auto; }
         .post-card, .post-image { transition: all 0.3s ease; }
         .post-card:hover { transform: translateY(-2px); }
-        .search-results { position: absolute; top: 100%; left: 0; right: 0; background: #1a1a1a; border: 1px solid #333; border-radius: 0 0 12px 12px; max-height: 200px; overflow-y: auto; z-index: 1000; }
-        .search-result-item { padding: 12px 16px; border-bottom: 1px solid #333; cursor: pointer; }
+        .search-results { position: absolute; top: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 0 0 12px 12px; max-height: 200px; overflow-y: auto; z-index: 1000; width: 100%; }
+        .search-result-item { padding: 12px 16px; border-bottom: 1px solid #333; cursor: pointer; transition: background 0.2s ease; }
         .search-result-item:hover { background: #2a2a2a; }
-        .comment-section { max-height: 200px; overflow-y: auto; }
-        
+        .comment-section { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .comment-section.open { max-height: 500px; }
         @media (max-width: 768px) {
-            .container-custom { padding: 0 0.5rem; }
+            .container-custom { padding-left: 1rem; padding-right: 1rem; }
             .header-content { flex-direction: column; gap: 1rem; }
             .post-grid { grid-template-columns: 1fr; }
-            .mobile-flex-col { flex-direction: column; }
-            .mobile-text-sm { font-size: 0.875rem; }
-            .mobile-p-3 { padding: 0.75rem; }
+            .post-actions { flex-wrap: wrap; gap: 0.5rem; }
         }
     </style>
 </head>
 <body class="bg-black text-white font-arabic min-h-screen dir-rtl">
-
 <div id="loadingScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-black">
     <div class="text-center">
-        <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-        <p class="text-gray-400 mobile-text-sm">جاري التحميل...</p>
+        <div class="w-12 h-12 border-3 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+        <p class="text-gray-400 text-sm">جاري التحميل...</p>
     </div>
 </div>
 
 <div id="mainContent" class="hidden-content">
     <div class="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
-        <div class="absolute top-[-10%] left-[20%] w-[300px] h-[300px] bg-[#0a1128] rounded-full blur-[80px] opacity-40 animate-pulse"></div>
+        <div class="absolute top-[-10%] left-[20%] w-[300px] h-[300px] bg-[#0a1128] rounded-full blur-[80px] opacity-40"></div>
         <div class="absolute bottom-[-10%] right-[10%] w-[250px] h-[250px] bg-[#1e40af] rounded-full blur-[60px] opacity-20"></div>
     </div>
 
     <header class="relative z-10 border-b border-white/10 bg-black/80 backdrop-blur-sm">
-        <div class="container-custom py-3">
-            <div class="flex items-center justify-between mobile-flex-col gap-3">
+        <div class="container-custom px-4 py-3">
+            <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <img src="https://d.top4top.io/p_3616filhy0.jpg" alt="VNDXS Logo" class="w-10 h-10 rounded-full border-2 border-white/10 object-cover"/>
-                    <div>
-                        <h1 class="text-lg font-bold font-orbitron bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">VNDXS Network</h1>
-                        <p class="text-gray-400 text-xs">التطوير والمشاركة</p>
-                    </div>
+                    <img src="https://d.top4top.io/p_3616filhy0.jpg" alt="VNDXS Logo" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/10 object-cover"/>
+                    <h1 class="text-lg sm:text-xl font-bold font-orbitron bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+                        VNDXS Network
+                    </h1>
                 </div>
-                <div class="flex items-center gap-2">
-                    <div class="relative">
-                        <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2"></i>
-                        <input type="text" id="searchPosts" placeholder="ابحث..." class="w-40 pl-8 pr-3 py-2 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none text-sm"/>
-                        <div id="searchResults" class="search-results hidden"></div>
-                    </div>
-                    <button id="createPostBtn" class="flex items-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl transition-all duration-300 text-sm">
-                        <i data-lucide="plus" class="w-4 h-4"></i>
-                        <span class="hidden sm:inline">جديد</span>
-                    </button>
-                </div>
+                <button id="createPostBtn" class="flex items-center gap-1 sm:gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl transition-all duration-200 text-sm">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    <span class="hidden sm:block">منشور جديد</span>
+                </button>
             </div>
         </div>
     </header>
 
-    <main class="relative z-10 container-custom py-4">
-        <div id="createPostSection" class="mb-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 hidden">
-            <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+    <main class="relative z-10 container-custom px-4 py-4">
+        <div id="createPostSection" class="mb-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 hidden">
+            <h2 class="text-lg font-bold mb-3 flex items-center gap-2">
                 <i data-lucide="edit-3" class="w-5 h-5 text-blue-400"></i>
                 منشور جديد
             </h2>
-            <div class="space-y-4">
-                <input type="text" id="postTitle" placeholder="عنوان المنشور" class="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none text-sm"/>
-                <textarea id="postContent" rows="3" placeholder="محتوى المنشور" class="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none resize-none text-sm"></textarea>
+            <div class="space-y-3">
+                <input type="text" id="postTitle" placeholder="عنوان المنشور" class="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:border-blue-500 focus:outline-none text-sm">
+                <textarea id="postContent" rows="3" placeholder="محتوى المنشور" class="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:border-blue-500 focus:outline-none resize-none text-sm"></textarea>
                 
                 <div class="space-y-2">
-                    <label class="text-gray-300 text-sm">الصور (يدعم GIF)</label>
-                    <input type="file" id="postImages" multiple accept="image/*,.gif" class="hidden"/>
-                    <button onclick="document.getElementById('postImages').click()" class="w-full px-3 py-2 bg-white/10 hover:bg-white/20 rounded-xl transition-colors text-sm flex items-center gap-2">
-                        <i data-lucide="image" class="w-4 h-4"></i>
-                        إضافة صور
-                    </button>
+                    <label class="text-gray-300 text-sm">الصور/GIF (اختياري)</label>
+                    <div class="border border-dashed border-white/20 rounded-lg p-3 text-center cursor-pointer" onclick="document.getElementById('postImages').click()">
+                        <i data-lucide="image" class="w-6 h-6 text-gray-400 mx-auto mb-1"></i>
+                        <p class="text-gray-400 text-xs">انقر لرفع الصور أو GIF</p>
+                        <input type="file" id="postImages" multiple accept="image/*,.gif" class="hidden">
+                    </div>
                     <div id="imagePreview" class="grid grid-cols-2 gap-2"></div>
                 </div>
 
                 <div class="space-y-2">
-                    <label class="text-gray-300 text-sm">الملفات</label>
-                    <input type="file" id="postFiles" multiple class="hidden"/>
-                    <button onclick="document.getElementById('postFiles').click()" class="w-full px-3 py-2 bg-white/10 hover:bg-white/20 rounded-xl transition-colors text-sm flex items-center gap-2">
-                        <i data-lucide="file" class="w-4 h-4"></i>
-                        إضافة ملفات
-                    </button>
-                    <div id="filePreview" class="space-y-2"></div>
+                    <label class="text-gray-300 text-sm">الملفات (اختياري)</label>
+                    <div class="border border-dashed border-white/20 rounded-lg p-3 text-center cursor-pointer" onclick="document.getElementById('postFiles').click()">
+                        <i data-lucide="file" class="w-6 h-6 text-gray-400 mx-auto mb-1"></i>
+                        <p class="text-gray-400 text-xs">انقر لرفع الملفات</p>
+                        <input type="file" id="postFiles" multiple class="hidden">
+                    </div>
+                    <div id="filePreview" class="space-y-1"></div>
                 </div>
 
                 <div class="flex gap-2 pt-2">
-                    <button id="publishPostBtn" class="flex-1 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl font-bold transition-colors text-sm">
-                        نشر
+                    <button id="publishPostBtn" class="flex-1 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-colors text-sm">
+                        نشر المنشور
                     </button>
-                    <button id="cancelPostBtn" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl transition-colors text-sm">
+                    <button id="cancelPostBtn" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-sm">
                         إلغاء
                     </button>
                 </div>
             </div>
         </div>
 
-        <div id="editPostSection" class="mb-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 hidden">
-            <h2 class="text-lg font-bold mb-4">تعديل المنشور</h2>
-            <div class="space-y-4">
-                <input type="text" id="editPostTitle" class="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none text-sm"/>
-                <textarea id="editPostContent" rows="3" class="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none resize-none text-sm"></textarea>
-                <div class="flex gap-2">
-                    <button id="updatePostBtn" class="flex-1 py-2 bg-green-600 hover:bg-green-700 rounded-xl font-bold transition-colors text-sm">
-                        حفظ
-                    </button>
-                    <button id="cancelEditBtn" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl transition-colors text-sm">
-                        إلغاء
-                    </button>
-                </div>
+        <div class="mb-6">
+            <div class="relative">
+                <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute right-3 top-1/2 transform -translate-y-1/2"></i>
+                <input type="text" id="searchPosts" placeholder="ابحث في المنشورات..." class="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-lg focus:border-blue-500 focus:outline-none text-sm">
+                <div id="searchResults" class="search-results hidden"></div>
             </div>
         </div>
 
         <div id="postsContainer">
-            <h2 class="text-xl font-bold mb-4">أحدث المنشورات</h2>
             <div id="postsList" class="space-y-4"></div>
             <div id="emptyState" class="text-center py-8">
-                <i data-lucide="newspaper" class="w-12 h-12 text-gray-600 mx-auto mb-3"></i>
+                <i data-lucide="newspaper" class="w-10 h-10 text-gray-600 mx-auto mb-2"></i>
                 <p class="text-gray-400 text-sm">لا توجد منشورات بعد</p>
             </div>
         </div>
@@ -164,354 +141,345 @@
 </div>
 
 <script>
-    lucide.createIcons();
-    
-    const { db, storage, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, orderBy, query, serverTimestamp, onSnapshot, ref, uploadBytes, getDownloadURL } = window.firebaseApp;
-    
-    let currentPosts = [];
-    let currentImages = [];
-    let currentFiles = [];
-    let editingPostId = null;
+    document.addEventListener('DOMContentLoaded', async function() {
+        lucide.createIcons();
+        
+        let currentImages = [];
+        let currentFiles = [];
+        let editingPostId = null;
 
-    async function loadPosts() {
-        try {
-            const q = query(collection(db, "posts"), orderBy("date", "desc"));
-            const querySnapshot = await getDocs(q);
-            const postsList = document.getElementById('postsList');
-            const emptyState = document.getElementById('emptyState');
+        setTimeout(() => {
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('mainContent').classList.remove('hidden-content');
+            loadPosts();
+        }, 800);
+
+        async function loadPosts() {
+            try {
+                const { getDocs, collection, query, orderBy } = window.firebaseModules;
+                const q = query(collection(window.db, 'posts'), orderBy('timestamp', 'desc'));
+                const snapshot = await getDocs(q);
+                const postsList = document.getElementById('postsList');
+                const emptyState = document.getElementById('emptyState');
+                
+                postsList.innerHTML = '';
+                
+                if (snapshot.empty) {
+                    emptyState.classList.remove('hidden');
+                    return;
+                }
+                
+                emptyState.classList.add('hidden');
+                
+                snapshot.forEach(doc => {
+                    const post = { id: doc.id, ...doc.data() };
+                    const postElement = createPostElement(post);
+                    postsList.appendChild(postElement);
+                });
+                
+                lucide.createIcons();
+            } catch (error) {
+                console.error('Error loading posts:', error);
+            }
+        }
+
+        function createPostElement(post) {
+            const div = document.createElement('div');
+            div.className = 'post-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4';
+            div.innerHTML = `
+                <div class="flex items-start justify-between mb-3">
+                    <h3 class="text-base font-bold text-white flex-1">${post.title}</h3>
+                    <div class="flex items-center gap-1">
+                        <button onclick="editPost('${post.id}')" class="text-gray-400 hover:text-blue-400 transition-colors p-1">
+                            <i data-lucide="edit" class="w-4 h-4"></i>
+                        </button>
+                        <button onclick="deletePost('${post.id}')" class="text-gray-400 hover:text-red-400 transition-colors p-1">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="text-gray-300 mb-3 text-sm leading-relaxed">${post.content}</p>
+                ${post.images && post.images.length > 0 ? `
+                    <div class="grid grid-cols-2 gap-2 mb-3">
+                        ${post.images.map(img => `
+                            <img src="${img}" alt="صورة المنشور" class="post-image w-full h-20 object-cover rounded-lg">
+                        `).join('')}
+                    </div>
+                ` : ''}
+                ${post.files && post.files.length > 0 ? `
+                    <div class="space-y-1 mb-3">
+                        ${post.files.map(file => `
+                            <div class="flex items-center gap-2 p-2 bg-white/5 rounded border border-white/10">
+                                <i data-lucide="file" class="w-3 h-3 text-blue-400"></i>
+                                <span class="text-gray-300 text-xs flex-1 truncate">${file.name}</span>
+                                <button onclick="downloadFile('${file.url}', '${file.name}')" class="text-blue-400 hover:text-blue-300 text-xs">
+                                    تحميل
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+                <div class="flex items-center justify-between pt-3 border-t border-white/10">
+                    <span class="text-gray-500 text-xs">${new Date(post.timestamp?.toDate()).toLocaleDateString('ar-EG')}</span>
+                    <div class="flex items-center gap-3 text-gray-400 post-actions">
+                        <button onclick="likePost('${post.id}')" class="flex items-center gap-1 text-xs hover:text-red-400 transition-colors">
+                            <i data-lucide="heart" class="w-3 h-3"></i>
+                            <span>${post.likes || 0}</span>
+                        </button>
+                        <button onclick="toggleComments('${post.id}')" class="flex items-center gap-1 text-xs hover:text-blue-400 transition-colors">
+                            <i data-lucide="message-circle" class="w-3 h-3"></i>
+                            <span>تعليق</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="comments-${post.id}" class="comment-section mt-3">
+                    <div class="flex gap-2 mb-2">
+                        <input type="text" id="commentInput-${post.id}" placeholder="اكتب تعليق..." class="flex-1 px-2 py-1 bg-white/5 border border-white/10 rounded text-xs">
+                        <button onclick="addComment('${post.id}')" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-xs">إرسال</button>
+                    </div>
+                    <div id="commentsList-${post.id}" class="space-y-2"></div>
+                </div>
+            `;
+            return div;
+        }
+
+        window.editPost = function(postId) {
+            editingPostId = postId;
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postContent').value = '';
+            document.getElementById('createPostSection').classList.remove('hidden');
+        };
+
+        window.deletePost = async function(postId) {
+            if (confirm('هل تريد حذف هذا المنشور؟')) {
+                try {
+                    const { deleteDoc, doc } = window.firebaseModules;
+                    await deleteDoc(doc(window.db, 'posts', postId));
+                    loadPosts();
+                } catch (error) {
+                    console.error('Error deleting post:', error);
+                }
+            }
+        };
+
+        window.likePost = async function(postId) {
+            try {
+                const { doc, updateDoc, getDoc } = window.firebaseModules;
+                const postRef = doc(window.db, 'posts', postId);
+                const postSnap = await getDoc(postRef);
+                if (postSnap.exists()) {
+                    const currentLikes = postSnap.data().likes || 0;
+                    await updateDoc(postRef, { likes: currentLikes + 1 });
+                    loadPosts();
+                }
+            } catch (error) {
+                console.error('Error liking post:', error);
+            }
+        };
+
+        window.toggleComments = function(postId) {
+            const commentsSection = document.getElementById(`comments-${postId}`);
+            commentsSection.classList.toggle('open');
+        };
+
+        window.addComment = async function(postId) {
+            const commentInput = document.getElementById(`commentInput-${postId}`);
+            const comment = commentInput.value.trim();
+            if (comment) {
+                try {
+                    const { doc, updateDoc, arrayUnion, serverTimestamp } = window.firebaseModules;
+                    const postRef = doc(window.db, 'posts', postId);
+                    await updateDoc(postRef, {
+                        comments: arrayUnion({
+                            text: comment,
+                            timestamp: serverTimestamp()
+                        })
+                    });
+                    commentInput.value = '';
+                    loadPosts();
+                } catch (error) {
+                    console.error('Error adding comment:', error);
+                }
+            }
+        };
+
+        window.downloadFile = function(url, filename) {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.click();
+        };
+
+        document.getElementById('postImages').addEventListener('change', function(e) {
+            const preview = document.getElementById('imagePreview');
+            currentImages = [];
+            preview.innerHTML = '';
             
-            postsList.innerHTML = '';
-            currentPosts = [];
+            Array.from(e.target.files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'w-full h-20 object-cover rounded-lg post-image';
+                        preview.appendChild(img);
+                        currentImages.push({
+                            url: e.target.result,
+                            name: file.name,
+                            type: file.type
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        document.getElementById('postFiles').addEventListener('change', function(e) {
+            const preview = document.getElementById('filePreview');
+            currentFiles = [];
+            preview.innerHTML = '';
             
-            if (querySnapshot.empty) {
-                emptyState.classList.remove('hidden');
+            Array.from(e.target.files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'flex items-center gap-2 p-2 bg-white/5 rounded border border-white/10';
+                    fileItem.innerHTML = `
+                        <i data-lucide="file" class="w-3 h-3 text-blue-400"></i>
+                        <span class="text-gray-300 text-xs flex-1 truncate">${file.name}</span>
+                        <span class="text-gray-500 text-xs">${(file.size / 1024).toFixed(1)}KB</span>
+                    `;
+                    preview.appendChild(fileItem);
+                    
+                    currentFiles.push({
+                        url: e.target.result,
+                        name: file.name,
+                        size: file.size
+                    });
+                };
+                reader.readAsDataURL(file);
+            });
+            lucide.createIcons();
+        });
+
+        document.getElementById('createPostBtn').addEventListener('click', function() {
+            editingPostId = null;
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postContent').value = '';
+            document.getElementById('imagePreview').innerHTML = '';
+            document.getElementById('filePreview').innerHTML = '';
+            document.getElementById('createPostSection').classList.remove('hidden');
+        });
+
+        document.getElementById('publishPostBtn').addEventListener('click', async function() {
+            const title = document.getElementById('postTitle').value.trim();
+            const content = document.getElementById('postContent').value.trim();
+            
+            if (!title || !content) {
+                alert('يرجى ملء العنوان والمحتوى');
                 return;
             }
             
-            emptyState.classList.add('hidden');
-            
-            querySnapshot.forEach((doc) => {
-                const post = { id: doc.id, ...doc.data() };
-                currentPosts.push(post);
-                const postElement = createPostElement(post);
-                postsList.appendChild(postElement);
-            });
-        } catch (error) {
-            console.error('Error loading posts:', error);
-        }
-    }
-
-    async function createPost(postData) {
-        try {
-            await addDoc(collection(db, "posts"), {
-                ...postData,
-                date: serverTimestamp(),
-                likes: 0,
-                likedBy: [],
-                comments: []
-            });
-            resetForm();
-            loadPosts();
-        } catch (error) {
-            console.error('Error creating post:', error);
-            alert('حدث خطأ في نشر المنشور');
-        }
-    }
-
-    async function updatePost(postId, updatedData) {
-        try {
-            const postRef = doc(db, "posts", postId);
-            await updateDoc(postRef, updatedData);
-            loadPosts();
-        } catch (error) {
-            console.error('Error updating post:', error);
-            alert('حدث خطأ في تعديل المنشور');
-        }
-    }
-
-    async function likePost(postId, userId = 'user_' + Date.now()) {
-        const post = currentPosts.find(p => p.id === postId);
-        if (!post) return;
-
-        const isLiked = post.likedBy?.includes(userId);
-        const newLikedBy = isLiked 
-            ? post.likedBy.filter(id => id !== userId)
-            : [...(post.likedBy || []), userId];
-
-        await updateDoc(doc(db, "posts", postId), {
-            likes: newLikedBy.length,
-            likedBy: newLikedBy
+            try {
+                const { addDoc, collection, serverTimestamp } = window.firebaseModules;
+                await addDoc(collection(window.db, 'posts'), {
+                    title,
+                    content,
+                    images: currentImages,
+                    files: currentFiles,
+                    likes: 0,
+                    comments: [],
+                    timestamp: serverTimestamp()
+                });
+                
+                document.getElementById('createPostSection').classList.add('hidden');
+                currentImages = [];
+                currentFiles = [];
+                loadPosts();
+            } catch (error) {
+                console.error('Error publishing post:', error);
+                alert('حدث خطأ في نشر المنشور');
+            }
         });
-    }
 
-    async function addComment(postId, commentText, userId = 'user_' + Date.now()) {
-        const newComment = {
-            id: 'comment_' + Date.now(),
-            text: commentText,
-            userId: userId,
-            date: new Date().toISOString()
-        };
-
-        const post = currentPosts.find(p => p.id === postId);
-        const updatedComments = [...(post.comments || []), newComment];
-
-        await updateDoc(doc(db, "posts", postId), {
-            comments: updatedComments
+        document.getElementById('cancelPostBtn').addEventListener('click', function() {
+            document.getElementById('createPostSection').classList.add('hidden');
         });
-    }
 
-    function createPostElement(post) {
-        const div = document.createElement('div');
-        div.className = 'post-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl mobile-p-3';
-        div.innerHTML = `
-            <div class="flex justify-between items-start mb-3">
-                <h3 class="text-base font-bold text-white flex-1">${post.title}</h3>
-                <button onclick="editPost('${post.id}')" class="text-gray-400 hover:text-blue-400 transition-colors p-1">
-                    <i data-lucide="edit" class="w-4 h-4"></i>
-                </button>
-            </div>
-            <p class="text-gray-300 mb-3 leading-relaxed mobile-text-sm">${post.content}</p>
-            
-            ${post.images && post.images.length > 0 ? `
-                <div class="grid grid-cols-2 gap-2 mb-3">
-                    ${post.images.map(img => `
-                        <img src="${img}" alt="صورة" class="post-image w-full h-20 object-cover rounded-lg"/>
-                    `).join('')}
-                </div>
-            ` : ''}
-            
-            ${post.files && post.files.length > 0 ? `
-                <div class="space-y-2 mb-3">
-                    ${post.files.map(file => `
-                        <div class="flex items-center gap-2 p-2 bg-white/5 rounded-lg border border-white/10">
-                            <i data-lucide="file" class="w-4 h-4 text-blue-400"></i>
-                            <span class="text-gray-300 mobile-text-sm flex-1 truncate">${file.name}</span>
-                            <button onclick="downloadFile('${file.url}', '${file.name}')" class="text-blue-400 hover:text-blue-300 transition-colors">
-                                <i data-lucide="download" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                    `).join('')}
-                </div>
-            ` : ''}
-            
-            <div class="flex items-center justify-between pt-3 border-t border-white/10">
-                <span class="text-gray-500 text-xs">${post.date ? new Date(post.date.seconds * 1000).toLocaleDateString('ar-EG') : ''}</span>
-                <div class="flex items-center gap-3 text-gray-400">
-                    <button onclick="likePost('${post.id}')" class="flex items-center gap-1 hover:text-red-400 transition-colors text-xs">
-                        <i data-lucide="heart" class="w-4 h-4"></i>
-                        <span>${post.likes || 0}</span>
-                    </button>
-                    <button onclick="toggleComments('${post.id}')" class="flex items-center gap-1 hover:text-blue-400 transition-colors text-xs">
-                        <i data-lucide="message-circle" class="w-4 h-4"></i>
-                        <span>${post.comments ? post.comments.length : 0}</span>
-                    </button>
-                </div>
-            </div>
-            
-            <div id="comments-${post.id}" class="comment-section mt-3 hidden">
-                <div class="flex gap-2 mb-2">
-                    <input type="text" id="commentInput-${post.id}" placeholder="اكتب تعليق..." class="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-xl focus:border-blue-500 focus:outline-none text-sm"/>
-                    <button onclick="postComment('${post.id}')" class="px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors text-sm">
-                        <i data-lucide="send" class="w-4 h-4"></i>
-                    </button>
-                </div>
-                <div id="commentsList-${post.id}" class="space-y-2">
-                    ${post.comments ? post.comments.map(comment => `
-                        <div class="flex items-start gap-2 p-2 bg-white/5 rounded-lg">
-                            <div class="flex-1">
-                                <p class="text-gray-300 text-xs">${comment.text}</p>
-                                <span class="text-gray-500 text-xs">${new Date(comment.date).toLocaleDateString('ar-EG')}</span>
-                            </div>
-                        </div>
-                    `).join('') : ''}
-                </div>
-            </div>
-        `;
-        return div;
-    }
+        document.getElementById('searchPosts').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            if (searchTerm.length >= 2) {
+                searchPosts(searchTerm);
+            } else {
+                document.getElementById('searchResults').classList.add('hidden');
+                loadPosts();
+            }
+        });
 
-    function editPost(postId) {
-        const post = currentPosts.find(p => p.id === postId);
-        if (!post) return;
-
-        editingPostId = postId;
-        document.getElementById('editPostTitle').value = post.title;
-        document.getElementById('editPostContent').value = post.content;
-        document.getElementById('editPostSection').classList.remove('hidden');
-    }
-
-    function toggleComments(postId) {
-        const commentsSection = document.getElementById(`comments-${postId}`);
-        commentsSection.classList.toggle('hidden');
-    }
-
-    function postComment(postId) {
-        const commentInput = document.getElementById(`commentInput-${postId}`);
-        const commentText = commentInput.value.trim();
-        
-        if (!commentText) return;
-
-        addComment(postId, commentText);
-        commentInput.value = '';
-    }
-
-    function downloadFile(url, filename) {
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = filename;
-        link.click();
-    }
-
-    function searchPosts(query) {
-        if (query.length < 2) {
-            document.getElementById('searchResults').classList.add('hidden');
-            return;
+        async function searchPosts(searchTerm) {
+            try {
+                const { getDocs, collection, query, orderBy } = window.firebaseModules;
+                const q = query(collection(window.db, 'posts'), orderBy('timestamp', 'desc'));
+                const snapshot = await getDocs(q);
+                const results = [];
+                
+                snapshot.forEach(doc => {
+                    const post = doc.data();
+                    if (post.title.toLowerCase().includes(searchTerm) || post.content.toLowerCase().includes(searchTerm)) {
+                        results.push({ id: doc.id, ...post });
+                    }
+                });
+                
+                displaySearchResults(results);
+            } catch (error) {
+                console.error('Error searching posts:', error);
+            }
         }
-        
-        const results = currentPosts.filter(post => 
-            post.title.toLowerCase().includes(query.toLowerCase()) ||
-            post.content.toLowerCase().includes(query.toLowerCase())
-        );
-        
-        const searchResults = document.getElementById('searchResults');
-        searchResults.innerHTML = '';
-        
-        if (results.length === 0) {
-            searchResults.innerHTML = '<div class="search-result-item text-gray-400 text-sm">لا توجد نتائج</div>';
-        } else {
-            results.forEach(post => {
-                const item = document.createElement('div');
-                item.className = 'search-result-item';
-                item.innerHTML = `
-                    <div class="font-medium text-sm">${post.title}</div>
-                    <div class="text-gray-400 text-xs mt-1">${post.content.substring(0, 50)}...</div>
-                `;
-                item.onclick = () => {
-                    document.getElementById('searchPosts').value = post.title;
-                    searchResults.classList.add('hidden');
-                };
-                searchResults.appendChild(item);
+
+        function displaySearchResults(results) {
+            const searchResults = document.getElementById('searchResults');
+            searchResults.innerHTML = '';
+            
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="search-result-item text-gray-400 text-sm">لا توجد نتائج</div>';
+            } else {
+                results.forEach(post => {
+                    const item = document.createElement('div');
+                    item.className = 'search-result-item';
+                    item.innerHTML = `
+                        <div class="font-medium text-sm">${post.title}</div>
+                        <div class="text-gray-400 text-xs mt-1">${post.content.substring(0, 50)}...</div>
+                    `;
+                    item.onclick = () => {
+                        document.getElementById('searchPosts').value = post.title;
+                        searchResults.classList.add('hidden');
+                        filterPostsBySearch(post.title);
+                    };
+                    searchResults.appendChild(item);
+                });
+            }
+            searchResults.classList.remove('hidden');
+        }
+
+        function filterPostsBySearch(searchTerm) {
+            const posts = document.querySelectorAll('.post-card');
+            posts.forEach(post => {
+                const title = post.querySelector('h3').textContent.toLowerCase();
+                const content = post.querySelector('p').textContent.toLowerCase();
+                if (title.includes(searchTerm.toLowerCase()) || content.includes(searchTerm.toLowerCase())) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
             });
         }
-        
-        searchResults.classList.remove('hidden');
-    }
 
-    function resetForm() {
-        document.getElementById('postTitle').value = '';
-        document.getElementById('postContent').value = '';
-        document.getElementById('imagePreview').innerHTML = '';
-        document.getElementById('filePreview').innerHTML = '';
-        document.getElementById('createPostSection').classList.add('hidden');
-        currentImages = [];
-        currentFiles = [];
-    }
-
-    document.getElementById('createPostBtn').addEventListener('click', function() {
-        document.getElementById('createPostSection').classList.remove('hidden');
-    });
-
-    document.getElementById('publishPostBtn').addEventListener('click', function() {
-        const title = document.getElementById('postTitle').value.trim();
-        const content = document.getElementById('postContent').value.trim();
-        
-        if (!title || !content) {
-            alert('يرجى ملء العنوان والمحتوى');
-            return;
-        }
-        
-        const postData = {
-            title,
-            content,
-            images: currentImages,
-            files: currentFiles
-        };
-        
-        createPost(postData);
-    });
-
-    document.getElementById('updatePostBtn').addEventListener('click', function() {
-        const title = document.getElementById('editPostTitle').value.trim();
-        const content = document.getElementById('editPostContent').value.trim();
-        
-        if (!title || !content || !editingPostId) {
-            alert('يرجى ملء العنوان والمحتوى');
-            return;
-        }
-        
-        updatePost(editingPostId, { title, content });
-        document.getElementById('editPostSection').classList.add('hidden');
-        editingPostId = null;
-    });
-
-    document.getElementById('cancelPostBtn').addEventListener('click', resetForm);
-    document.getElementById('cancelEditBtn').addEventListener('click', function() {
-        document.getElementById('editPostSection').classList.add('hidden');
-        editingPostId = null;
-    });
-
-    document.getElementById('searchPosts').addEventListener('input', function(e) {
-        searchPosts(e.target.value);
-    });
-
-    document.getElementById('postImages').addEventListener('change', function(e) {
-        const preview = document.getElementById('imagePreview');
-        currentImages = [];
-        
-        Array.from(e.target.files).forEach(file => {
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = 'w-full h-20 object-cover rounded-lg post-image';
-                    preview.appendChild(img);
-                    currentImages.push(e.target.result);
-                };
-                reader.readAsDataURL(file);
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#searchPosts') && !e.target.closest('#searchResults')) {
+                document.getElementById('searchResults').classList.add('hidden');
             }
         });
     });
-
-    document.getElementById('postFiles').addEventListener('change', function(e) {
-        const preview = document.getElementById('filePreview');
-        currentFiles = [];
-        
-        Array.from(e.target.files).forEach(file => {
-            const fileItem = document.createElement('div');
-            fileItem.className = 'flex items-center gap-2 p-2 bg-white/5 rounded-lg border border-white/10';
-            fileItem.innerHTML = `
-                <i data-lucide="file" class="w-4 h-4 text-blue-400"></i>
-                <span class="text-gray-300 mobile-text-sm flex-1 truncate">${file.name}</span>
-                <span class="text-gray-500 text-xs">${(file.size / 1024).toFixed(1)} KB</span>
-            `;
-            preview.appendChild(fileItem);
-            
-            currentFiles.push({
-                name: file.name,
-                url: URL.createObjectURL(file),
-                size: file.size
-            });
-        });
-        
-        lucide.createIcons();
-    });
-
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('#searchPosts') && !e.target.closest('#searchResults')) {
-            document.getElementById('searchResults').classList.add('hidden');
-        }
-    });
-
-    window.editPost = editPost;
-    window.likePost = likePost;
-    window.toggleComments = toggleComments;
-    window.postComment = postComment;
-    window.downloadFile = downloadFile;
-
-    document.getElementById('loadingScreen').style.display = 'none';
-    document.getElementById('mainContent').classList.remove('hidden-content');
-    loadPosts();
 </script>
 </body>
 </html>
