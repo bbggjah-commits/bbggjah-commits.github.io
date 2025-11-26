@@ -72,7 +72,7 @@
     </div>
 
     <!-- Terms Modal -->
-    <div id="termsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div id="termsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"></div>
         
         <div id="modalContent" class="relative bg-gradient-to-br from-gray-900 to-black border border-white/10 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl animate-fade-in-up backdrop-blur-sm">
@@ -329,11 +329,14 @@
         // التحقق من موافقة شروط الخدمة
         const hasAgreed = localStorage.getItem('vndxsImageTermsAgreed');
         
-        if (hasAgreed) {
-            showMainContent();
-        } else {
-            showTermsModal();
-        }
+        // إخفاء شاشة التحميل بعد وقت قصير
+        setTimeout(() => {
+            if (hasAgreed) {
+                showMainContent();
+            } else {
+                showTermsModal();
+            }
+        }, 1000);
 
         function showMainContent() {
             document.getElementById('loadingScreen').style.display = 'none';
@@ -368,8 +371,20 @@
         const resultIcon = document.getElementById('resultIcon');
         const imageLink = document.getElementById('imageLink');
         const copyLinkBtn = document.getElementById('copyLinkBtn');
+        const agreeBtn = document.getElementById('agreeBtn');
+        const termsBtn = document.getElementById('termsBtn');
 
         let selectedFile = null;
+
+        // أحداث شروط الخدمة - الإصلاح هنا
+        agreeBtn.addEventListener('click', function() {
+            localStorage.setItem('vndxsImageTermsAgreed', 'true');
+            showMainContent();
+        });
+
+        termsBtn.addEventListener('click', function() {
+            showTermsModal();
+        });
 
         // أحداث السحب والإفلات
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -508,14 +523,6 @@
                 lucide.createIcons();
             }, 2000);
         });
-
-        // أحداث شروط الخدمة
-        document.getElementById('agreeBtn').addEventListener('click', function() {
-            localStorage.setItem('vndxsImageTermsAgreed', 'true');
-            showMainContent();
-        });
-
-        document.getElementById('termsBtn').addEventListener('click', showTermsModal);
     </script>
 </body>
 </html>
