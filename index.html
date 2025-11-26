@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VNDXS Image Host - تحويل الصور إلى روابط</title>
+    <title>VNDXS Image Host - تحويل الصور إلى روابط قصيرة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
@@ -69,7 +69,7 @@
                 </h1>
                 
                 <p class="text-xl md:text-2xl text-gray-400 font-light tracking-wide">
-                    تحويل الصور إلى روابط مباشرة
+                    تحويل الصور إلى روابط قصيرة
                 </p>
             </header>
 
@@ -103,7 +103,6 @@
                             معاينة الصورة
                         </h3>
                         <div class="flex flex-col md:flex-row gap-6 items-center">
-                            <!-- هنا سيتم عرض الصورة مباشرة -->
                             <div class="w-48 h-48 bg-gray-800 rounded-xl border-2 border-gray-700 flex items-center justify-center overflow-hidden">
                                 <img id="previewImage" class="w-full h-full object-cover hidden">
                                 <i data-lucide="image" class="w-16 h-16 text-gray-400" id="previewIcon"></i>
@@ -128,7 +127,7 @@
 
                 <!-- زر إنشاء الرابط -->
                 <button id="generateLinkBtn" class="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
-                    <span id="generateText">🚀 إنشاء الرابط المباشر</span>
+                    <span id="generateText">🚀 إنشاء الرابط القصير</span>
                     <div id="generateSpinner" class="hidden animate-spin rounded-full h-6 w-6 border-b-2 border-white mx-auto"></div>
                 </button>
             </div>
@@ -146,20 +145,27 @@
                             <i data-lucide="image" class="w-12 h-12 text-green-400" id="resultIcon"></i>
                         </div>
                         <div class="flex-1 space-y-3">
-                            <div class="flex items-center gap-2">
-                                <span class="text-gray-400">الرابط المباشر:</span>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-gray-400">الرابط القصير:</span>
                                 <button id="copyLinkBtn" class="text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1">
                                     <i data-lucide="copy" class="w-4 h-4"></i>
                                     نسخ الرابط
                                 </button>
                             </div>
-                            <div class="bg-gray-900 rounded-lg p-3">
-                                <textarea id="imageLink" readonly class="w-full bg-transparent text-sm text-gray-300 resize-none h-20 custom-scrollbar"></textarea>
+                            <div class="bg-gray-900 rounded-lg p-3 border border-gray-700">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="link" class="w-4 h-4 text-blue-400"></i>
+                                    <input id="imageLink" type="text" readonly class="w-full bg-transparent text-sm text-gray-300 select-all font-mono" value="جاري إنشاء الرابط...">
+                                </div>
+                            </div>
+                            <div class="text-xs text-gray-500 flex items-center gap-1">
+                                <i data-lucide="info" class="w-3 h-3"></i>
+                                الرابط سينتهي خلال 14 يوم (خدمة مجانية)
                             </div>
                             <div class="flex gap-2">
                                 <button id="testLinkBtn" class="flex-1 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors text-sm">
                                     <i data-lucide="external-link" class="w-4 h-4 inline ml-1"></i>
-                                    تجربة الرابط
+                                    فتح الرابط
                                 </button>
                                 <button id="downloadBtn" class="flex-1 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors text-sm">
                                     <i data-lucide="download" class="w-4 h-4 inline ml-1"></i>
@@ -175,26 +181,26 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
                 <div class="group relative glass-effect rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(30,64,175,0.3)] flex flex-col items-center text-center">
                     <div class="mb-4 p-3 rounded-lg bg-black/40 border border-white/5 group-hover:border-blue-500/30 transition-colors">
-                        <i data-lucide="zap" class="w-8 h-8 text-blue-400"></i>
+                        <i data-lucide="link-2" class="w-8 h-8 text-blue-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 text-gray-100 group-hover:text-white">بدون سيرفر</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">لا حاجة لخدمات سحابية، كل شيء يعمل محلياً</p>
+                    <h3 class="text-xl font-bold mb-2 text-gray-100 group-hover:text-white">روابط قصيرة</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">روابط مختصرة تشبه top4top.io</p>
                 </div>
 
                 <div class="group relative glass-effect rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(30,64,175,0.3)] flex flex-col items-center text-center">
                     <div class="mb-4 p-3 rounded-lg bg-black/40 border border-white/5 group-hover:border-green-500/30 transition-colors">
-                        <i data-lucide="shield-check" class="w-8 h-8 text-green-400"></i>
+                        <i data-lucide="cloud" class="w-8 h-8 text-green-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 text-gray-100 group-hover:text-white">خصوصية كاملة</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">الصور لا تترك متصفحك أبداً</p>
+                    <h3 class="text-xl font-bold mb-2 text-gray-100 group-hover:text-white">استضافة حقيقية</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">رفع حقيقي على سيرفرات File.io</p>
                 </div>
 
                 <div class="group relative glass-effect rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(30,64,175,0.3)] flex flex-col items-center text-center">
                     <div class="mb-4 p-3 rounded-lg bg-black/40 border border-white/5 group-hover:border-purple-500/30 transition-colors">
-                        <i data-lucide="link" class="w-8 h-8 text-purple-400"></i>
+                        <i data-lucide="clock" class="w-8 h-8 text-purple-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 text-gray-100 group-hover:text-white">روابط مباشرة</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">إنشاء روابط Base64 مباشرة للصور</p>
+                    <h3 class="text-xl font-bold mb-2 text-gray-100 group-hover:text-white">14 يوم مجاناً</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">الروابط متاحة لمدة 14 يوم مجاناً</p>
                 </div>
             </div>
 
@@ -238,7 +244,7 @@
         const downloadBtn = document.getElementById('downloadBtn');
 
         let selectedFile = null;
-        let base64Url = '';
+        let shortUrl = '';
 
         // أحداث السحب والإفلات
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -316,7 +322,7 @@
             reader.readAsDataURL(file);
         }
 
-        // إنشاء الرابط Base64
+        // إنشاء الرابط القصير باستخدام File.io
         generateLinkBtn.addEventListener('click', async () => {
             if (!selectedFile) {
                 alert('⚠️ يرجى اختيار صورة أولاً');
@@ -326,15 +332,25 @@
             generateLinkBtn.disabled = true;
             generateText.classList.add('hidden');
             generateSpinner.classList.remove('hidden');
+            imageLink.value = '⏳ جاري رفع الصورة وإنشاء الرابط...';
 
             try {
-                // تحويل الصورة إلى Base64
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    base64Url = e.target.result;
+                // استخدام File.io API مجاناً
+                const formData = new FormData();
+                formData.append('file', selectedFile);
+
+                const response = await fetch('https://file.io', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    shortUrl = data.link;
                     
-                    // عرض الرابط
-                    imageLink.value = base64Url;
+                    // عرض الرابط القصير
+                    imageLink.value = shortUrl;
                     linkResult.classList.remove('hidden');
                     
                     // إظهار الصورة في النتيجة
@@ -344,15 +360,39 @@
                     // التمرين إلى النتيجة
                     linkResult.scrollIntoView({ behavior: 'smooth' });
                     
-                    generateLinkBtn.disabled = false;
-                    generateText.classList.remove('hidden');
-                    generateSpinner.classList.add('hidden');
-                };
-                reader.readAsDataURL(selectedFile);
+                    alert('✅ تم إنشاء الرابط بنجاح! الرابط ساري لمدة 14 يوم');
+                } else {
+                    throw new Error(data.message || 'فشل في رفع الملف');
+                }
 
             } catch (error) {
-                console.error('Error generating link:', error);
-                alert('❌ حدث خطأ في إنشاء الرابط: ' + error.message);
+                console.error('Error uploading file:', error);
+                
+                // محاولة بديلة باستخدام transfer.sh
+                try {
+                    alert('⚠️ جاري المحاولة بخدمة بديلة...');
+                    const formData = new FormData();
+                    formData.append('file', selectedFile);
+
+                    const transferResponse = await fetch('https://transfer.sh', {
+                        method: 'PUT',
+                        body: selectedFile
+                    });
+
+                    if (transferResponse.ok) {
+                        shortUrl = await transferResponse.text();
+                        imageLink.value = shortUrl.trim();
+                        linkResult.classList.remove('hidden');
+                        resultImage.classList.remove('hidden');
+                        resultIcon.classList.add('hidden');
+                        alert('✅ تم إنشاء الرابط بنجاح!');
+                    } else {
+                        throw new Error('فشل في الخدمة البديلة');
+                    }
+                } catch (secondError) {
+                    alert('❌ فشل في إنشاء الرابط. يرجى المحاولة مرة أخرى: ' + error.message);
+                }
+            } finally {
                 generateLinkBtn.disabled = false;
                 generateText.classList.remove('hidden');
                 generateSpinner.classList.add('hidden');
@@ -376,18 +416,18 @@
             }, 2000);
         });
 
-        // تجربة الرابط
+        // فتح الرابط
         testLinkBtn.addEventListener('click', () => {
-            if (base64Url) {
-                window.open(base64Url, '_blank');
+            if (shortUrl) {
+                window.open(shortUrl, '_blank');
             }
         });
 
         // تحميل الصورة
         downloadBtn.addEventListener('click', () => {
-            if (base64Url && selectedFile) {
+            if (selectedFile) {
                 const link = document.createElement('a');
-                link.href = base64Url;
+                link.href = URL.createObjectURL(selectedFile);
                 link.download = selectedFile.name || 'image.png';
                 link.click();
             }
