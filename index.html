@@ -3,209 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VNDXS Network - المدونة</title>
+    <title>VNDXS Image Host - تحويل الصور إلى روابط</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         .font-arabic { font-family: 'IBM Plex Sans Arabic', sans-serif; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .bg-gradient-custom { background: linear-gradient(135deg, #0a0a0a 0%, #1e3a8a 100%); }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+        }
+        
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-glow { animation: glow 2s ease-in-out infinite; }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 <body class="bg-black text-white font-arabic min-h-screen dir-rtl">
-    
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
+    <!-- الخلفية المتحركة -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div class="absolute top-1/2 left-1/2 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse delay-500"></div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="relative z-10 container mx-auto px-4 py-8 max-w-4xl">
         <!-- الهيدر -->
-        <header class="text-center mb-12">
-            <h1 class="text-4xl md:text-6xl font-orbitron mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-                VNDXS Network
-            </h1>
-            <p class="text-gray-400 text-lg">مدونة VNDXS الرسمية</p>
+        <header class="text-center mb-16">
+            <div class="relative inline-block mb-6">
+                <div class="absolute -inset-4 bg-blue-500/20 rounded-full blur-xl opacity-50 animate-glow"></div>
+                <h1 class="text-5xl md:text-7xl font-orbitron font-bold relative gradient-text">
+                    VNDXS IMAGE
+                </h1>
+            </div>
+            <p class="text-xl text-gray-400 mb-2">تحويل الصور إلى روابط مباشرة دائمة</p>
+            <p class="text-gray-500">رفع سحابي آمن وسريع مع روابط دائمة</p>
         </header>
 
-        <!-- نموذج النشر -->
-        <div class="bg-gray-900 rounded-2xl p-6 mb-8 border border-gray-700">
-            <h2 class="text-xl font-bold mb-4">✍️ منشور جديد</h2>
-            <input type="text" id="postTitle" placeholder="عنوان المنشور" class="w-full p-3 bg-gray-800 rounded-lg mb-3 border border-gray-600 focus:border-blue-500">
-            <textarea id="postContent" placeholder="محتوى المنشور..." rows="4" class="w-full p-3 bg-gray-800 rounded-lg mb-3 border border-gray-600 focus:border-blue-500"></textarea>
-            
-            <div class="mb-4">
-                <input type="file" id="postImage" accept="image/*" class="hidden">
-                <label for="postImage" class="cursor-pointer bg-gray-800 border border-dashed border-gray-600 rounded-lg p-4 text-center block">
-                    <span class="text-gray-400">📸 اضغط لرفع صورة (اختياري)</span>
-                </label>
-                <div id="imagePreview" class="mt-2"></div>
+        <!-- منطقة رفع الصور -->
+        <div class="glass-effect rounded-2xl p-8 mb-8 transition-all duration-500 hover:scale-[1.02]">
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center animate-float">
+                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold mb-2">رفع صورتك</h2>
+                <p class="text-gray-400">اسحب وأفلت أو انقر لاختيار الصورة</p>
             </div>
 
-            <button onclick="publishPost()" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-all">
-                🚀 نشر المنشور
+            <!-- منطقة السحب والإفلات -->
+            <div id="dropZone" class="border-2 border-dashed border-gray-600 rounded-2xl p-12 text-center transition-all duration-300 hover:border-blue-500 hover:bg-white/5 cursor-pointer mb-6">
+                <input type="file" id="fileInput" accept="image/*" class="hidden">
+                <div class="space-y-4">
+                    <svg class="w-16 h-16 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                    </svg>
+                    <div>
+                        <p class="text-lg font-medium">اسحب وأفلت الصورة هنا</p>
+                        <p class="text-gray-400 text-sm mt-1">أو انقر لاختيار الملف</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- معاينة الصورة -->
+            <div id="imagePreview" class="hidden mb-6">
+                <div class="bg-gray-900 rounded-2xl p-6">
+                    <h3 class="text-lg font-bold mb-4">معاينة الصورة</h3>
+                    <div class="flex flex-col md:flex-row gap-6 items-center">
+                        <img id="previewImage" class="w-48 h-48 object-cover rounded-xl border-2 border-gray-700">
+                        <div class="flex-1 space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-800 rounded-lg">
+                                <span class="text-gray-400">الحجم:</span>
+                                <span id="fileSize" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-800 rounded-lg">
+                                <span class="text-gray-400">النوع:</span>
+                                <span id="fileType" class="font-medium"></span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-800 rounded-lg">
+                                <span class="text-gray-400">الأبعاد:</span>
+                                <span id="fileDimensions" class="font-medium"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- زر الرفع -->
+            <button id="uploadBtn" class="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                <span id="uploadText">🚀 رفع الصورة واحصل على الرابط</span>
+                <div id="uploadSpinner" class="hidden animate-spin rounded-full h-6 w-6 border-b-2 border-white mx-auto"></div>
             </button>
         </div>
 
-        <!-- قائمة المنشورات -->
-        <div id="postsContainer">
-            <div class="text-center py-12">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-                <p class="text-gray-400">جاري تحميل المنشورات...</p>
+        <!-- نتائج الرفع -->
+        <div id="uploadResult" class="hidden glass-effect rounded-2xl p-6 mb-8 animate-fade-in">
+            <h3 class="text-xl font-bold mb-4 text-green-400">✅ تم رفع الصورة بنجاح!</h3>
+            <div class="space-y-4">
+                <div class="flex flex-col md:flex-row gap-4 items-center">
+                    <img id="resultImage" class="w-32 h-32 object-cover rounded-lg border-2 border-green-500/30">
+                    <div class="flex-1 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-400">الرابط المباشر:</span>
+                            <button id="copyLinkBtn" class="text-blue-400 hover:text-blue-300 transition-colors">
+                                نسخ الرابط
+                            </button>
+                        </div>
+                        <div class="bg-gray-900 rounded-lg p-3">
+                            <input id="imageLink" type="text" readonly class="w-full bg-transparent text-sm text-gray-300 select-all">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- الميزات -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="glass-effect rounded-2xl p-6 text-center transition-all duration-300 hover:scale-105">
+                <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="font-bold mb-2">سريع جداً</h3>
+                <p class="text-gray-400 text-sm">رفع فوري مع معالجة سريعة</p>
+            </div>
+
+            <div class="glass-effect rounded-2xl p-6 text-center transition-all duration-300 hover:scale-105">
+                <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                </div>
+                <h3 class="font-bold mb-2">آمن ومضمون</h3>
+                <p class="text-gray-400 text-sm">تخزين سحابي آمن مع روابط دائمة</p>
+            </div>
+
+            <div class="glass-effect rounded-2xl p-6 text-center transition-all duration-300 hover:scale-105">
+                <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                    </svg>
+                </div>
+                <h3 class="font-bold mb-2">مشاركة سهلة</h3>
+                <p class="text-gray-400 text-sm">روابط مباشرة سهلة المشاركة</p>
+            </div>
+        </div>
+
+        <!-- الفوتر -->
+        <footer class="text-center border-t border-gray-800 pt-8">
+            <p class="text-gray-500 text-sm">
+                صنع بـ ❤️ بواسطة 
+                <span class="text-blue-400 font-orbitron">VNDXS Group</span>
+            </p>
+        </footer>
     </div>
 
     <script>
-        // تكوين Supabase - بالمفاتيح الحقيقية
+        // تكوين Supabase
         const supabaseUrl = 'https://ervicxogdkgrsbmqelnh.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVydmljeG9nZGtncnNibXFlbG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxMDAwMTIsImV4cCI6MjA3OTY3NjAxMn0.vZ7Ie9bBvoRCGXIs1M9nIjHCG-5fYLaMdqoNFz_rOwg';
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        // متغيرات التطبيق
-        let selectedImage = null;
+        // عناصر DOM
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImage = document.getElementById('previewImage');
+        const fileSize = document.getElementById('fileSize');
+        const fileType = document.getElementById('fileType');
+        const fileDimensions = document.getElementById('fileDimensions');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const uploadText = document.getElementById('uploadText');
+        const uploadSpinner = document.getElementById('uploadSpinner');
+        const uploadResult = document.getElementById('uploadResult');
+        const resultImage = document.getElementById('resultImage');
+        const imageLink = document.getElementById('imageLink');
+        const copyLinkBtn = document.getElementById('copyLinkBtn');
 
-        // معالجة اختيار الصورة
-        document.getElementById('postImage').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                selectedImage = file;
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('imagePreview').innerHTML = `
-                        <img src="${e.target.result}" class="w-32 h-32 object-cover rounded-lg border border-gray-600">
-                    `;
-                };
-                reader.readAsDataURL(file);
-            }
+        let selectedFile = null;
+
+        // أحداث السحب والإفلات
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
         });
 
-        // دالة رفع الصورة
-        async function uploadImage(file) {
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => {
+                dropZone.classList.add('border-blue-500', 'bg-blue-500/10');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => {
+                dropZone.classList.remove('border-blue-500', 'bg-blue-500/10');
+            }, false);
+        });
+
+        dropZone.addEventListener('drop', handleDrop, false);
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', handleFileSelect);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            if (files.length > 0) {
+                selectedFile = files[0];
+                if (selectedFile.type.startsWith('image/')) {
+                    displayImagePreview(selectedFile);
+                } else {
+                    alert('⚠️ يرجى اختيار ملف صورة فقط');
+                }
+            }
+        }
+
+        function displayImagePreview(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                resultImage.src = e.target.result;
+                
+                // معلومات الملف
+                fileSize.textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+                fileType.textContent = file.type.split('/')[1].toUpperCase();
+                
+                // الحصول على الأبعاد
+                const img = new Image();
+                img.onload = function() {
+                    fileDimensions.textContent = `${this.width} × ${this.height}`;
+                };
+                img.src = e.target.result;
+                
+                imagePreview.classList.remove('hidden');
+                uploadBtn.disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // رفع الصورة
+        uploadBtn.addEventListener('click', async () => {
+            if (!selectedFile) {
+                alert('⚠️ يرجى اختيار صورة أولاً');
+                return;
+            }
+
+            uploadBtn.disabled = true;
+            uploadText.classList.add('hidden');
+            uploadSpinner.classList.remove('hidden');
+
             try {
-                const fileName = `posts/${Date.now()}_${file.name}`;
+                // رفع الصورة إلى Supabase Storage
+                const fileName = `uploads/${Date.now()}_${selectedFile.name}`;
                 
                 const { data, error } = await supabase.storage
                     .from('blog-images')
-                    .upload(fileName, file);
+                    .upload(fileName, selectedFile);
 
                 if (error) throw error;
-                
+
                 // الحصول على الرابط العام
                 const { data: { publicUrl } } = supabase.storage
                     .from('blog-images')
                     .getPublicUrl(fileName);
-                    
-                return publicUrl;
-            } catch (error) {
-                console.error('خطأ في رفع الصورة:', error);
-                throw error;
-            }
-        }
 
-        // دالة نشر المنشور
-        async function publishPost() {
-            const title = document.getElementById('postTitle').value.trim();
-            const content = document.getElementById('postContent').value.trim();
-            
-            if (!title || !content) {
-                alert('⚠️ يرجى ملء العنوان والمحتوى');
-                return;
-            }
-
-            const publishBtn = document.querySelector('button[onclick="publishPost()"]');
-            publishBtn.innerHTML = '⏳ جاري النشر...';
-            publishBtn.disabled = true;
-
-            try {
-                let imageUrl = null;
+                // عرض النتيجة
+                imageLink.value = publicUrl;
+                uploadResult.classList.remove('hidden');
                 
-                // رفع الصورة إذا كانت موجودة
-                if (selectedImage) {
-                    imageUrl = await uploadImage(selectedImage);
-                }
-
-                // حفظ المنشور في قاعدة البيانات
-                const { data, error } = await supabase
-                    .from('posts')
-                    .insert([
-                        {
-                            title: title,
-                            content: content,
-                            image_url: imageUrl,
-                            created_at: new Date().toISOString(),
-                            likes: 0
-                        }
-                    ])
-                    .select();
-
-                if (error) throw error;
-
-                // إعادة تعيين النموذج
-                document.getElementById('postTitle').value = '';
-                document.getElementById('postContent').value = '';
-                document.getElementById('imagePreview').innerHTML = '';
-                selectedImage = null;
-
-                alert('✅ تم نشر المنشور بنجاح!');
-                loadPosts(); // إعادة تحميل المنشورات
+                // التمرين إلى النتيجة
+                uploadResult.scrollIntoView({ behavior: 'smooth' });
 
             } catch (error) {
-                console.error('خطأ في النشر:', error);
-                alert('❌ حدث خطأ في نشر المنشور: ' + error.message);
+                console.error('Error uploading image:', error);
+                alert('❌ حدث خطأ في رفع الصورة: ' + error.message);
             } finally {
-                publishBtn.innerHTML = '🚀 نشر المنشور';
-                publishBtn.disabled = false;
+                uploadBtn.disabled = false;
+                uploadText.classList.remove('hidden');
+                uploadSpinner.classList.add('hidden');
             }
-        }
+        });
 
-        // دالة تحميل المنشورات
-        async function loadPosts() {
-            try {
-                const { data: posts, error } = await supabase
-                    .from('posts')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-
-                if (error) throw error;
-
-                const container = document.getElementById('postsContainer');
-                
-                if (!posts || posts.length === 0) {
-                    container.innerHTML = `
-                        <div class="text-center py-12">
-                            <p class="text-gray-400 text-lg">📝 لا توجد منشورات بعد</p>
-                            <p class="text-gray-600 mt-2">كن أول من ينشر!</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                container.innerHTML = posts.map(post => `
-                    <div class="bg-gray-900 rounded-2xl p-6 mb-6 border border-gray-700">
-                        <h3 class="text-xl font-bold mb-3 text-white">${post.title}</h3>
-                        <p class="text-gray-300 mb-4 leading-relaxed">${post.content}</p>
-                        
-                        ${post.image_url ? `
-                            <img src="${post.image_url}" alt="صورة المنشور" class="w-full rounded-lg mb-4 max-h-96 object-cover">
-                        ` : ''}
-                        
-                        <div class="flex justify-between items-center text-sm text-gray-500">
-                            <span>${new Date(post.created_at).toLocaleDateString('ar-EG')}</span>
-                            <span>❤️ ${post.likes} إعجاب</span>
-                        </div>
-                    </div>
-                `).join('');
-
-            } catch (error) {
-                console.error('خطأ في تحميل المنشورات:', error);
-                container.innerHTML = `
-                    <div class="text-center py-12 text-red-400">
-                        ❌ حدث خطأ في تحميل المنشورات
-                    </div>
-                `;
-            }
-        }
-
-        // تحميل المنشورات عند بدء التشغيل
-        document.addEventListener('DOMContentLoaded', function() {
-            loadPosts();
+        // نسخ الرابط
+        copyLinkBtn.addEventListener('click', () => {
+            imageLink.select();
+            document.execCommand('copy');
+            
+            // تأثير النسخ
+            const originalText = copyLinkBtn.textContent;
+            copyLinkBtn.textContent = 'تم النسخ!';
+            copyLinkBtn.classList.add('text-green-400');
+            
+            setTimeout(() => {
+                copyLinkBtn.textContent = originalText;
+                copyLinkBtn.classList.remove('text-green-400');
+            }, 2000);
         });
     </script>
 </body>
