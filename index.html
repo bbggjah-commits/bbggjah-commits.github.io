@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         .font-arabic { font-family: 'IBM Plex Sans Arabic', sans-serif; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
@@ -23,6 +22,17 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .animate-fade-in-up { animation: fade-in-up 0.6s ease-out forwards; }
+        
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body class="bg-black text-white font-arabic min-h-screen dir-rtl">
@@ -59,7 +69,7 @@
                 </h1>
                 
                 <p class="text-xl md:text-2xl text-gray-400 font-light tracking-wide">
-                    تحويل الصور إلى روابط دائمة
+                    تحويل الصور إلى روابط مباشرة
                 </p>
             </header>
 
@@ -74,7 +84,7 @@
                 </div>
 
                 <!-- منطقة السحب والإفلات -->
-                <div id="dropZone" class="border-2 border-dashed border-gray-600 rounded-2xl p-12 text-center transition-all duration-300 hover:border-blue-500 hover:bg-white/5 cursor-pointer mb-6">
+                <div id="dropZone" class="border-2 border-dashed border-gray-600 rounded-2xl p-8 text-center transition-all duration-300 hover:border-blue-500 hover:bg-white/5 cursor-pointer mb-6">
                     <input type="file" id="fileInput" accept="image/*" class="hidden">
                     <div class="space-y-4">
                         <i data-lucide="cloud-upload" class="w-16 h-16 text-gray-400 mx-auto"></i>
@@ -93,9 +103,10 @@
                             معاينة الصورة
                         </h3>
                         <div class="flex flex-col md:flex-row gap-6 items-center">
-                            <div class="w-48 h-48 bg-gray-800 rounded-xl border-2 border-gray-700 flex items-center justify-center">
+                            <!-- هنا سيتم عرض الصورة مباشرة -->
+                            <div class="w-48 h-48 bg-gray-800 rounded-xl border-2 border-gray-700 flex items-center justify-center overflow-hidden">
+                                <img id="previewImage" class="w-full h-full object-cover hidden">
                                 <i data-lucide="image" class="w-16 h-16 text-gray-400" id="previewIcon"></i>
-                                <img id="previewImage" class="w-48 h-48 object-cover rounded-xl hidden">
                             </div>
                             <div class="flex-1 space-y-3">
                                 <div class="flex justify-between items-center p-3 bg-gray-800 rounded-lg">
@@ -115,26 +126,26 @@
                     </div>
                 </div>
 
-                <!-- زر الرفع -->
-                <button id="uploadBtn" class="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
-                    <span id="uploadText">🚀 رفع الصورة واحصل على الرابط</span>
-                    <div id="uploadSpinner" class="hidden animate-spin rounded-full h-6 w-6 border-b-2 border-white mx-auto"></div>
+                <!-- زر إنشاء الرابط -->
+                <button id="generateLinkBtn" class="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span id="generateText">🚀 إنشاء الرابط المباشر</span>
+                    <div id="generateSpinner" class="hidden animate-spin rounded-full h-6 w-6 border-b-2 border-white mx-auto"></div>
                 </button>
             </div>
 
-            <!-- نتائج الرفع -->
-            <div id="uploadResult" class="hidden glass-effect rounded-2xl p-6 mb-8 max-w-2xl mx-auto animate-fade-in-up">
+            <!-- نتائج الرابط -->
+            <div id="linkResult" class="hidden glass-effect rounded-2xl p-6 mb-8 max-w-2xl mx-auto animate-fade-in-up">
                 <h3 class="text-xl font-bold mb-4 text-green-400 flex items-center gap-2">
                     <i data-lucide="check-circle" class="w-6 h-6"></i>
-                    تم رفع الصورة بنجاح!
+                    تم إنشاء الرابط بنجاح!
                 </h3>
                 <div class="space-y-4">
                     <div class="flex flex-col md:flex-row gap-4 items-center">
-                        <div class="w-32 h-32 bg-gray-800 rounded-lg border-2 border-green-500/30 flex items-center justify-center">
+                        <div class="w-32 h-32 bg-gray-800 rounded-lg border-2 border-green-500/30 flex items-center justify-center overflow-hidden">
+                            <img id="resultImage" class="w-full h-full object-cover hidden">
                             <i data-lucide="image" class="w-12 h-12 text-green-400" id="resultIcon"></i>
-                            <img id="resultImage" class="w-32 h-32 object-cover rounded-lg hidden">
                         </div>
-                        <div class="flex-1 space-y-2">
+                        <div class="flex-1 space-y-3">
                             <div class="flex items-center gap-2">
                                 <span class="text-gray-400">الرابط المباشر:</span>
                                 <button id="copyLinkBtn" class="text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1">
@@ -143,7 +154,17 @@
                                 </button>
                             </div>
                             <div class="bg-gray-900 rounded-lg p-3">
-                                <input id="imageLink" type="text" readonly class="w-full bg-transparent text-sm text-gray-300 select-all">
+                                <textarea id="imageLink" readonly class="w-full bg-transparent text-sm text-gray-300 resize-none h-20 custom-scrollbar"></textarea>
+                            </div>
+                            <div class="flex gap-2">
+                                <button id="testLinkBtn" class="flex-1 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors text-sm">
+                                    <i data-lucide="external-link" class="w-4 h-4 inline ml-1"></i>
+                                    تجربة الرابط
+                                </button>
+                                <button id="downloadBtn" class="flex-1 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors text-sm">
+                                    <i data-lucide="download" class="w-4 h-4 inline ml-1"></i>
+                                    تحميل الصورة
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -156,24 +177,24 @@
                     <div class="mb-4 p-3 rounded-lg bg-black/40 border border-white/5 group-hover:border-blue-500/30 transition-colors">
                         <i data-lucide="zap" class="w-8 h-8 text-blue-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 text-gray-100 group-hover:text-white">سريع جداً</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">رفع فوري مع معالجة سريعة للصور</p>
+                    <h3 class="text-xl font-bold mb-2 text-gray-100 group-hover:text-white">بدون سيرفر</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">لا حاجة لخدمات سحابية، كل شيء يعمل محلياً</p>
                 </div>
 
                 <div class="group relative glass-effect rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(30,64,175,0.3)] flex flex-col items-center text-center">
                     <div class="mb-4 p-3 rounded-lg bg-black/40 border border-white/5 group-hover:border-green-500/30 transition-colors">
                         <i data-lucide="shield-check" class="w-8 h-8 text-green-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 text-gray-100 group-hover:text-white">آمن ومضمون</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">تخزين سحابي آمن مع روابط دائمة</p>
+                    <h3 class="text-xl font-bold mb-2 text-gray-100 group-hover:text-white">خصوصية كاملة</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">الصور لا تترك متصفحك أبداً</p>
                 </div>
 
                 <div class="group relative glass-effect rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(30,64,175,0.3)] flex flex-col items-center text-center">
                     <div class="mb-4 p-3 rounded-lg bg-black/40 border border-white/5 group-hover:border-purple-500/30 transition-colors">
                         <i data-lucide="link" class="w-8 h-8 text-purple-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 text-gray-100 group-hover:text-white">مشاركة سهلة</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">روابط مباشرة سهلة المشاركة</p>
+                    <h3 class="text-xl font-bold mb-2 text-gray-100 group-hover:text-white">روابط مباشرة</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">إنشاء روابط Base64 مباشرة للصور</p>
                 </div>
             </div>
 
@@ -196,11 +217,6 @@
             document.getElementById('mainContent').classList.remove('hidden');
         }, 1000);
 
-        // تكوين Supabase
-        const supabaseUrl = 'https://ervicxogdkgrsbmqelnh.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVydmljeG9nZGtncnNibXFlbG5oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxMDAwMTIsImV4cCI6MjA3OTY3NjAxMn0.vZ7Ie9bBvoRCGXIs1M9nIjHCG-5fYLaMdqoNFz_rOwg';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
         // عناصر DOM
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
@@ -210,16 +226,19 @@
         const fileSize = document.getElementById('fileSize');
         const fileType = document.getElementById('fileType');
         const fileDimensions = document.getElementById('fileDimensions');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const uploadText = document.getElementById('uploadText');
-        const uploadSpinner = document.getElementById('uploadSpinner');
-        const uploadResult = document.getElementById('uploadResult');
+        const generateLinkBtn = document.getElementById('generateLinkBtn');
+        const generateText = document.getElementById('generateText');
+        const generateSpinner = document.getElementById('generateSpinner');
+        const linkResult = document.getElementById('linkResult');
         const resultImage = document.getElementById('resultImage');
         const resultIcon = document.getElementById('resultIcon');
         const imageLink = document.getElementById('imageLink');
         const copyLinkBtn = document.getElementById('copyLinkBtn');
+        const testLinkBtn = document.getElementById('testLinkBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
 
         let selectedFile = null;
+        let base64Url = '';
 
         // أحداث السحب والإفلات
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -273,14 +292,12 @@
         function displayImagePreview(file) {
             const reader = new FileReader();
             reader.onload = function(e) {
+                // عرض الصورة مباشرة في المربع
                 previewImage.src = e.target.result;
-                resultImage.src = e.target.result;
-                
-                // إظهار الصورة وإخفاء الأيقونة
                 previewImage.classList.remove('hidden');
                 previewIcon.classList.add('hidden');
-                resultImage.classList.remove('hidden');
-                resultIcon.classList.add('hidden');
+                
+                resultImage.src = e.target.result;
                 
                 // معلومات الملف
                 fileSize.textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
@@ -294,51 +311,51 @@
                 img.src = e.target.result;
                 
                 imagePreview.classList.remove('hidden');
-                uploadBtn.disabled = false;
+                generateLinkBtn.disabled = false;
             };
             reader.readAsDataURL(file);
         }
 
-        // رفع الصورة
-        uploadBtn.addEventListener('click', async () => {
+        // إنشاء الرابط Base64
+        generateLinkBtn.addEventListener('click', async () => {
             if (!selectedFile) {
                 alert('⚠️ يرجى اختيار صورة أولاً');
                 return;
             }
 
-            uploadBtn.disabled = true;
-            uploadText.classList.add('hidden');
-            uploadSpinner.classList.remove('hidden');
+            generateLinkBtn.disabled = true;
+            generateText.classList.add('hidden');
+            generateSpinner.classList.remove('hidden');
 
             try {
-                // رفع الصورة إلى Supabase Storage
-                const fileName = `image-host/${Date.now()}_${selectedFile.name}`;
-                
-                const { data, error } = await supabase.storage
-                    .from('blog-images')
-                    .upload(fileName, selectedFile);
-
-                if (error) throw error;
-
-                // الحصول على الرابط العام
-                const { data: { publicUrl } } = supabase.storage
-                    .from('blog-images')
-                    .getPublicUrl(fileName);
-
-                // عرض النتيجة
-                imageLink.value = publicUrl;
-                uploadResult.classList.remove('hidden');
-                
-                // التمرين إلى النتيجة
-                uploadResult.scrollIntoView({ behavior: 'smooth' });
+                // تحويل الصورة إلى Base64
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    base64Url = e.target.result;
+                    
+                    // عرض الرابط
+                    imageLink.value = base64Url;
+                    linkResult.classList.remove('hidden');
+                    
+                    // إظهار الصورة في النتيجة
+                    resultImage.classList.remove('hidden');
+                    resultIcon.classList.add('hidden');
+                    
+                    // التمرين إلى النتيجة
+                    linkResult.scrollIntoView({ behavior: 'smooth' });
+                    
+                    generateLinkBtn.disabled = false;
+                    generateText.classList.remove('hidden');
+                    generateSpinner.classList.add('hidden');
+                };
+                reader.readAsDataURL(selectedFile);
 
             } catch (error) {
-                console.error('Error uploading image:', error);
-                alert('❌ حدث خطأ في رفع الصورة: ' + error.message);
-            } finally {
-                uploadBtn.disabled = false;
-                uploadText.classList.remove('hidden');
-                uploadSpinner.classList.add('hidden');
+                console.error('Error generating link:', error);
+                alert('❌ حدث خطأ في إنشاء الرابط: ' + error.message);
+                generateLinkBtn.disabled = false;
+                generateText.classList.remove('hidden');
+                generateSpinner.classList.add('hidden');
             }
         });
 
@@ -358,6 +375,23 @@
                 lucide.createIcons();
             }, 2000);
         });
+
+        // تجربة الرابط
+        testLinkBtn.addEventListener('click', () => {
+            if (base64Url) {
+                window.open(base64Url, '_blank');
+            }
+        });
+
+        // تحميل الصورة
+        downloadBtn.addEventListener('click', () => {
+            if (base64Url && selectedFile) {
+                const link = document.createElement('a');
+                link.href = base64Url;
+                link.download = selectedFile.name || 'image.png';
+                link.click();
+            }
+        });
     </script>
 </body>
-    </html>
+</html>
